@@ -1,0 +1,31 @@
+*.aaa
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fff
+*.fls
+*.gz
+*.log
+*.nav
+*.o
+*.out
+*.snm
+*.toc
+*.ttt
+*.txt
+*.vrb
+
+### R nonsense ### 
+.Rhistory
+*-Ex.R
+
+### OS Files ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+

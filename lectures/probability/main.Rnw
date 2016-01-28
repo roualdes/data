@@ -1,0 +1,453 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+@
+
+\title{Introduction to Probability}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\frame {\frametitle{outline}
+  \tableofcontents
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sample Space and Events}
+
+\begin{frame}
+  \frametitle{Sample Space}
+  Probability is interested in outcomes of experiments (observational studies, games, $\ldots$).  
+
+  \begin{block}{sample space}
+    A sample space is the set of all possible outcomes of an experiment, commonly denoted $\mathcal{S}$.
+  \end{block}
+
+  \begin{block}{event}
+    An event is any subset of the sample space.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sample Space, examples}
+  Here are some examples of sample spaces:
+  \begin{itemize}
+  \item<1-> two websites that are classified as defective or non-defective
+    \begin{itemize}
+    \item<2-> $\{NN, DN, ND, DD\}$
+    \end{itemize}
+  \item<3-> a survey about people's belief in the future lifespan (in years, say) of PHP
+    \begin{itemize}
+    \item<4-> $\{0, 1, 2, \ldots \}$
+    \end{itemize}
+  \item<5-> re PHP: each response is recorded as the average of 3 sequential respondents beliefs
+    \begin{itemize}
+    \item<6-> \texttt{R}?
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Event, examples}
+  Here are some examples corresponding to the samples spaces above:
+  \begin{itemize}
+  \item<1-> defective (D) or non-defective websites
+    \begin{itemize}
+    \item<1-> both work $== \{NN\}$, neither works $== \{DD\}$, at least one works $== \{ND, DN\}$
+    \end{itemize}
+  \item<2-> beliefs about lifespan of PHP in years
+    \begin{itemize}
+    \item<3-> $\{3, 4, \ldots \}$ or $\{0, 1, 2 \}$
+    \end{itemize}
+  \item<4-> $\{1/3, 2/3 \}$ or $\ldots$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Set Operations}
+  If we are dealing so heavily with sets, you can imagine we should rehears set operations.
+  \begin{block}{union}
+    The union of $k$ sets $A_j$ is the event consisting of $A_1$ or (xor) $A_2$ or $\ldots$ $A_k$.  Mathematically, we write $\cup_{j=1}^k A_j$.  This is also thought of as at least one of $A_j$ happens.
+  \end{block}
+
+  \begin{block}{intersection}
+    The intersection of $k$ sets $A_j$ is the event consisting of $A_1$ and $A_2$ and $\ldots$ $A_k$.  Mathematically, we write $\cap_{j=1}^k A_j$.  This is also thought of as all of $A_1, \ldots, A_k$ happen.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Set Operations}
+  \begin{block}{complement}
+    The complement $A^c$ of $A$ is the set of events that are not in $A$.
+  \end{block}
+  \begin{block}{difference}
+    The difference $B - A$ is the set of events contained in $B$ but not in $A$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Set Operations}
+    \begin{block}{disjoint}
+      Two sets $A$ and $B$ are disjoint (or mutually exclusive) if $A$ and $B$ do not overlap, i.e.\ have no events in common.  Mathematically, we write $A \cap B = \emptyset$.
+  \end{block}
+
+  \begin{block}{subset}
+    The set $A$ is said to be a subset of $B$ is all events in $A$ implies an event of the set $B$.  Mathematically, we write $A \subseteq B$.  Mathematically, we write $a \in A$ implies $a \in B$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Subsets}
+Some notes on subsets:
+\begin{itemize}
+\item<1-> Sometimes people will use the symbol $\subset$ to explicitly state that $A$ is a subset of $B$, but certainly not equal to $B$.
+\item<2-> To show that $A = B$, one needs to show both that $x \in A$ implies $x \in B$ and that $x \in B$ implies $x \in A$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Laws of Set Operations}
+There are well established laws of sets, analogous to laws of mathematics.
+  \begin{itemize}
+  \item<1-> Commutative: $A \cup B = B \cup A$ and $A \cap B = B \cap A$.
+  \item<2-> Associative: $(A \cup B) \cup C = A \cup (B \cup C)$ and $(A \cap B) \cap C = A \cap (B \cap C)$.
+  \item<3-> Distributive: $(A \cup B) \cap C = (A \cap C) \cup (B \cap C)$ and $(A \cap B) \cup C = (A \cup C) \cap (B \cup C)$.
+  \item<4-> De Morgan's Laws: $(A \cup B)^c = A^c \cap B^c$ and $(A \cap B)^c = A^c \cup B^c$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Let's Be Real}
+  Set operations, laws of set operations, and/or any combination of these don't come up very often.  But I promise you this: if you can drop some set logic in a time of need at any future career you have $\ldots$ mad street cred.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Connecting Sets and Probability}
+  \textbf{Probability} is formally defined as an abstract mathematical operation that maps sets to the interval $[0, 1]$.  If we let $\mathcal{E}$ be the set of all possible events of $\mathcal{S}$, then mathematically we write  $P: \mathcal{E} \rightarrow [0,1]$.
+
+More tangibly:
+\begin{itemize}
+\item<1-> $P(H) = 0.5$ reads, the probability of flipping a head is $1/2$.
+\item<2-> much of the rest of this class is talking about the probability of different events, $E$ or $H$ or $\ldots$ pick an event.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability, from where}
+  The idea of probability comes from a \textbf{limiting relative frequency}.  Conceptually, the limiting relative frequency is the probability of observing event $E$ under infinite replications of the experiment of interest.  Let $N_n(E)$ dnote the number of occurrence of $E$ after $n$ replications.  We interpret the probability of an event $E$, namely $P(E)$, as
+
+\[ \lim_{n\to\infty} \frac{N_n(E)}{n}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability, example}
+  We all claim to know the probability of flipping a head on a fair coin.  But, does one flip justify our intuition?
+
+  \begin{itemize}
+  \item<2-> What is the sample space of flipping a coin?
+  \item<3-> What is one event?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability, example}
+  Coin flipping in \texttt{R}.
+
+<<>>=
+# sample space; T=0, H=1
+S <- c(0, 1)
+# 1 flip
+outcome <- sample(S, 1)
+mean(outcome)
+# 100 flips; replications
+outcomes <- sample(S, 100, replace=TRUE) 
+mean(outcomes)
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability, example}
+  Coin flipping in \texttt{R}.
+
+<<>>=
+mean(sample(S, 1000, replace=TRUE))
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability, example}
+  Coin flipping in \texttt{R}.
+
+<<>>=
+suppressMessages(library(ggplot2))
+reps <- 100000 # replications
+x <- 1:reps
+outcomes <- sample(S, reps, replace=TRUE)
+flips <- data.frame(x=x,# create data frame
+                    m=cumsum(outcomes)/x)
+# make plot
+p <- qplot(x, m, data=flips, geom="line") +
+    geom_hline(y=0.5) 
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability, example}
+  Coin flipping in \texttt{R}.
+
+<<fig.height=2.5, fig.width=3, fig.align="center">>=
+p
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability as a Model}
+  As you can imagine, this is an inefficient method of defining probabilities -- are going to sit and flip a coin forever?  Play Texas Hold'em until the end of time?  Instead we think of probability models, the formal assignment of probabilities to events.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Equally Likely Outcomes}
+  The most common probability models are those consisting of finite sample spaces, where each of $N$ outcomes is equally likely to occur:
+
+  \begin{itemize}
+  \item<1-> coin flip: $\mathcal{S} = \{H, T\}$, $P(H) = 1/2$
+  \item<2-> die roll: $\mathcal{S} = \{1, 2, 3, 4, 5, 6\}$, $P(roll 1) = 1/6$
+  \item<3-> If $N$ elements in $\mathcal{S}$, then $P(E) = N(E)/N$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability, example}
+  Imagine you roll two (fair) dice.  What is the probability of the event $E = \{ R_1 + R_2 = 7 \}$?
+
+  \begin{itemize}
+  \item<2-> What is the sample space?
+    % \begin{itemize}
+    % \item<5-> $\mathcal{S} = \{ (1,1), (1,2), \ldots, (6,6) \}$ implies $N=36$.
+    % \end{itemize}
+  \item<3-> How many ways can we roll a sum of $7$?
+    % \begin{itemize}
+    % \item<5-> $E = \{ (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) \}$ implies $N(E) = 6$.
+    % \end{itemize}
+  \item<4-> The elements of $E$ are disjoint and equally likely
+  \item<5-> Answer: $P(E) = 1/6$ % P((1,6)) + P((2,5)) + \ldots + P((6,1)) = 6/36
+  \end{itemize}
+\end{frame}
+
+\section{Conditional Probability}
+
+
+
+% TODO add PMF (PSR2.3-2), 
+% TODO axioms of probability
+% relate to dice games: sums of disjoint events, A \subset B => P(A) <= P(B), 1 - P(A) = P(A^c)
+% relate back to proportions: 1-hat(p) = hat(q)
+% TODO conditinal probability 2.5; quick example
+% TODO independent events 2.6; quick example
+
+
+\begin{frame}
+  \frametitle{Motivating Conditional Probability}
+  Wouldn't it be great if there was a formal method to update probabilities given new information.  Consider this scenario.  You draw a card from a deck of $52$ cards and then learn that the card you drew is a face card.  What is the probability that this card is a king?
+
+  \begin{itemize}
+  \item<2-> There's $12$ face cards.
+  \item<3-> $4$ of the $12$ face cards are kings.
+  \item<4-> Therefore, there's a $1/3$ probability that the card you drew is a king.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Conditional Probability}
+  Without the learned knowledge that the card you drew is a face card, the probability of drawing a king is $4/52 = \Sexpr{round(4/52, 2)}$.  But after incorporating this new knowledge, the probability of drawing a king is $1/3 = \Sexpr{round(1/3, 2)}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conditional Probability}
+  Conditional probability allows us to update probabilities given a new set of information; e.g.\ we learned that the card we drew was a face card.
+
+  \begin{block}{conditional probability}
+    For any two events $A$ and $B$
+    \[ P(B|A) = \frac{P(A \cap B)}{P(A)}, \]
+    so long as $P(A) > 0$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conditional Probability, example}
+  Let $A$ be the probability that we draw a face card and let $B$ be the probability that we draw a king.
+
+  \[ P(B|A) = \frac{P(A \cap B)}{P(A)} = \frac{P(\text{face card and king})}{P(\text{face card})} = \frac{4/52}{12/52}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Conditional Probability, example 2}
+  Suppose you are working with a city planner (traffic engineer?) to synchronize two consecutive intersections' stop lights.  The planner claims that if the first light is green the second light will be green with probability $0.75$.  Assume the probability of finding the first light green is $0.55$.  What is the probability that any given driver will breeze through both lights?
+
+\only<2->{Let $P(A) = 0.55$ and $P(B|A) = 0.75$.  We want to find $P(A \cap B)$.}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Law of Total Probability}
+
+We now have a method for finding the probability of the intersection of two events, $P(A \cap B) = P(A)P(B|A)$.  Sometimes though we are given much information on conditional probabilities, $P(B|A_j)$ for events $j= 1, \ldots, k$, and we need to recover $P(B)$.  
+
+\begin{figure}
+  \center
+  \includegraphics[scale=0.25]{figs/totalprobability.jpg}
+\end{figure}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Law of Total Probability}
+
+Visually, we could sum the probabilities of the intersections of $B$ with each $A_j$,
+
+\[ P(B) = P(A_1 \cap B) + P(A_2 \cap B) + \ldots + P(A_k \cap B). \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Law of Total Probability}
+The law of total probability combines this idea with the formula from conditional probability.
+
+\begin{block}{Law of Total Probability}
+  \[ P(B) = P(A_1)P(B|A_1) + P(A_2)P(B|A_2) + \ldots + P(A_k)P(B|A_k) \]
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Law of Total Probability, example 2 continued}
+Suppose further that we know if the a driver approaches a red first traffic light, then the second light will be green with probability $0.9$\%.  What is the probability that a driver will find the second traffic light green?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Law of Total Probability, example 2 continued}
+We want to find the probability the second traffic light is green.  What do we know?
+
+\begin{itemize}
+\item<1-> Know
+  \begin{itemize}
+  \item<1-> probability first light is green, $P(A) = 0.55.$
+  \item<1-> probability first light is red, $1 - P(A) = P(A^c) = 0.45$
+  \item<1-> probability second light is green, given first light is green, $P(B|A) = 0.75$
+  \item<1-> probability second light is green, given first light is red, $P(B|A^c) = 0.9$
+  \end{itemize}
+\item<2-> Want
+  \begin{itemize}
+  \item<2-> $P(B)$
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Law of Total Probability, example 2 continued}
+  Find the probability that the first traffic light is green given that the second traffic light is green.  
+
+\begin{itemize}
+\item<1-> Know
+  \begin{itemize}
+  \item<1-> $P(A) = 0.55.$
+  \item<1-> $P(A^c) = 0.45$
+  \item<1-> $P(B|A) = 0.75$
+  \item<1-> $P(B|A^c) = 0.9$
+  \item<1-> $P(B) = 0.8175$
+  \end{itemize}
+\item<2-> Want
+  \begin{itemize}
+  \item<2-> $P(A|B)$
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bayes' Theorem}
+  Conditional probability combined with the law of total probability, written in all generality (and that we just used), is known as Bayes' Theorem.
+
+  \begin{block}{Bayes' Theorem}
+    \[ P(A_j|B) = \frac{P(A_j)P(B|A_j)}{\sum_{i=1}^k P(A_i)P(B|A_i)} \]
+  \end{block}
+\end{frame}
+
+\section{Independence}
+
+\begin{frame}
+  \frametitle{Motivating Independence}
+  It is through probability that we formalize statements like
+
+  \begin{itemize}
+  \item<2-> two coin flips have nothing to do with each other
+  \item<3-> the probability of rollig a $1$ is the same as rolling a $2$
+  \item<4-> $\ldots$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Independence, intuition}
+  The intuition of independence is mathematically defined via conditional probability,
+
+\[ P(B|A) = P(B). \]
+
+That is the probability of $B$ does not depend on $A$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Independence}
+The formal definition of independence is a condition that need be checked to state that two events are independent.
+
+\begin{block}{independence}
+Two events $A$ and $B$ are said to be independent if 
+  \[ P(A \cap B) = P(A)P(B). \]
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Independence, example}
+Suppose you roll a fair die twice.  Let $A$ be the first roll is odd and let $B$ be the second roll is $4$ or $6$.  Are the events independent?
+
+\begin{itemize}
+\item<2-> $P(A \cap B)$
+  \begin{itemize}
+  \item<3-> From two rolls there are $36$ outcomes. $A \cap B$ has $6$ possible outcomes; $3$ (odd) $\times 2$ ($4$ or $6$). Therefore $P(A \cap B) = 6/36$.
+  \end{itemize}
+\item<4-> $P(A)$ and $P(B)$
+  \begin{itemize}
+  \item<5-> $P(A) = 1/2$ and $P(B) = 1/3$.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Take Away}
+
+\begin{frame}
+  \frametitle{Take Away}
+  \begin{itemize}
+  \item<1-> Sample space and events.
+  \item<2-> Set operations.
+  \item<3-> Notation of probability of arbitary events $E$, $P(E)$.
+    \begin{itemize}
+    \item<3-> now, $E = \{encounter green light\}$
+    \item<4-> soon, $E = \{X > 3\}$
+    \end{itemize}
+  \item<5-> Conditional Probability 
+  \item<6-> Law of Total Probability
+  \item<7-> Bayes' Theorem
+  \item<8-> Independent Events
+  \end{itemize}
+\end{frame}
+\section{References}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}

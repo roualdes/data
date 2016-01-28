@@ -1,0 +1,150 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+library(ggplot2)
+@
+\title{Introduction to Statistics, Examples}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\frame {\frametitle{outline}
+  \tableofcontents
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% pop/samples
+
+\begin{frame}
+  \frametitle{Population}
+  To which population does the following refer?
+  \begin{itemize}
+  \item<1-> Smoking causes lung cancer?
+  \item<2-> Do Gmail users receive (to their inbox) less spam than Outlook users?
+  \item<3-> Does LibreOffice crash less often than Microsoft Word?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sample}
+  What would a random sample look like from the following?
+  \begin{itemize}
+  \item<1-> Smoking causes lung cancer?
+  \item<2-> Do Gmail users receive (to their inbox) less spam than Outlook users?
+  \item<3-> Does LibreOffice crash less often than Microsoft Word?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Experiments or Observational Study}
+  What would it take to make the following experiment?  
+  \begin{itemize}
+  \item<1-> Smoking causes lung cancer?
+  \item<2-> Do Gmail users receive (to their inbox) less spam than Outlook users?
+  \item<3-> Does LibreOffice crash less often than Microsoft Word?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+  Suppose we're attempting to measure computer performance.  We'll use the unit millions of instructions per second (mips).  We'll consider the data set named \texttt{speed}, which contains information on various systems mips.
+  <<one>>=
+  speed <- read.csv("https://roualdes.us/data/speed.csv")
+  tail(speed)
+  @ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lil' Analysis}
+Plot the data!
+\only<2->{What kind of data do we have?  What kind of plot does that warrant?}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+Make a scatter plot.
+<<two, fig.align="center", fig.width=2.5, fig.height=2.5>>=
+suppressMessages(library(ggplot2))
+qplot(year, mips, data=speed)
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lil' Analysis}
+  What's wrong with this plot?  Is there a lurking variable we are missing?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+<<three, fig.align="center", fig.width=2.5, fig.height=2.5>>=
+suppressMessages(library(dplyr))
+qplot(year, mips, data=filter(speed, cores == 1))
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lil' Analysis}
+  From the above scatter plot, what kind of skew do we expect \texttt{mips} to have?  What is the univariate plot that we should use to look at \texttt{mips}?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+Histogram of \texttt{mips}.
+
+<<four, fig.align="center", fig.width=2.5, fig.height=2.5>>=
+qplot(mips, data=speed, geom="histogram", binwidth=5e8)
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lil' Analysis}
+  Ignoring the variable \texttt{cores}, how can we find the mean and median?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+The functions \texttt{mean} and \texttt{median}.
+<<five>>=
+mean(speed$mips)
+median(speed$mips)
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lil' Analysis}
+  Let's also calculate the standard deviation of \texttt{mips}.
+<<six>>=
+sd(speed$mips)
+sd(filter(speed, cores == 1)$mips)
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lil' Conclusions}
+  From a little analysis comes little conclusions.  
+
+  \begin{itemize}
+  \item<1-> What can we conclude with respect to
+  \begin{itemize}
+  \item<2-> sample and population?
+  \item<3-> plots?
+  \item<4-> mean, median, standard deviation?  
+  \item<5-> What do we think of our simple models?
+  \end{itemize}
+\item<6-> What better questions might we be interested in?
+  \end{itemize}
+\end{frame}
+
+\section{References}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
+
