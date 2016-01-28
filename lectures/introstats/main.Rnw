@@ -236,8 +236,8 @@ The \textbf{sample mean} gives a summary of the middle of  multiple observations
 The \textbf{sample median} gives a (different) summary of the middle of multiple observations of a numeric variable.  There is not simple mathematical expression for it.  Hence, we think of the median as the number in the middle of the ordered observations, dependent on the sample size $n$:
 
 \begin{itemize}
-\item<2-> even -- median is $(n+1)/2$th observation
-\item<3-> odd -- median is the mean of the $n/2$th and $(n/2)+1$th terms.
+\item<2-> odd -- median is $(n+1)/2$th observation
+\item<3-> even -- median is the mean of the $n/2$th and $(n/2)+1$th terms.
 \end{itemize}
 \end{frame}
 
@@ -246,7 +246,7 @@ The \textbf{sample median} gives a (different) summary of the middle of multiple
   From the dataset \texttt{email}, we can estimate the (population) median number of characters in an email using the sample median
 
    <<>>=
-   median(email$num_char) # sample mean, xbar
+   median(email$num_char) # sample median, xbar
    @ 
 
 \end{frame}
@@ -291,7 +291,7 @@ summary(email$num_char)
 
 \begin{frame}
   \frametitle{Different Statistics Tell Us Different Things}
-  Up until now, all the statistics we've considered measured the center of the data, e.g.\ where the data is located.
+  Up until now, all the statistics we've considered measured the center of the data, i.e.\ where the data is located.
   \begin{itemize}
   \item<2-> re \texttt{num\_char}: something near $5$ or $10$
   \item<3-> U.S.\ adult heights
@@ -306,7 +306,7 @@ summary(email$num_char)
 
 \begin{frame}
   \frametitle{Interquartile Range}
-The \texttt{interquaretile range} (IQR) is defined as the difference between the third and the first quartile:
+The \texttt{interquartile range} (IQR) is defined as the difference between the third and the first quartile:
 
 \[ IQR = Q_3 - Q_1. \]
 \end{frame}
