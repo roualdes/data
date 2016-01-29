@@ -60,6 +60,9 @@ library(help="ggplot2")
 
 ## data structures
 ### data frame
+#### If you are having trouble with read.csv, try this:
+##### download.file("https://roualdes.us/data/email.csv", destfile = "/tmp/test.csv", method = "curl")
+##### email <- read.csv("/tmp/test.csv")
 email <- read.csv("https://roualdes.us/data/email.csv")
 str(email)
 names(email)
