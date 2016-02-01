@@ -200,7 +200,7 @@ Different data types require different statistics.
 \begin{frame}
   \frametitle{Proportion}
 
-The \textbf{sample proprotion} summarizes multiple observations of a categorical variable: divide the number of ``successess'' by the number of observations;
+The \textbf{sample proportion} summarizes multiple observations of a categorical variable: divide the number of ``successes'' by the number of observations;
 
 \[ \hat{p} = \frac{\# successes}{\# observations}. \]
 \end{frame}
