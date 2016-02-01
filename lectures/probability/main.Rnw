@@ -70,7 +70,7 @@ opts_knit$set(progress=FALSE)
 
 \begin{frame}
   \frametitle{Set Operations}
-  If we are dealing so heavily with sets, you can imagine we should rehears set operations.
+  If we are dealing so heavily with sets, you can imagine we should rehearse set operations.
   \begin{block}{union}
     The union of $k$ sets $A_j$ is the event consisting of $A_1$ or (xor) $A_2$ or $\ldots$ $A_k$.  Mathematically, we write $\cup_{j=1}^k A_j$.  This is also thought of as at least one of $A_j$ happens.
   \end{block}
