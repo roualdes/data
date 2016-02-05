@@ -1,0 +1,1 @@
+# Suppose you have three bags, one contains two white marbles, one two black, and the third one of each color.  You pick a random bag and take out one marble.  It is a white marble.  What is the probability that the remaining marble from the same bag is white?

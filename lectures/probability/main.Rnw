@@ -13,9 +13,15 @@ opts_knit$set(progress=FALSE)
 \date{\today}
 \maketitle
 
-\frame {\frametitle{outline}
-  \tableofcontents
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
 }
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Sample Space and Events}
@@ -43,7 +49,7 @@ opts_knit$set(progress=FALSE)
     \end{itemize}
   \item<3-> a survey about people's belief in the future lifespan (in years, say) of PHP
     \begin{itemize}
-    \item<4-> $\{0, 1, 2, \ldots \}$
+    \item<4-> $\{0, 1, 2, \ldots, 5\}$
     \end{itemize}
   \item<5-> re PHP: each response is recorded as the average of 3 sequential respondents beliefs
     \begin{itemize}
@@ -54,7 +60,7 @@ opts_knit$set(progress=FALSE)
 
 \begin{frame}
   \frametitle{Event, examples}
-  Here are some examples corresponding to the samples spaces above:
+  Here are some examples of events corresponding to the sample spaces above:
   \begin{itemize}
   \item<1-> defective (D) or non-defective websites
     \begin{itemize}
@@ -62,17 +68,18 @@ opts_knit$set(progress=FALSE)
     \end{itemize}
   \item<2-> beliefs about lifespan of PHP in years
     \begin{itemize}
-    \item<3-> $\{3, 4, \ldots \}$ or $\{0, 1, 2 \}$
+    \item<3-> $\{3\}$ or $\{0, 1, 2 \}$
     \end{itemize}
-  \item<4-> $\{1/3, 2/3 \}$ or $\ldots$
+  \item<4-> $\{1/3\}$ or $\{2/3\}$ or $\{1/3, 2\}$ or $\ldots$
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Set Operations}
-  If we are dealing so heavily with sets, you can imagine we should rehearse set operations.
+  If we are dealing so heavily with sets, you can imagine we should rehearse set operations.  Let's try to make this a bit more lively, you guys draw them out.
+
   \begin{block}{union}
-    The union of $k$ sets $A_j$ is the event consisting of $A_1$ or (xor) $A_2$ or $\ldots$ $A_k$.  Mathematically, we write $\cup_{j=1}^k A_j$.  This is also thought of as at least one of $A_j$ happens.
+    The union of $k$ sets $A_j$ is the event consisting of $A_1$ or (not xor) $A_2$ or $\ldots$ $A_k$.  Mathematically, we write $\cup_{j=1}^k A_j$.  This is also thought of as at least one of $A_j$ happens.
   \end{block}
 
   \begin{block}{intersection}
@@ -117,7 +124,7 @@ There are well established laws of sets, analogous to laws of mathematics.
   \begin{itemize}
   \item<1-> Commutative: $A \cup B = B \cup A$ and $A \cap B = B \cap A$.
   \item<2-> Associative: $(A \cup B) \cup C = A \cup (B \cup C)$ and $(A \cap B) \cap C = A \cap (B \cap C)$.
-  \item<3-> Distributive: $(A \cup B) \cap C = (A \cap C) \cup (B \cap C)$ and $(A \cap B) \cup C = (A \cup C) \cap (B \cup C)$.
+  \item<3-> Distributive: $C \cap (A \cup B) = (C \cap A) \cup (C \cap B)$ and $C \cup (A \cap B) = (C \cup A) \cap (C \cup B)$.
   \item<4-> De Morgan's Laws: $(A \cup B)^c = A^c \cap B^c$ and $(A \cap B)^c = A^c \cup B^c$.
   \end{itemize}
 \end{frame}
@@ -140,7 +147,7 @@ More tangibly:
 
 \begin{frame}
   \frametitle{Probability, from where}
-  The idea of probability comes from a \textbf{limiting relative frequency}.  Conceptually, the limiting relative frequency is the probability of observing event $E$ under infinite replications of the experiment of interest.  Let $N_n(E)$ dnote the number of occurrence of $E$ after $n$ replications.  We interpret the probability of an event $E$, namely $P(E)$, as
+  The idea of probability comes from a \textbf{limiting relative frequency}.  Conceptually, the limiting relative frequency is the probability of observing event $E$ under infinite replications of the experiment of interest.  Let $N_n(E)$ denote the number of occurrence of $E$ after $n$ replications.  We interpret the probability of an event $E$, namely $P(E)$, as
 
 \[ \lim_{n\to\infty} \frac{N_n(E)}{n}. \]
 \end{frame}
@@ -189,11 +196,13 @@ suppressMessages(library(ggplot2))
 reps <- 100000 # replications
 x <- 1:reps
 outcomes <- sample(S, reps, replace=TRUE)
-flips <- data.frame(x=x,# create data frame
+flips <- data.frame(x=x,
                     m=cumsum(outcomes)/x)
 # make plot
-p <- qplot(x, m, data=flips, geom="line") +
-    geom_hline(y=0.5) 
+p <- qplot(x, m, data=flips, geom="line",
+           main="Limiting relative frequency",
+           xlab="Flip", ylab="P(head)") +
+    geom_hline(y=0.5)
 @ 
 \end{frame}
 
@@ -201,7 +210,7 @@ p <- qplot(x, m, data=flips, geom="line") +
   \frametitle{Probability, example}
   Coin flipping in \texttt{R}.
 
-<<fig.height=2.5, fig.width=3, fig.align="center">>=
+<<echo=FALSE, fig.height=2.5, fig.width=3, fig.align="center">>=
 p
 @ 
 \end{frame}
@@ -217,7 +226,7 @@ p
 
   \begin{itemize}
   \item<1-> coin flip: $\mathcal{S} = \{H, T\}$, $P(H) = 1/2$
-  \item<2-> die roll: $\mathcal{S} = \{1, 2, 3, 4, 5, 6\}$, $P(roll 1) = 1/6$
+  \item<2-> die roll: $\mathcal{S} = \{1, 2, 3, 4, 5, 6\}$, $P(\text{roll } 1) = 1/6$
   \item<3-> If $N$ elements in $\mathcal{S}$, then $P(E) = N(E)/N$
   \end{itemize}
 \end{frame}
@@ -297,7 +306,7 @@ p
 \begin{frame}
   \frametitle{Motivating Law of Total Probability}
 
-We now have a method for finding the probability of the intersection of two events, $P(A \cap B) = P(A)P(B|A)$.  Sometimes though we are given much information on conditional probabilities, $P(B|A_j)$ for events $j= 1, \ldots, k$, and we need to recover $P(B)$.  
+We now have a method for finding the probability of the intersection of two events, $P(A \cap B) = P(A)P(B|A)$.  Sometimes though we are given information about conditional probabilities, $P(B|A_j)$ for events $j= 1, \ldots, k$, and we need to recover $P(B)$.  
 
 \begin{figure}
   \center
@@ -326,7 +335,7 @@ The law of total probability combines this idea with the formula from conditiona
 
 \begin{frame}
   \frametitle{Law of Total Probability, example 2 continued}
-Suppose further that we know if the a driver approaches a red first traffic light, then the second light will be green with probability $0.9$\%.  What is the probability that a driver will find the second traffic light green?
+Suppose further that we know, if the driver approaches a red traffic light first, then the second light will be green with probability $0.9$\%.  What is the probability that a driver will find the second traffic light green?
 \end{frame}
 
 \begin{frame}
