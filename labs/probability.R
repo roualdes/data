@@ -32,7 +32,7 @@ data(carnivora)
 ?carnivora
 
 ## semi-complex request
-summarise(mutate(group_by(carnivora, Family), brbo = SB/SW) Mn_brbo = mean(brbo, na.rm=TRUE))
+summarise(mutate(group_by(carnivora, Family), brbo = SB/SW), Mn_brbo = mean(brbo, na.rm=TRUE))
 
 ## these sort of requests can get long
 ## dplyr offers new syntax
