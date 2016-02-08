@@ -22,6 +22,7 @@ for (i in seq_len(n)) {
         b1 <- unlist(sample(bags, 1))
         d1 <- sample(b1, 1)
     }
+    w <- which(b1 == 1)[1]
     outB[i] <- b1[-w]
 }
 mean(outB)

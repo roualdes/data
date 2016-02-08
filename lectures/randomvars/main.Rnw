@@ -109,7 +109,7 @@ Consider again, the random variable $X$ from above (not the coin).  What is $P(X
 Probabilities of events of the form $\{X \leq x\}$ are defined generally with the term \textbf{cumulative distribution function}, for both discrete and continuous random variables.  
 
 \begin{block}{cumulative distribution function}
-  The CDF of a random variable $X$ is defined to be $F_X(x) = P(X < x)$, for all numbers $x$.
+  The CDF of a random variable $X$ is defined to be $F_X(x) = P(X \leq x)$, for all numbers $x$.
 \end{block} % often of interest is defintion 3.2-4; and general (discrete/continuous) notation
 \end{frame}
 
@@ -187,7 +187,7 @@ Some notes on PDFs
   \end{itemize}
 \item<4-> $P(Y = y) = 0$, for all $y$
 \item<5-> $P(a < Y \leq b) = \int_a^b f_Y(y) dy = F(b) - F(a)$
-\item<6-> inequalities don't matter, $P(Y \leq 3) = P(X < 3)$
+\item<6-> inequalities don't matter, $P(Y \leq 3) = P(Y < 3)$
 \end{itemize}
 \end{frame}
 
