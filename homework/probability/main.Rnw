@@ -26,7 +26,7 @@ Due: 2016-02-12
   \item Find the probability that this randomly sampled North American locks their computer with a password.
   \item If the person is known to lock their computer with a password, what is the probability that the person lives in the states?
   \end{enumerate}
-\item Suppose a card is drawn from a standard deck of cards.  Let $A$ be the event that the card drawn is an eight, and $B$ be the events that the card drawn is an ace.  Are these two events independent? % PSR 2.5-13
+\item Suppose a card is drawn from a standard deck of cards.  Let $A$ be the event that the card drawn is an eight, and $B$ be the event that the card drawn is an ace.  Are these two events independent? % PSR 2.5-13
 
 \end{enumerate}
 \end{document}
