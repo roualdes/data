@@ -200,7 +200,7 @@ Different data types require different statistics.
 \begin{frame}
   \frametitle{Proportion}
 
-The \textbf{sample proprotion} summarizes multiple observations of a categorical variable: divide the number of ``successess'' by the number of observations;
+The \textbf{sample proportion} summarizes multiple observations of a categorical variable: divide the number of ``successes'' by the number of observations;
 
 \[ \hat{p} = \frac{\# successes}{\# observations}. \]
 \end{frame}
@@ -246,7 +246,7 @@ The \textbf{sample median} gives a (different) summary of the middle of multiple
   From the dataset \texttt{email}, we can estimate the (population) median number of characters in an email using the sample median
 
    <<>>=
-   median(email$num_char) # sample median, xbar
+   median(email$num_char) # sample median
    @ 
 
 \end{frame}
