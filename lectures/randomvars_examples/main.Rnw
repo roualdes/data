@@ -11,7 +11,7 @@ suppressMessages({library(ggplot2)
 @
 
 \title{Random Variables, examples}
-\institute{CSU, Chico Math 314} 
+\institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
 
@@ -56,21 +56,21 @@ suppressMessages({library(ggplot2)
 \subsection{Probabilities in \texttt{R} via the normal distribution}
 \begin{frame}[fragile]
   \frametitle{Normal Distribution}
-  The \textbf{normal distribution} is ubiquitous in statistics.  
+  The \textbf{normal distribution} is ubiquitous in statistics.
 <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
 ggplot(data.frame(x=c(-4,4)), aes(x)) + stat_function(fun=dnorm, geom="line") +
     labs(x="", y="") +
     theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-@ 
+@
 \end{frame}
 
 \begin{frame}
   \frametitle{Normal Distribution}
   The probability density function for the normal distribution is
   \[ f(x) = (2\sigma^2\pi)^{-1/2} \exp \left\{ \frac{-(x-\mu)^2}{2\sigma^2} \right\}. \]
-  
+
   Probability statements about the normal distribution take the form
-  
+
   \[ P(a < X < b) = \int_a^b f(x) dx. \]
 \end{frame}
 
@@ -78,7 +78,7 @@ ggplot(data.frame(x=c(-4,4)), aes(x)) + stat_function(fun=dnorm, geom="line") +
 
 \begin{frame}
   \frametitle{Normal Distribution, example}
-  A well known example of the normal distribution is SAT scores.  Let $X \sim N(1500, 300^2)$ be the distribution of SAT scores with population mean $\mu = 1500$ and population variance $\sigma^2 = 300^2$. 
+  A well known example of the normal distribution is SAT scores.  Let $X \sim N(1500, 300^2)$ be the distribution of SAT scores with population mean $\mu = 1500$ and population variance $\sigma^2 = 300^2$.
 \end{frame}
 
 \begin{frame}
@@ -90,7 +90,7 @@ ggplot(data.frame(x=c(1500-4*300,1500+4*300)), aes(x)) +
                   arg=list(mean=1500, sd=300)) +
     labs(x="", y="") +
     theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -117,7 +117,7 @@ ggplot(data.frame(x=c(1500-4*300,1500+4*300)), aes(x)) +
                         arg=list(mean=0, sd=300)) +
           labs(x="", y="") +
             theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-  @   
+  @
 \end{frame}
 
 \begin{frame}
@@ -129,7 +129,7 @@ ggplot(data.frame(x=c(1500-4*300,1500+4*300)), aes(x)) +
                         arg=list(mean=0, sd=1)) +
           labs(x="", y="") +
             theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-@   
+@
 \end{frame}
 
 \begin{frame}
@@ -157,7 +157,7 @@ Steps
 
 <<>>=
 
-@ 
+@
 \begin{frame}[fragile]
   \frametitle{Z-score, example}
 Picture of proportion of SAT takers that did worse than Ann: $P(Z < 1)$
@@ -171,7 +171,7 @@ d <- ggplot_build(p)$data[[1]]
 p + geom_area(data=subset(d, x<1), aes(x=x, y=y), fill="black", colour="black") +
     theme(axis.text.y=element_blank(),
           axis.ticks=element_blank())
-@   
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -180,23 +180,23 @@ Use \texttt{R} to find $P(Z<1)$.
 
 <<>>=
 pnorm(1) # = P(Z<1)
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{\texttt{pnorm}}
-  The function \texttt{pnrom} in \texttt{R} calculates for us the area under the curve, less than the value provided.
+  The function \texttt{pnorm} in \texttt{R} calculates for us the area under the curve that's less than the value provided.
 
 <<eval=FALSE>>=
 ?pnorm
-@ 
+@
 
 What is the stats name of this function?
 \end{frame}
 
 \begin{frame}
   \frametitle{Arithmetic with Densities}
-  Since all the area under the normal curve is equal to one, we can easily manipulate the output of \texttt{pnrom} to find areas greater than some value, or in between two values.
+  Since all the area under the normal curve is equal to one, we can easily manipulate the output of \texttt{pnorm} to find areas greater than some value, or in between two values.
 \end{frame}
 
 \begin{frame}
@@ -220,7 +220,7 @@ What is the stats name of this function?
     theme(axis.text.y=element_blank(), axis.ticks=element_blank())
   d <- ggplot_build(p)$data[[1]]
   p
-@   
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -229,7 +229,7 @@ What is the stats name of this function?
   p + geom_area(data=subset(d, x>0.43), aes(x=x, y=y),
                   fill="black", colour="black") +
       theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-@     
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -238,7 +238,7 @@ What is the stats name of this function?
 
 <<>>=
 1 - pnorm(0.43) # = P(Z>0.43)
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -251,9 +251,9 @@ What is the stats name of this function?
 $P(0.43 < z < 1)$?
 <<>>=
 pnorm(1) - pnorm(0.43)
-@ 
+@
 
-This is \texttt{R}'s version of 
+This is \texttt{R}'s version of
 
 \[ P(a < Y < b) = \int_a^b f_Y(y) dy = F(b) - F(a). \]
 
@@ -287,7 +287,7 @@ Proportion who scored better than Ann
   p + geom_area(data=subset(d, x>1), aes(x=x, y=y), fill="black", colour="black") +
         theme(axis.text.y=element_blank(),
                 axis.ticks=element_blank())
-@   
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -295,7 +295,7 @@ Proportion who scored better than Ann
 Proportion who scored better than Tom
   <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
   p + geom_area(data=subset(d, x>0.6), aes(x=x, y=y), fill="black", colour="black") + theme(axis.text.y=element_blank(), axis.ticks=element_blank())
-@   
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -305,7 +305,7 @@ Use \texttt{R} to find $P(Z>1)$ and $P(Z>0.6)$.
 <<>>=
 1 - pnorm(1) # = P(Z>1), Ann
 1 - pnorm(0.6) # = P(Z>0.6), Tom
-@ 
+@
 
 Conclusion?
 \end{frame}
@@ -315,7 +315,7 @@ Conclusion?
 \begin{frame}
   \frametitle{Normal Distribution, 68, 95, 99.7 Rule}
   \begin{center}
-  \includegraphics[scale=0.8]{figs/rule.pdf}    
+  \includegraphics[scale=0.8]{figs/rule.pdf}
   \end{center}
 \end{frame}
 
@@ -361,23 +361,23 @@ Conclusion?
   \frametitle{Percentiles, example}
   Find Z-score
   <<>>=
-  qnorm(.9) # finds Z-score z that puts 90% < 
+  qnorm(0.9) # finds Z-score z that puts 90% <
   @
 \end{frame}
 
 \begin{frame}
   \frametitle{Percentiles, example}
   With $z = \Sexpr{round(qnorm(0.9),2)}$, we can solve for Atahualpa's SAT score.
-  
+
   \[ z = \Sexpr{round(qnorm(0.9),2)} = \frac{x - 1500}{300}. \]
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{\texttt{qnorm}}
-  The function \texttt{qnrom} in \texttt{R} calculates for us the Z-score $z$ that puts the supplied probability less than $z$.
+  The function \texttt{qnorm} in \texttt{R} calculates for us the Z-score $z$ that puts the supplied probability less than $z$.
 <<eval=FALSE>>=
 ?qnorm
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -388,7 +388,7 @@ Conclusion?
 ?pnorm
 ?punif
 ?pbinom # to get the Bernoulli use size=1
-@ 
+@
 \end{frame}
 
 \subsection{Integrate to $1$}
@@ -410,14 +410,14 @@ The previous integral wasn't that bad, but they get ugly quick.  Calculate the e
 \end{frame}
 
 \section{Working with the Variance}
-\subsection{Propertier of Variance}
+\subsection{Properties of Variance}
 
 \begin{frame}
   \frametitle{Properties of Variance}
-  Since we can derive the following properties of the variance using only the expectation operator, these properties hold for both discrete and continuous random variables.  Let's derivde on the board
+  Since we can derive the following properties of the variance using only the expectation operator, these properties hold for both discrete and continuous random variables.  Let's derive on the board
 
   \begin{enumerate}
-  \item the short cut formula, and 
+  \item the short cut formula, and
   \item $V(aX + b)$
   \end{enumerate}
 \end{frame}
