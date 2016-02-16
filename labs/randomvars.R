@@ -37,6 +37,7 @@
 ## What is the probability a randomly chosen semiconductor
 ## will fail within 4 years?
 
+## 3.b
 ## What is the lifespan of the shortest 12% of semiconductors?
 
 ## 4. Randomly generate 1001 observations from a normal
