@@ -33,7 +33,7 @@ Due: 2016-02-19
   \item How long do $75$\% of the light bulbs from Sturdy Light last?
   \end{itemize}
 
-\item Assume $X \sim U(0,1)$ is a continuous random variable.  Calculate the expected value of the random variable $X$.  Provide your work.
+\item Assume $X \sim U(a, b)$ is a continuous random variable.  Calculate the expected value of the random variable $X$.  Provide your work.
 
 \end{enumerate}
 \end{document}
