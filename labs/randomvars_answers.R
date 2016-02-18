@@ -20,7 +20,7 @@ for (i in idx) {
     v <- v + p[i]*(x[i]-m)^2
 }
 
-## not intuitive + fast! + right answer = correct
+## not intuitive + fast + right answer = Max Power way! (correct)
 m <- sum(p*x)
 v <- sum(p*(x-m)^2)
 
