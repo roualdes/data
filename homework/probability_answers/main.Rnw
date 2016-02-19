@@ -15,11 +15,11 @@ Due: 2016-02-12
   \begin{enumerate}
   \item What is the probability that one of FlyMoar's flights arrived on time given that it departed on time?
 \ans{ Let $A, D$ be the event that arrivals and departures are on time, respectively.
-\[ P(D|A) = \frac{P(A \cap D)}{P(A)} = \frac{.78}{.82} = \Sexpr{round(.78/.82, 2)}.\]
+\[ P(A|D) = \frac{P(A \cap D)}{P(D)} = \frac{.78}{.83} = \Sexpr{round(.78/.83, 2)}.\]
 }
   \item What is the probability that one of FlyMoar's flights departed on time given that it arrived on time?
 \ans{ 
-\[ P(A|D) = \frac{P(A \cap D)}{P(D)} = \frac{.78}{.83} = \Sexpr{round(.78/.83, 2)}.\]
+\[ P(D|A) = \frac{P(A \cap D)}{P(A)} = \frac{.78}{.82} = \Sexpr{round(.78/.82, 2)}.\]
 }
 
   \end{enumerate}
