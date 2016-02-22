@@ -233,7 +233,7 @@ The \textbf{sample mean} gives a summary of the middle of  multiple observations
 
  \begin{frame}
    \frametitle{Median}
-The \textbf{sample median} gives a (different) summary of the middle of multiple observations of a numeric variable.  There is not simple mathematical expression for it.  Hence, we think of the median as the number in the middle of the ordered observations, dependent on the sample size $n$:
+The \textbf{sample median} gives a (different) summary of the middle of multiple observations of a numeric variable.  There is no simple mathematical expression for it.  Hence, we think of the median as the number in the middle of the ordered observations, dependent on the sample size $n$:
 
 \begin{itemize}
 \item<2-> odd -- median is $(n+1)/2$th observation
