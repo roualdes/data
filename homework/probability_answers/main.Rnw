@@ -14,17 +14,32 @@ Due: 2016-02-12
 \item The airline company FlyMoar claims that of regularly scheduled flighs, departures and arrivals are on time $83$\% and $82$\% of the time, respectively.   The probability that a flight arrives and departs on time is $78$\%. % PS Ex 2.33
   \begin{enumerate}
   \item What is the probability that one of FlyMoar's flights arrived on time given that it departed on time?
+\ans{ Let $A, D$ be the event that arrivals and departures are on time, respectively.
+\[ P(D|A) = \frac{P(A \cap D)}{P(A)} = \frac{.78}{.82} = \Sexpr{round(.78/.82, 2)}.\]
+}
   \item What is the probability that one of FlyMoar's flights departed on time given that it arrived on time?
+\ans{ 
+\[ P(A|D) = \frac{P(A \cap D)}{P(D)} = \frac{.78}{.83} = \Sexpr{round(.78/.83, 2)}.\]
+}
+
   \end{enumerate}
 
 \item Suppose that $3.5$\% of all Americans and $1$\% of all Canadians lock their computer with a password.  A person is sampled randomly from a summit on North American culture where $40$\% of the summit is Canadians and $60$\% is Americans. % PSR ex 2.5-13
 
   \begin{enumerate}
   \item Find the probability that this randomly sampled North American locks their computer with a password.
+\ans{
+\[P(lock) = P(U.S.\ \cap lock) + P(Canada \cap lock) = 0.035*.6 + 0.01*.4 = \Sexpr{round(0.035*.6 + 0.01*.4, 2)} \]
+}
   \item If the person is known to lock their computer with a password, what is the probability that the person lives in the states?
+\ans{
+\[ P(U.S.\ | lock) = \frac{P(U.S.\ \cap lock)}{P(lock)} = \frac{0.035*0.6}{\Sexpr{round(0.035*.6 + 0.01*.4, 2)}} = \Sexpr{round(0.035*0.6/(0.035*.6 + 0.01*.4), 2)}. \]
+} 
   \end{enumerate}
 \item Suppose a card is drawn from a standard deck of cards.  Let $A$ be the event that the card drawn is an eight, and $B$ be the event that the card drawn is an ace.  Are these two events independent? % PSR 2.5-13
-
+\ans{Dependent, since
+\[ P(Ace \cap Eight) \ne P(Ace)P(Eight). \]
+}
 \end{enumerate}
 \end{document}
 
