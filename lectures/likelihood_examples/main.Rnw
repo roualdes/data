@@ -1,0 +1,21 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+@
+
+\title{Likelihood Function, examples}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{Gau$\beta$ian Distribution}
+  Suppose we have $x_1, \ldots, x_n \sim N(\mu, \sigma^2)$, where $\mu$ is unkown, but $\sigma$ is known.  Find the MLE for $\mu$ on paper and via \texttt{R}.
+\end{frame}
+
+\end{document}
