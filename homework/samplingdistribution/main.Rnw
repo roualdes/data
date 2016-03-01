@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\input{RnwOptions.tex}
+\begin{document}
+\chead{Math 314 -- Homework 05 Sampling Distributions}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=60)
+opts_knit$set(progress=FALSE)
+@
+
+Due: 2016-03-12 \\
+\begin{enumerate}
+\item Assume $X_1, \ldots, X_n \sim_{iid} G$ where $Var(X) = \sigma^2$.
+  \begin{enumerate}
+  \item Find the expected value of $\hat{\sigma}^2$.
+  \item How can you modify the estimator $\hat{\sigma}^2$ so that is is unbiased?  Write down the new estimator.
+  \end{enumerate}
+
+\item The average number of eggs laid by a certain species of hen during their breeding period is $35$ with a standard deviation of $18.2$.  Suppose a group of researchers randomly samples $45$ hens of this species, counts the number of eggs laid during their breeding period, and records the sample mean.  They repeat this $1,000$ times, and build a distribution of sample means.
+  \begin{enumerate}
+  \item What is this distribution called?
+  \item Would you expect the shape of this distribution to be symmetric, right skewed, or left skewed? Explain your reasoning.
+  \item Calculate the variability of this distribution and state the appropriate term used to refer to this value.
+  \item  Suppose the researchers' budget is reduced and they are only able to collect random samples of $10$ hens. The sample mean of the number of eggs is recorded, and we repeat this $1,000$ times, and build a new distribution of sample means.  How will the variability of this new distribution compare to the variability of the original distribution?
+  \end{enumerate}
+
+\item Write an \texttt{R} function that replicates the applet we played with in class:  \url{http://onlinestatbook.com/stat_sim/sampling_dist/}.  Your function should
+  \begin{itemize}
+  \item input: 
+    \begin{itemize}
+    \item \texttt{rng} -- (function) a function that generates a random sample of size $n$ from a distribution of your choice, and returns a standardized sample mean.
+    \item $n$ -- (integer) sample size
+    \item $R$ -- (integer) number of replicates
+    \end{itemize}
+  \item output: a histogram of the $R$ standardized sample means
+  \end{itemize}
+  \begin{enumerate}
+  \item How does the histogram change as you increase the sample size?  Try at least three different sample sizes.
+  \item Develop a second function that generates a random mean, similar to \texttt{rng} above, that uses a different distribution function.  How do the plots change relative to your first three plots, from the previous distribution function?
+  \end{enumerate}
+
+\end{enumerate}
+\end{document}
+
