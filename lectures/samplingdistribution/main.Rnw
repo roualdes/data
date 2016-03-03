@@ -5,7 +5,7 @@
 
 <<setup, include=FALSE>>=
 options(replace.assign=TRUE, width=40)
-opts_knit$set(progress=FALSE)
+opts_knit[["set"]](progress=FALSE)
 suppressMessages(library(ggplot2))
 @
 
@@ -35,6 +35,48 @@ suppressMessages(library(ggplot2))
 We assume data $x_1, \ldots, x_n$ are generated from distribution $G(\theta)$.  Given these data, the most likely value of the paramter $\theta$ is $\hat{\theta}$ (often some function of $\bar{X}$).
 \end{frame}
 
+\section{Motivation}
+
+\begin{frame}
+  \frametitle{Is $\bar{X}$ good at its job?}
+  How good is $\bar{X}$ at its job?  Could we simulate an (not The) answer?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  Let's pretend that we know the population mean $\mu = 0$, and then take many samples of data from the same population.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+This is like $101$ of us each took a random sample $n=100$ from the same population and each calculated our own sample mean and sample standard deviation.
+<<>>=
+# 101 random samples each of size 100 from N(0, 1)
+X <- matrix(rnorm(100*101), nrow=100)
+xbars <- colMeans(X) # 101 sample means
+mean(xbars) # mean of the means
+sd(xbars) # standard deviation of means
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  What does the distribution of sample means look like?
+<<>>=
+suppressMessages(library(ggplot2))
+p <- qplot(xbars, geom="histogram", binwidth=1/30,
+           main="Histogram of 101 sample means")
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  The sample means seem to on average estimate $\mu = 0$ quite well.
+<<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+p
+@ 
+\end{frame}
+
 \section{Point Estimators}
 \begin{frame}
   \frametitle{Point Estimators, idea}
@@ -59,14 +101,17 @@ We assume data $x_1, \ldots, x_n$ are generated from distribution $G(\theta)$.  
 
 \begin{frame}
   \frametitle{Mean of $\bar{X}$}
-  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $E(X) = \mu$.  Then
+  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $E(X) = \mu$.  Calculate $E(\bar{X})$.
 
+
+\only<2->{
   \begin{align*}
     E(\bar{X}) & = E(n^{-1} \sum_{i=1}^n X_i) \\
                & = n^{-1} \sum_{i=1}^n E(X_i) \\
                & = n^{-1} n \mu \\
                & = \mu.
   \end{align*}
+}
 \end{frame}
 
 \subsection{Standard Error}
@@ -82,8 +127,9 @@ The \textbf{standard error} describes the error/uncertainty/inaccuracy of an est
 
 \begin{frame}
   \frametitle{Variance of $\bar{X}$}
-  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $Var(X) = \sigma^2$.  Then
+  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $Var(X) = \sigma^2$.  Calculate $Var(\bar{X})$.
 
+\only<2->{
     \begin{align*}
       \sigma_{\bar{X}}^2 = Var(\bar{X}) & = Var(n^{-1} \sum_{i=1}^n X_i) \\
                     & = n^{-2}Var(\sum_{i=1}^n X_i) \\
@@ -91,6 +137,7 @@ The \textbf{standard error} describes the error/uncertainty/inaccuracy of an est
                     & = n^{-2} n \sigma^2 \\
                     & = \frac{\sigma^2}{n}
     \end{align*}
+}
 \end{frame}
 
 \begin{frame}
@@ -145,16 +192,6 @@ We want point estimators to be good at their job.  Good, here, can mean many dif
 \end{frame}
 
 \begin{frame}
-  \frametitle{Summarizing Properties of $\bar{X}$, in English}
-  To summarize in English the above properties of $\bar{X}$, we'd say
-
-  \begin{itemize}
-  \item<1-> on average $\bar{X}$ estimates the thing it's supposed to --  $Bias(\bar{X}) = 0$
-  \item<2-> $\bar{X}$ estimates the thing it's supposed to with smaller error than any other estimator -- minimum variance
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
   \frametitle{Summarizing Properties of $\bar{X}$, in picture}
 
 <<echo=FALSE, fig.width=2, fig.height=2, fig.align="center", fig.show="hold">>=
@@ -177,7 +214,16 @@ p + geom_point(data=data.frame(x=0, y=0), aes(x, y), color="red", size=3) +
           axis.text.x = element_blank(),
           axis.text.y = element_blank())
 @ 
-  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summarizing Properties of $\bar{X}$, in English}
+  To summarize in English the above properties of $\bar{X}$, we'd say
+
+  \begin{itemize}
+  \item<1-> on average $\bar{X}$ estimates the thing it's supposed to --  $Bias(\bar{X}) = 0$
+  \item<2-> $\bar{X}$ estimates the thing it's supposed to with smaller error than any other estimator -- minimum variance
+  \end{itemize}
 \end{frame}
 
 \section{Sampling Distribution}
