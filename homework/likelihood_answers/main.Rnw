@@ -1,0 +1,55 @@
+\documentclass[12pt]{article}
+\input{RnwOptions.tex}
+\usepackage{ulem}
+\begin{document}
+\chead{Math 314 -- Homework 04 Likelihood Function answers}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=60)
+opts_knit$set(progress=FALSE)
+@
+
+Due: 2016-03-04 \\
+\begin{enumerate}
+\item Assume you obsvered $x_1, \ldots, x_n \sim_{iid} Exp(\lambda)$ where $\lambda$ is unkown.
+  \begin{enumerate}
+  \item Simulate the above scenario in \texttt{R} by generating $n$ random variables that follow the exponential distribution with parameter $\lambda$ -- choose $\lambda$ to generate the data and then pretend you don't know the value until you check your work.
+  \item Find the MLE for $\lambda$ via calculus and compute this value in \texttt{R}.
+
+The exponential probability density function is  $f(x|\lambda) = \lambda \exp{(-\lambda x)}$ when $x > 0$.  So the likelihood function is
+
+\[ L(\lambda | \mathbf{x}) = \prod_{i=1}^n \lambda \exp{(-\lambda x_i)}. \]
+
+We want to maximize $L$ with respect to $\lambda$.  Let's help ourselves out by taking the natural log, and then setting the derivative of $\ell = \log{(L)}$, with respect to $\lambda$, equal to zero. 
+
+\[\frac{d \ell}{d \lambda}  = \sum_{i=1}^n \{ \frac{1}{\lambda} - x_i \} = 0. \]
+
+Find the answer by solving for $\lambda$. We find
+
+\[ \frac{n}{\lambda} = \sum_{i=1}^n x_i \]
+
+implies 
+
+\[ \hat{\lambda} = \frac{n}{\sum_{i=1}^n x_i} \]
+
+<<>>=
+x <- rexp(1001, rate=2*pi)
+1/mean(x) # close to 2*pi
+@ 
+ 
+  \item Find the MLE for $\lambda$ via \texttt{R}'s function \texttt{optim}.
+
+<<>>=
+l <- function(theta, x) {
+    -sum(dexp(x, rate=theta, log=TRUE))
+}
+
+optim(rexp(1), l, method="L-BFGS-B", x=x)$par
+@ 
+  \item Compare your answers to the values returned by the functions \texttt{mean} \sout{and \texttt{sd}}.
+
+The answers are exactly the same, because the statistics theory just dictates that the maximum likelihood estimator is the argument that maximizes $L$.  Here, our calculus and \texttt{R} easily compute the same answer, but with tougher probability density functions the math isn't as easy and computational methods can help us out.
+  \end{enumerate}
+\end{enumerate}
+\end{document}
+
