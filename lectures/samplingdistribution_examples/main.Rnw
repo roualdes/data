@@ -10,7 +10,7 @@ suppressMessages(library(ggplot2))
 @
 
 \title{Sampling Distributions, examples}
-\institute{CSU, Chico Math 314} 
+\institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
 
@@ -36,7 +36,7 @@ suppressMessages(library(ggplot2))
   \item Randomly sample $n$ observations from $U(a, b)$ -- we have to choose $a$ and $b$.
   \item Calculate $\bar{X}$.
   \item Calculate bias: $bias = \bar{X} - \frac{a+b}{2}$.
-  \item Repeate steps $1$ through $3$ $R$ times and calculate $B = R^{-1}\sum_{r=1}^R bias_r$.
+  \item repeat steps $1$ through $3$ $R$ times and calculate $B = R^{-1}\sum_{r=1}^R bias_r$.
   \end{enumerate}
 \end{frame}
 
