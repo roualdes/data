@@ -1,0 +1,291 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Sampling Distributions}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Review}
+
+\begin{frame}
+  \frametitle{Review: the sample mean shows up everywhere}
+We assume data $x_1, \ldots, x_n$ are generated from distribution $G(\theta)$.  Given these data, the most likely value of the paramter $\theta$ is $\hat{\theta}$ (often some function of $\bar{X}$).
+\end{frame}
+
+\section{Motivation}
+
+\begin{frame}
+  \frametitle{Is $\bar{X}$ good at its job?}
+  How good is $\bar{X}$ at its job?  Could we simulate an (not The) answer?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  Let's pretend that we know the population mean $\mu = 0$, and then take many samples of data from the same population.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+This is like $101$ of us each took a random sample $n=100$ from the same population and each calculated our own sample mean and sample standard deviation.
+<<>>=
+# 101 random samples each of size 100 from N(0, 1)
+X <- matrix(rnorm(100*101), nrow=100)
+xbars <- colMeans(X) # 101 sample means
+mean(xbars) # mean of the means
+sd(xbars) # standard deviation of means
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  What does the distribution of sample means look like?
+<<>>=
+suppressMessages(library(ggplot2))
+p <- qplot(xbars, geom="histogram", binwidth=1/30,
+           main="Histogram of 101 sample means")
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Is $\bar{X}$ good at its job?}
+  The sample means seem to on average estimate $\mu = 0$ quite well.
+<<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+p
+@ 
+\end{frame}
+
+\section{Point Estimators}
+\begin{frame}
+  \frametitle{Point Estimators, idea}
+  Since data will vary from sample to sample, $\hat{\theta}$ will vary from sample to sample.  But, then we should really be thinking about data theoretically; instead of $x_1, \ldots, x_n$ we should be thinking $X_1, \ldots, X_n$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Point Estimators, definition}
+  That is to say, data not yet collected are random variables.  Hence, the \textbf{point estimator} $\bar{X}$ is a random variable.  
+
+  \begin{block}{point estimator}
+    A statistic that estimates a single value, e.g.\ $\bar{X}, \hat{\sigma}, \hat{p}, \ldots$
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Point Estimators are Random Variables}
+  If point estimators are random variables, and random variables have distribution functions, then point estimators have distribution functions.  This means that point estimators, follow some functional form and thus have a mean and a variance of their own.
+\end{frame}
+
+\subsection{Mean of $\bar{X}$}
+
+\begin{frame}
+  \frametitle{Mean of $\bar{X}$}
+  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $E(X) = \mu$.  Calculate $E(\bar{X})$.
+
+
+\only<2->{
+  \begin{align*}
+    E(\bar{X}) & = E(n^{-1} \sum_{i=1}^n X_i) \\
+               & = n^{-1} \sum_{i=1}^n E(X_i) \\
+               & = n^{-1} n \mu \\
+               & = \mu.
+  \end{align*}
+}
+\end{frame}
+
+\subsection{Standard Error}
+
+\begin{frame}
+  \frametitle{Standard Error}
+The \textbf{standard error} describes the error/uncertainty/inaccuracy of an estimator.
+
+  \begin{block}{standard error}
+  The standard deviation of a point estimator is called the \textbf{standard error}.  
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance of $\bar{X}$}
+  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $Var(X) = \sigma^2$.  Calculate $Var(\bar{X})$.
+
+\only<2->{
+    \begin{align*}
+      \sigma_{\bar{X}}^2 = Var(\bar{X}) & = Var(n^{-1} \sum_{i=1}^n X_i) \\
+                    & = n^{-2}Var(\sum_{i=1}^n X_i) \\
+                    & = n^{-2} \sum_{i=1}^n Var(X_i) \quad\quad\quad (\text{because }X_i \text{ independent}) \\
+                    & = n^{-2} n \sigma^2 \\
+                    & = \frac{\sigma^2}{n}
+    \end{align*}
+}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standard Error of $\bar{X}$}
+  Since the standard error is the point estimator analogue to the standard deviation, it holds the same relation to the variance of a point estimator.
+
+  \begin{block}{standard error of $\bar{X}$}
+    The standard error of $\bar{X}$ is 
+\[ \sigma_{\bar{X}} = \sqrt{\sigma_{\bar{X}}^2} = \frac{\sigma}{\sqrt{n}}. \]
+  \end{block}
+\end{frame}
+
+\section{Properties of Point Estimators}
+
+\begin{frame}
+  \frametitle{Properties of Point Estimators}
+We want point estimators to be good at their job.  Good, here, can mean many different things, but a common definition requires two criteria
+
+\begin{enumerate}
+\item<1-> un\textbf{bias}ed
+\item<2-> minimum variance.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bias}
+  Statistics unfortunately uses the word \textbf{bias} in two different ways, sample bias and estimator bias.
+
+  \begin{block}{(estimator) bias}
+    Bias is defined as the difference between the expected value of an estimator $\hat{\theta}$ and the true parameter value
+
+\[ Bias(\hat{\theta}) = E(\hat{\theta}) - \theta. \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{$\bar{X}$ is unbiased}
+  Amongst its good properties, the sample mean is unbiased.  Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $E(X) = \mu$.
+
+  \begin{align*}
+   Bias(\bar{X}) & = E(\bar{X}) - \mu \\
+                 & = \mu - \mu \\
+                 & = 0.
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{$\bar{X}$ has minimum variance}
+  Amongst its good properties, the sample mean has minimum variance.  Assume $X_1, \ldots, X_n \sim_{iid} G$.  If $T(\mathbf{X}) = \bar{X}$ and $T'(\mathbf{X})$ is another estimator of $E(X)$,  then
+
+\[Var(T(\mathbf{X})) \leq Var(T'(\mathbf{X})). \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summarizing Properties of $\bar{X}$, in picture}
+
+<<echo=FALSE, fig.width=2, fig.height=2, fig.align="center", fig.show="hold">>=
+n <- 20
+df <- data.frame()
+p <- ggplot(df) + xlim(-1, 1) + ylim(-1, 1)
+p + geom_point(data=data.frame(x=0, y=0), aes(x, y), color="red", size=3) +
+    geom_point(data=data.frame(x=rnorm(n, sd=1/sqrt(100)),
+                               y=rnorm(n, sd=1/sqrt(100))), aes(x, y)) +
+    labs(title="unbiased, min var", x="", y="") +
+    theme(axis.ticks = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank())
+
+p + geom_point(data=data.frame(x=0, y=0), aes(x, y), color="red", size=3) +
+    geom_point(data=data.frame(x=rnorm(n, mean=0.4, sd=1/sqrt(25)),
+                               y=rnorm(n, mean=0.4, sd=1/sqrt(25))), aes(x, y)) +
+    labs(title="biased, larger var", x="", y="") +
+    theme(axis.ticks = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank())
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summarizing Properties of $\bar{X}$, in English}
+  To summarize in English the above properties of $\bar{X}$, we'd say
+
+  \begin{itemize}
+  \item<1-> on average $\bar{X}$ estimates the thing it's supposed to --  $Bias(\bar{X}) = 0$
+  \item<2-> $\bar{X}$ estimates the thing it's supposed to with smaller error than any other estimator -- minimum variance
+  \end{itemize}
+\end{frame}
+
+\section{Sampling Distribution}
+
+\begin{frame}
+  \frametitle{Sampling Distribution}
+While it's nice to know the expected value and variance of an estimator, we would still like to know the distribution function (the functional form) of our estimator.  We use the phrase \textbf{sampling distribution} to describe the distribution of a point estimator.
+
+\begin{block}{sampling distribution}
+  The sampling distribution is the distribution of a point estimator based on a sample of fixed size.
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Notes on Sampling Distributions}
+  Some notes on sampling distributions:
+
+  \begin{itemize}
+  \item<1-> we do not immediately know the distribution function associated with a particular point estimator,
+  \item<2-> some point estimator's sampling distributions are easy to find some are quite difficult,
+  \item<3-> any given point estimate can be thought of as a random variable sampled from the sampling distribution.
+  \end{itemize}
+\end{frame}
+
+\section{Central Limit Theorem}
+
+\begin{frame}
+  \frametitle{Central Limit Theorem}
+  The \textbf{Central Limit Theorem} describes the sampling distribution of the sample mean.
+
+  \begin{block}{Central Limit Theorem}
+    Assume $X_1, \ldots, X_n \sim_{iid} G$, such that $E(X) = \mu$ and $Var(X) = \sigma^2 < \infty$.  Then $\bar{X}$ is approximately distributed as $N(\mu, \sigma^2/n)$, or
+
+\[ \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} \overset{\cdot}{\sim} N(0, 1). \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{CLT, via applet}
+  \url{http://onlinestatbook.com/stat_sim/sampling_dist/}
+\end{frame}
+
+\begin{frame}
+  \frametitle{CLT, notes}
+  The CLT
+  \begin{itemize}
+  \item<1-> requires independent, identically distributed observations with finite variance,
+  \item<2-> is an approximation that depends on the sample size $n$,
+    \begin{itemize}
+    \item<2-> the approximation improves as $n \to \infty$,
+    \end{itemize}
+  \item<3-> is population distribution invariant in the limit,
+  \item<4-> in practice (finite world) requires a relatively larger sample size when the population distribution is abnormal,
+  \item<5-> relies on unknown parameters.
+  \end{itemize}
+\end{frame}
+
+\section{References}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}

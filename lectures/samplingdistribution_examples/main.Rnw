@@ -1,0 +1,74 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Sampling Distributions, examples}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Estimate Bias}
+
+\begin{frame}
+  \frametitle{Bias}
+  Recall, bias is defined as $Bias(\hat{\theta}) = E(\hat{\theta}) - \theta$.  How does one estimate $E(\hat{\theta})$?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Estimate Bias}
+  Assume $X_1, \ldots, X_n \sim U(a, b)$.  Estimate the bias of the estimator $\bar{X}$.  Steps:
+
+  \begin{enumerate}
+  \item Randomly sample $n$ observations from $U(a, b)$ -- we have to choose $a$ and $b$.
+  \item Calculate $\bar{X}$.
+  \item Calculate bias: $bias = \bar{X} - \frac{a+b}{2}$.
+  \item Repeat steps $1$ through $3$ $R$ times and calculate $B = R^{-1}\sum_{r=1}^R bias_r$.
+  \end{enumerate}
+\end{frame}
+
+\section{Sampling Distribution}
+
+\begin{frame}
+  \frametitle{a tangent, Binomial Distribution}
+  The binomial distribution is a generalization of the Bernoulli.  We write $X \sim Binomial(K, p)$, where $K$ is known.  The binomial distribution describes $k$ possible successes out of $K$ total trials.
+
+\[ \mu = Kp \quad \quad \sigma = \sqrt{Kp(1-p)} \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Binomial and the CLT}
+  Two high school juniors conducted a survey on $15$ students at their school, asking the students whether they would like the school to offer an after-school art program, counted the number of ``yes'' answers, and recorded the sample proportion.  $14$ out of the $15$ students responded ``yes.''  They repeated this $100$ times and built a distribution of sample means.
+
+  \begin{enumerate}
+  \item<1-> What is the underlying distribution called?
+  \item<2-> What is the distribution of the sample means called?
+  \item<3-> Would you expect the shape of this distribution to be symmetric, right skewed, or left skewed?
+Explain your reasoning.
+\item<4-> Calculate the variability of this distribution and state the appropriate term used to refer to
+this value.
+\item<5-> Suppose that the students are now able to collect data from random samples of $25$ students.  How will the variability of this new distribution compare to the variability of the original distribution?
+  \end{enumerate}
+\end{frame}
+
+\section{References}
+\nocite{Akritas:2016,Diez:2015}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}

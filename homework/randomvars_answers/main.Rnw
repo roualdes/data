@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\input{RnwOptions.tex}
+\begin{document}
+\chead{Math 314 -- Homework 03: Random Variables answers}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=60)
+opts_knit$set(progress=FALSE)
+@
+
+Due: 2016-02-19
+\begin{enumerate}
+\item What is the expected value of the random variable described in Table~\ref{tab:X}?
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c|cccc}
+    $x$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    $P(X = x)$ & $0.4$ & $0.3$ & $0.2$ & $0.1$ \\
+  \end{tabular} % example 3.2-3, what is the PMF?
+  \caption{}
+  \label{tab:X}
+\end{table}
+
+<<>>=
+x <- 1:4
+p <- (4:1)/10
+sum(p*x)
+@ 
+
+\item Provide the \texttt{R} code to justify the 68, 95, 99.7 rule.  (Hint: use \texttt{pnorm}.)
+
+<<>>=
+pnorm(1:3) - pnorm(-(1:3))
+@ 
+
+\item Suppose adult heights are distributed normally with a mean of $70$ inches and a standard deviation of $4$ inches.  What is the probability we randomly select an adult who is between $64$ and $78$ inches tall?
+
+<<>>=
+pnorm((78-70)/4) - pnorm((64-70)/4)
+@ 
+
+\item The lifetime of a Sturdy Light light bulb follows an exponential distribution with an expected value (mean) of 180 days.  (Hint: how does the expected value relate to the parameter of the exponential distribution?  Which does \texttt{pexp} take as its argument?)
+
+  \begin{itemize}
+  \item What’s the probability a randomly chosen light bulb from Sturdy Light will fail within 160 days?  
+  \item How long do $75$\% of the light bulbs from Sturdy Light last?
+  \end{itemize}
+
+<<>>=
+pexp(160, 1/180)
+qexp(0.75, 1/180)
+@ 
+
+\item Assume $X \sim U(a, b)$ is a continuous random variable.  Calculate the expected value of the random variable $X$.  Provide your work.
+
+\ans{Let $X \sim U(a, b)$, such that $f(x) = \frac{1}{b-a}1(x \in [a, b])$}.
+
+\begin{align*}
+    E(X) & = \int_{-\infty}^{\infty} x f(x) dx \\
+         & = \int_a^b \frac{x}{b-a} dx \\
+         & = \frac{1}{b-a} \frac{x^2}{2} \Bigg\vert_a^b \\
+         & = \frac{b^2 - a^2}{2(b-a)} \\
+         & = \frac{(b-a)(b+a)}{2(b-a)} \\
+         & = \frac{b+a}{2} \\
+\end{align*}
+
+\end{enumerate}
+\end{document}
+
