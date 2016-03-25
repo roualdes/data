@@ -10,7 +10,7 @@ suppressMessages({library(ggplot2)
 @
 
 \title{Introduction to Inference}
-\institute{CSU, Chico Math 314} 
+\institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
 
@@ -32,7 +32,7 @@ suppressMessages({library(ggplot2)
 
 \begin{frame}
   \frametitle{Review: sampling distribution}
-  Since $\bar{X}$ consists of $n$ random variables $X_1, \ldots, X_n$, we think of $\bar{X}$ itself as a random variable.  The population distribution for $\bar{X}$, from which any sampled value of $\bar{x}$ is drawn, is often unkown, but reasonably well approximated by the normal distribution due the Central Limit Theorem\footnote{Some, quite plausible, assumptions must be met for the CLT to apply, but in practice these assumptions are often are met.}.
+  Since $\bar{X}$ consists of $n$ random variables $X_1, \ldots, X_n$, we think of $\bar{X}$ itself as a random variable.  The population distribution for $\bar{X}$, from which any sampled value of $\bar{x}$ is drawn, is often unknown, but reasonably well approximated by the normal distribution due the Central Limit Theorem\footnote{Some, quite plausible, assumptions must be met for the CLT to apply, but in practice these assumptions are often met.}.
 \end{frame}
 
 \section{Confidence Intervals}
@@ -49,10 +49,10 @@ We will use the sampling distribution of $\bar{X}$ to help us make informed deci
 
 \begin{frame}
   \frametitle{Confidence Interval, definition}
-  Our net is called a \textbf{confidence interval}, and we make a comprimise between width and confidence.
+  Our net is called a \textbf{confidence interval}, and we make a compromise between width and confidence.
 
   \begin{block}{confidence interval}
-    A confidence interval is an interval $[ \hat{\theta}_L, \hat{\theta}_U ]$ computed from a samlpe,  used to estimate a population parameter of interest.
+    A confidence interval is an interval $[ \hat{\theta}_L, \hat{\theta}_U ]$ computed from a sample,  used to estimate a population parameter of interest.
   \end{block}
 \end{frame}
 
@@ -65,7 +65,7 @@ p <- ggplot(data.frame(x=c(-4, 4)), aes(x)) + stat_function(fun=dnorm, geom="lin
     labs(x=expression(mu), y=expression(N(mu, frac(sigma^2, n))))
 d <- ggplot_build(p)$data[[1]]
 p + geom_area(data=subset(d, x>qnorm(0.025)&x<qnorm(0.975)), aes(x=x, y=y), fill="black", colour="black")
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -94,12 +94,12 @@ p + geom_area(data=subset(d, x>qnorm(0.025)&x<qnorm(0.975)), aes(x=x, y=y), fill
 xbar <- 1.697
 se <- 0.0088
 xbar + qnorm(c(0.025, 0.975))*0.0088 # unpack this
-@ 
+@
 \end{frame}
 
 \begin{frame}
   \frametitle{Confidence Intervals, literal translation}
-  If we were to resample $N$ times and create a confidence interval from each new sample (of size $n$), $100(1-\alpha)$\% of those intervals would include the true population mean\footnote{Confidence intervals say nothing about individual observations.  They only make statements about the population paramters we are estimating.}.
+  If we were to re-sample $N$ times and create a confidence interval from each new sample (of size $n$), $100(1-\alpha)$\% of those intervals would include the true population mean\footnote{Confidence intervals say nothing about individual observations.  They only make statements about the population parameters we are estimating.}.
 \end{frame}
 
 \begin{frame}[fragile]
@@ -116,7 +116,7 @@ qplot(x, factor(sample), data=df, colour=factor(notcontain), ylab="sample", xlab
     scale_colour_manual(values=c("black", "red")) +
     theme(axis.text.x=element_blank(),
           axis.ticks=element_blank())
-@ 
+@
 \end{frame}
 
 \section{Hypothesis Testing}
@@ -213,7 +213,7 @@ qplot(x, factor(sample), data=df, colour=factor(notcontain), ylab="sample", xlab
 To properly follow the scientific method, there must be a predefined largest level at which we are willing to incorrectly conclude.  We call this value the level of significance, and give it the symbol $\alpha$\footnote{Common value of $\alpha$ are $0.05$ and $0.01$.}.
 
 \begin{block}{level of significance}
-  The largest probability of incorrectly rejecting $H_0$ when in fact $H_0$ is true.  
+  The largest probability of incorrectly rejecting $H_0$ when in fact $H_0$ is true.
 \end{block}
 \end{frame}
 
@@ -239,7 +239,7 @@ To properly follow the scientific method, there must be a predefined largest lev
 \begin{frame}[fragile]
   \frametitle{Hypothesis Test, another example}
 
-Suppose Giggle wants to test their browser Chime.  They sample $1014$ randomly selected websites and make a simple decision, this website was displayed properly on Chime or it was not.  They found that $984$ websites displayed correctly.  Test whether or not Chime displays $99$\% of webpages correctly, and compare your conclusion to a confidence interval.  Choose $\alpha = 0.05$.
+Suppose Giggle wants to test their browser Chime.  They sample $1014$ randomly selected websites and make a simple decision, this website was displayed properly on Chime or it was not.  They found that $984$ websites displayed correctly.  Test whether or not Chime displays $99$\% of web pages correctly, and compare your conclusion to a confidence interval.  Choose $\alpha = 0.05$.
 
   \only<2->{
     \begin{itemize}
@@ -263,7 +263,7 @@ phat <- 984/n
 sigma <- sqrt(phat*(1-phat))
 z <- (phat - 0.99)/(sigma/sqrt(n)) # assume H_0 true
 2*(1 - pnorm(abs(z))) # compare to alpha = 0.05
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -275,7 +275,7 @@ n <- 1014
 phat <- 984/n
 sigma <- sqrt(phat*(1-phat))
 phat + qnorm(c(0.025, 0.975))*sigma/sqrt(n)
-@ 
+@
 \end{frame}
 
 \section{References}
