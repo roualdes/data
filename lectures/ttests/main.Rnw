@@ -243,7 +243,7 @@ tstar <- qt(c(0.01, 0.99), min(c(nC, nF)-1))
 
 \begin{frame}[fragile]
   \frametitle{Two Sample t-test, example}
-We are $98$\% confidence that the population difference in mean longevity between the SuperFamlies Caniformia and Feliformia is between $\Sexpr{round((xbarC - xbarF) + qt(0.01, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ and $\Sexpr{round((xbarC - xbarF) + qt(0.99, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ months.
+We are $98$\% confident that the population difference in mean longevity between the SuperFamlies Caniformia and Feliformia is between $\Sexpr{round((xbarC - xbarF) + qt(0.01, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ and $\Sexpr{round((xbarC - xbarF) + qt(0.99, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ months.
 \end{frame}
 
 \begin{frame}
