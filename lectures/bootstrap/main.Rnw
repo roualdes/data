@@ -1,0 +1,258 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Bootstrap}
+\institute{CSU, Chico Math 314} 
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Recap}
+
+\begin{frame}
+  \frametitle{recap, standard error}
+We can calculate the standard error of the sample mean analytically,
+
+\[ Var(\bar{X}) = \frac{\sigma^2}{n}. \]
+
+The Central Limit Theorem allows us to easily estimate a population mean using this standard error.
+\end{frame}
+
+\section{Sampling Distributions Revisited}
+
+\begin{frame}
+  \frametitle{Sampling Distribution Revisited}
+  All statistics have a sampling distributions.  The sample mean is relatively easy to calculate, and thus statistics (the discipline) most often estimates population means.
+\end{frame}
+
+\subsection{Sample Median}
+
+\begin{frame}
+  \frametitle{Sample Median}
+Assume we have $X_1, \ldots, X_n \sim_{iid} F$, with probability density function $f$.  Define $m$ such that $P(X \leq m) = 0.5$.  It can be shown that the sampling distribution of the sample median $\tilde{X}$ is appropximately normal when the sample size is sufficiently large,
+
+\begin{equation}
+  \label{eq:1}
+ \frac{\tilde{X} - m}{4nf^2(m)} \overset{\cdot}{\sim} N(0, 1). 
+\end{equation}
+ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sample Median, notes}
+  Note that we want a statement like Equation~(\ref{eq:1}) where we don't have to assume we know $F/f$ -- the Central Limit Theorem gives us this for the sample mean.
+\end{frame}
+
+\section{Bootstrap}
+
+\begin{frame}
+  \frametitle{Bootstrap}
+  ``[The] bootstrap allows us to estimate the sampling distribution of a statistic empirically without making assumptions about the form of the population, and without deriving the sampling distribution explicitly'' \cite{Fox:2010}.
+\end{frame}
+
+<<echo=FALSE>>=
+sample_mean <- function(d, i) {
+    mean(d[i])
+}
+@ 
+
+\subsection{Lite Example}
+\begin{frame}[fragile]
+  \frametitle{Some Fake Data, sample mean}
+  Assume we know $F$.  We'll generate some fake data from $F$, calculate the true standard error for the sample mean and compare it to the bootstraped standard error.
+
+<<>>=
+x <- rpois(101, lambda=pi) # st dev = sqrt(pi)
+sqrt(pi/101) # true standard error
+
+# load bootstrap library
+suppressMessages(library(boot)) 
+b <- boot(x, sample_mean, R=1000) # run bootstrap
+sd(b$t) # estimated standard error
+@ 
+\end{frame}
+
+\subsection{Mechanics}
+
+\begin{frame}
+  \frametitle{Bootstrap Mechanics, in words}
+  Assume we have a random sample of size $n$.  Bootstrapping re-samples, $R$ times with replacement, $n$ observations from our original sample and calculates the statistic of interest from each re-sample.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bootstrap Mechanics, in math}
+  Assume $X_1, \ldots, X_n \sim_{iid} F$, and that interest lies in the statistic $T = t(\mathbf{X})$ which estimates $\theta$.  Bootstrapping proceeds as follows:
+
+  \begin{enumerate}
+  \item<2-> Randomly select with replacement $X^*_{r1}, \ldots, X^*_{rn}$ from the original sample
+  \item<3-> Calculate $T^*_r = t(\mathbf{X}^*_r)$
+  \item<4-> Repeat steps $2$-$3$ $R$ times.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bootstrap Estimates}
+  The distribution of $T^*_r$ about the original estimate $T$ is analogous to the sampling distribution of the estimator $T$ about the population parameter $\theta$.
+
+  \begin{exampleblock}{}
+    The population is to the sample \\
+    as the sample is to the bootstrap samples.
+  \end{exampleblock}    
+\end{frame}
+
+\section{Example}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample mean}
+  Consider the data set \texttt{ape::carnivora}.  Suppose we are interested in the mean brain weight of the order Carnivora.
+
+<<>>=
+suppressMessages({library(ape)
+    data(carnivora)
+    library(ggplot2)})
+anyNA(carnivora$SB)
+p <- qplot(SB, data=carnivora,
+           geom="histogram", binwidth=10)
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample mean}
+Plot the data!
+
+<<echo=FALSE, fig.width=2.5, fig.height=2.5, fig.align="center">>=
+p
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample mean}
+A $95$\% confidence interval using the proper standard error.
+<<>>=
+with(carnivora, {
+    n <- length(SB)
+    mean(SB) + qt(c(0.025, 0.975), n-1)*sd(SB)/sqrt(n)
+})
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample mean}
+A $95$\% confidence interval using a bootstrap estimated standard error
+<<>>=
+sample_mean <- function(d, i) {
+    mean(d[i])
+}
+with(carnivora, {
+    b <- boot(data=SB, statistic=sample_mean, R=2000)
+    ci <- boot.ci(b, conf=0.95, type="norm")
+    ci$normal
+})
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Carnivora Brain Weight}
+  But doesn't the median seem more appropriate for these data?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample median}
+A $95$\% confidence interval using the proper standard error.
+<<>>=
+# doh
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Brain Weight, sample median}
+A $95$\% confidence interval using a bootstrap estimated standard error
+<<>>=
+sample_median <- function(d, i) {
+    median(d[i])
+}
+with(carnivora, {
+    b <- boot(data=SB, statistic=sample_median, R=2000)
+    ci <- boot.ci(b, conf=0.95, type="bca") # use this type
+    ci$bca[4:5] # bca is recommended
+})
+@ 
+\end{frame}
+
+
+\section{Pointers}
+
+\begin{frame}
+  \frametitle{Bootstrap Pointers}
+  Some notes on using the bootstrap.
+
+  \begin{enumerate}
+  \item<1-> Just like CLT, bootstrap relies on large sample sizes
+  \item<2-> Lots of variations on the bootstrap exist.  In order, try 
+    \begin{enumerate}
+    \item<3-> \texttt{boot.ci(..., type=``bca'')}
+    \item<3-> \texttt{boot.ci(..., type=``basic'', h=log, hdot=function(x) 1/x)}
+    \item<3-> \texttt{boot.ci(..., type=``perc'')}
+    \item<3-> \texttt{boot.ci(..., type=``basic'')}
+    \end{enumerate}
+  \item<4-> Use $R = max(2000, 2*n)$ replications, if not more.
+  \end{enumerate}
+\end{frame}
+
+\section{Reference Material}
+
+\subsection{How to Use \texttt{boot}}
+
+\begin{frame}[fragile]
+  \frametitle{\texttt{R}'s package \texttt{boot}}
+\texttt{R}'s package \texttt{boot} is awesome.
+\url{http://www.mayin.org/ajayshah/KB/R/documents/boot.html}
+
+\url{http://www.statmethods.net/advstats/bootstrapping.html}
+
+And of course
+<<eval=FALSE>>=
+?boot # find argument parallel
+@ 
+\end{frame}
+
+\subsection{Theory}
+\begin{frame}
+  \frametitle{ Mathematics of Bootstrap}
+These are some of the more simple discussions of the bootstrap.
+\url{http://statweb.stanford.edu/~tibs/sta305files/FoxOnBootingRegInR.pdf}
+
+\url{http://stat.rutgers.edu/home/mxie/RCPapers/bootstrap.pdf}
+\end{frame}
+
+\section{References}
+
+\begin{frame}[allowframebreaks]
+\nocite{Davison:1997}
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+
+\end{document}
