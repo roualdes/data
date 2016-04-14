@@ -9,7 +9,7 @@ suppressMessages(library(ggplot2))
 @
 
 \title{Bootstrap}
-\institute{CSU, Chico Math 314} 
+\institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
 
@@ -54,9 +54,9 @@ Assume we have $X_1, \ldots, X_n \sim_{iid} F$, with probability density functio
 
 \begin{equation}
   \label{eq:1}
- \frac{\tilde{X} - m}{4nf^2(m)} \overset{\cdot}{\sim} N(0, 1). 
+ \frac{\tilde{X} - m}{4nf^2(m)} \overset{\cdot}{\sim} N(0, 1).
 \end{equation}
- 
+
 \end{frame}
 
 \begin{frame}
@@ -75,7 +75,7 @@ Assume we have $X_1, \ldots, X_n \sim_{iid} F$, with probability density functio
 sample_mean <- function(d, i) {
     mean(d[i])
 }
-@ 
+@
 
 \subsection{Lite Example}
 \begin{frame}[fragile]
@@ -87,10 +87,10 @@ x <- rpois(101, lambda=pi) # st dev = sqrt(pi)
 sqrt(pi/101) # true standard error
 
 # load bootstrap library
-suppressMessages(library(boot)) 
+suppressMessages(library(boot))
 b <- boot(x, sample_mean, R=1000) # run bootstrap
 sd(b$t) # estimated standard error
-@ 
+@
 \end{frame}
 
 \subsection{Mechanics}
@@ -107,7 +107,7 @@ sd(b$t) # estimated standard error
   \begin{enumerate}
   \item<2-> Randomly select with replacement $X^*_{r1}, \ldots, X^*_{rn}$ from the original sample
   \item<3-> Calculate $T^*_r = t(\mathbf{X}^*_r)$
-  \item<4-> Repeat steps $2$-$3$ $R$ times.
+  \item<4-> Repeat steps $1$-$2$ $R$ times.
   \end{enumerate}
 \end{frame}
 
@@ -118,7 +118,7 @@ sd(b$t) # estimated standard error
   \begin{exampleblock}{}
     The population is to the sample \\
     as the sample is to the bootstrap samples.
-  \end{exampleblock}    
+  \end{exampleblock}
 \end{frame}
 
 \section{Example}
@@ -134,7 +134,7 @@ suppressMessages({library(ape)
 anyNA(carnivora$SB)
 p <- qplot(SB, data=carnivora,
            geom="histogram", binwidth=10)
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -143,7 +143,7 @@ Plot the data!
 
 <<echo=FALSE, fig.width=2.5, fig.height=2.5, fig.align="center">>=
 p
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -154,7 +154,7 @@ with(carnivora, {
     n <- length(SB)
     mean(SB) + qt(c(0.025, 0.975), n-1)*sd(SB)/sqrt(n)
 })
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -169,7 +169,7 @@ with(carnivora, {
     ci <- boot.ci(b, conf=0.95, type="norm")
     ci$normal
 })
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -182,7 +182,7 @@ with(carnivora, {
 A $95$\% confidence interval using the proper standard error.
 <<>>=
 # doh
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -197,7 +197,7 @@ with(carnivora, {
     ci <- boot.ci(b, conf=0.95, type="bca") # use this type
     ci$bca[4:5] # bca is recommended
 })
-@ 
+@
 \end{frame}
 
 
@@ -209,7 +209,7 @@ with(carnivora, {
 
   \begin{enumerate}
   \item<1-> Just like CLT, bootstrap relies on large sample sizes
-  \item<2-> Lots of variations on the bootstrap exist.  In order, try 
+  \item<2-> Lots of variations on the bootstrap exist.  In order, try
     \begin{enumerate}
     \item<3-> \texttt{boot.ci(..., type=``bca'')}
     \item<3-> \texttt{boot.ci(..., type=``basic'', h=log, hdot=function(x) 1/x)}
@@ -234,7 +234,7 @@ with(carnivora, {
 And of course
 <<eval=FALSE>>=
 ?boot # find argument parallel
-@ 
+@
 \end{frame}
 
 \subsection{Theory}
