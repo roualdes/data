@@ -10,7 +10,7 @@ opts_knit$set(progress=FALSE)
 
 Due: 2016-05-06
 \begin{enumerate}
-\item Pick a data set from my website or from an R package, run simple linear regression on it, and describe your analysis.  You need at least the following items in your write up:
+\item Pick a data set (not the elmhurst data) from my website or from an R package, run simple linear regression on it, and describe your analysis.  You need at least the following items in your write up:
   \begin{enumerate}
   \item A description of the data -- the variables, the origin of the data and the data set (such that I could find it and replicate your work).
   \item A correlation calculation.
@@ -19,6 +19,7 @@ Due: 2016-05-06
   \item Formal hypothesis tests or confidence intervals.
   \item A formal conclusion in both Statistics and in English.
   \item An interpretation of your model in context -- intercept, slope, adjusted $R^2$.
+  \item The value your model predicts when the explanatory variable is equal to its mean and a sentence describing this value.
   \item The \texttt{R} code used to produce the analysis.
   \end{enumerate}
 \end{enumerate}
