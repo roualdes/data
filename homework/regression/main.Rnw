@@ -1,0 +1,26 @@
+\documentclass[12pt]{article}
+\input{RnwOptions.tex}
+\begin{document}
+\chead{Math 314 -- Homework 08: Simple Linear Regression}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=60)
+opts_knit$set(progress=FALSE)
+@
+
+Due: 2016-05-06
+\begin{enumerate}
+\item Pick a data set from my website or from an R package, run simple linear regression on it, and describe your analysis.  You need at least the following items in your write up:
+  \begin{enumerate}
+  \item A description of the data -- the variables, the origin of the data and the data set (such that I could find it and replicate your work).
+  \item A correlation calculation.
+  \item An appropriate plot to display the data with respect to your analysis.
+  \item An analysis of simple linear regression's assumptions.
+  \item Formal hypothesis tests or confidence intervals.
+  \item A formal conclusion in both Statistics and in English.
+  \item An interpretation of your model in context -- intercept, slope, adjusted $R^2$.
+  \item The \texttt{R} code used to produce the analysis.
+  \end{enumerate}
+\end{enumerate}
+\end{document}
+
