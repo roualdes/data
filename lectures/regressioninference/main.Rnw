@@ -183,7 +183,7 @@ beta <- coef(elmReg)
 \noindent we'd estimate $\Sexpr{round(beta[1] + 1000*beta[2], 2)}$ thousand dollars.
 
 <<eval=FALSE>>=
-?predict
+?predict.lm
 @ 
 \end{frame}
 
