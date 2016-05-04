@@ -60,7 +60,7 @@ p1
   \frametitle{Transformations, motivation}
 If we fit linear regression to these data, nothing looks good.
 <<>>=
-fit_ew <- lm(SW~BW, data=carnivora)
+fit_ew <- lm(SW{\textasciitilde}BW, data=carnivora)
 # summary(fit_ew) # RStudio
 r <- rstandard(fit_ew)
 yhat <- fitted(fit_ew)
@@ -156,7 +156,7 @@ p3
   \frametitle{Transformations, motivation}
 Let's fit simple linear regression to the transformed data.
 <<>>=
-fit <- lm(log(SW)~log(BW), data=carn)
+fit <- lm(log(SW){\textasciitilde}log(BW), data=carn)
 # summary(fit) # RStudio
 r <- rstandard(fit)
 yhat <- fitted(fit)

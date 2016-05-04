@@ -72,7 +72,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   Good.
   <<linreg, echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
   data <- lmData(113)
-  fit <- lm(y~x, data=data)
+  fit <- lm(y{\textasciitilde}x, data=data)
   qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
         geom_hline(aes(yintercept=0))
 @ 
@@ -102,7 +102,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   Bad. The residuals are not randomly scattered about, but instead have a clear pattern.
 
   <<echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
-  nlfit <- lm(y~x, data=data2)  
+  nlfit <- lm(y{\textasciitilde}x, data=data2)  
   qplot(fitted(nlfit), rstandard(nlfit), xlab=expression(hat(y)), ylab="Residuals") +
         geom_hline(aes(yintercept=0))
   @ 
@@ -113,7 +113,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   Good.
   <<echo=FALSE, fig.align="center", fig.width=2.7, fig.height=2.7>>=
   data <- lmData(113)
-  fit <- lm(y~x, data=data)
+  fit <- lm(y{\textasciitilde}x, data=data)
   qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
         geom_hline(aes(yintercept=0))
 @ 
@@ -148,7 +148,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
 
   <<echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
   vardata <- lmData(125, sd=seq(1, 10, length.out=125))
-  varfit <- lm(y~x, data=vardata)
+  varfit <- lm(y{\textasciitilde}x, data=vardata)
   qplot(fitted(varfit), rstandard(varfit), xlab=expression(hat(y)), ylab="Residuals") +
         geom_hline(aes(yintercept=0))
 @ 
@@ -159,7 +159,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   Good.
   <<echo=FALSE, fig.align="center", fig.width=2.7, fig.height=2.7>>=
   data <- lmData(113)
-  fit <- lm(y~x, data=data)
+  fit <- lm(y{\textasciitilde}x, data=data)
   qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
         geom_hline(aes(yintercept=0))
 @ 
@@ -177,7 +177,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   To make plots of the residuals on the fitted values,
   <<eval=FALSE>>=
   ## fake code  
-  model <- lm(y~x, data=data) # first fit a model
+  model <- lm(y{\textasciitilde}x, data=data) # first fit a model
   e <- rstandard(model) # vector of standardized residuals
   yhat <- fitted(model) # vector of fitted values
   qplot(yhat, e) + geom_hline(aes(yintercept=0))
@@ -201,7 +201,7 @@ Scatter plots of (standardized) residuals on fitted values help you check the as
   To make histograms of standardized residuals,
   <<eval=FALSE>>=
   ## fake code  
-  model <- lm(y~x, data=data) # first fit a model
+  model <- lm(y{\textasciitilde}x, data=data) # first fit a model
   e <- rstandard(model) # vector of standardized residuals
   qplot(e, geom="histogram", binwidth=1/3)
   @  
@@ -270,7 +270,7 @@ which(abs(e) > 3)
 suppressMessages(library(ggplot2))
 url <- "https://roualdes.us/data/elmhurst.csv"
 elmhurst <- read.csv(url)
-fit <- lm(gift_aid ~ family_income, data=elmhurst)
+fit <- lm(gift_aid {\textasciitilde} family_income, data=elmhurst)
 yhat <- fitted(fit)
 e <- rstandard(fit)
 @ 

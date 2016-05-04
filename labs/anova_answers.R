@@ -28,7 +28,7 @@ qplot(factor(region), infection_risk, data=hospital, geom="boxplot")
 
 ## Evaluate your hypothesis and conclude in context.
 
-fit <- lm(infection_risk~factor(region), data=hospital)
+fit <- lm(infection_risk{\textasciitilde}factor(region), data=hospital)
 anova(fit)
 
 ## Which of the mean(s) appear different than the rest?  Be sure to
@@ -41,7 +41,7 @@ astar <- 0.05/K
 library(dplyr)
 pairs <- combn(1:4, 2)
 apply(pairs, 2, function(x)
-    t.test(infection_risk~factor(region),
+    t.test(infection_risk{\textasciitilde}factor(region),
            data=filter(hospital, region %in% x),
            conf.level=1-astar))
 

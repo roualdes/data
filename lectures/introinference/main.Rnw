@@ -201,7 +201,7 @@ qplot(x, factor(sample), data=df, colour=factor(notcontain), ylab="sample", xlab
 
 \begin{frame}
   \frametitle{p-value, definition}
-  The \textbf{p-value} helps us decided between $H_0$ and $H_1$.
+  The \textbf{p-value} helps us decide between $H_0$ and $H_1$.
 
   \begin{block}{p-value}
     The probability of observing the test statistic we did, or something more extreme\footnote{smaller, larger, or both, depending on the alternative hypothesis.}, assuming the null hypothesis is true.
