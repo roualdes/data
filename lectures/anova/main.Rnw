@@ -211,7 +211,7 @@ p <- qplot(position, salary, data=mlb, geom="boxplot") +
   \frametitle{ANOVA, in \texttt{R}}
   The \texttt{R} code to run ANOVA
   <<results="hide">>=
-  model <- lm(salary~position, data=mlb)
+  model <- lm(salary\textasciitildeposition, data=mlb)
   anova(model)
   @
 \end{frame}
@@ -221,7 +221,7 @@ p <- qplot(position, salary, data=mlb, geom="boxplot") +
   The tilde $\sim$ is meant to be read as, predict the left hand side with the right hand side.  Hence, we read the following as, predict salary by different levels of position.
   
   <<eval=FALSE>>=
-  model <- lm(salary~position, data=mlb)
+  model <- lm(salary\textasciitildeposition, data=mlb)
   @
   
   We thus need to ensure that the variable \texttt{position} is a categorical/factor variable.
@@ -325,7 +325,7 @@ with $\alpha = 0.01$.
   \frametitle{\texttt{ape::carnivora}, average brain weight}
   Fit the model.
   <<>>=
-  fit <- lm(SB~Family, data=carnivs)
+  fit <- lm(SB\textasciitildeFamily, data=carnivs)
   anova(fit)
 @ 
 \end{frame}
@@ -352,7 +352,7 @@ with $\alpha = 0.01$.
   <<>>=
   carns1 <- filter(carnivs,
                     Family %in% c("Hyaenidae", "Ursidae"))
-  t1 <- t.test(SB~Family, data=carns1,
+  t1 <- t.test(SB\textasciitildeFamily, data=carns1,
                  conf.level=1-astar)
   @
 \end{frame}
@@ -371,7 +371,7 @@ Just Hyaenidae and Ursidae.
   <<>>=
   carns2 <- filter(carnivs,
                     Family %in% c("Canidae", "Felidae"))
-  t2 <- t.test(SB~Family, data=carns2,
+  t2 <- t.test(SB\textasciitildeFamily, data=carns2,
                  conf.leve=1-astar)
   @
 \end{frame}
@@ -428,7 +428,7 @@ carnivs <- filter(carnivora,
   \frametitle{recap, ANOVA}
   Then ran ANOVA.
 <<results="hide">>=
-mod <- lm(SB~Family, data=carnivs)
+mod <- lm(SB\textasciitildeFamily, data=carnivs)
 anova(mod)
 @ 
 \end{frame}
