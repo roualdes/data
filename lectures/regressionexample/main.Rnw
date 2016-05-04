@@ -1,0 +1,117 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+@
+
+\title{Simple Linear Regression, Example}
+\institute{CSU Chico, Math 314} 
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{Hypothesis}
+  Does a finch's middle toe length (mm) predict the wing length (mm) for Galapagos finches?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plot the data!}
+  <<>>=
+  suppressMessages({library(ggplot2)
+        library(dplyr)
+        library(boot)})
+  finch <- read.csv("https://roualdes.us/data/finches.csv")
+  p <- qplot(middletoelength, winglength, data=finch)
+  @ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plot the data!}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  p
+  @ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fit Linear Regression}
+<<>>=
+fit <- lm(winglength ~ middletoelength, data=finch)
+## summary(fit) # RStudio
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Check Assumptions}
+<<>>=
+r <- rstandard(fit)
+yhat <- fitted(fit)
+linearity <- qplot(yhat, r)
+normality <- qplot(r, geom="histogram", binwidth=2/3)
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity?}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  linearity
+  @ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Normality?}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  normality
+  @ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Interpretation}
+  We are $95$\% confident that the for every $1$ mm increase in middle toe length for Galapagos finches, we expect to see between a $1.88$ and $3.11$ mm increase in wing length.
+<<>>=
+confint(fit)
+@ 
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Justify Linear Regression Output}
+  Let's go through each piece of the output and justify it.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Justify Standard Errors}
+  We could work out the math, but let's try the bootstrap.  Recall, we resample random variables.  Only $\epsilon$ is a random variable in linear regression.
+
+<<>>=
+breg <- function(d, i, yhat, mtl) {
+    ystar <- yhat + d[i] # yhat + randomly sampled errors
+    fit <- lm(ystar ~ mtl)
+    coef(fit)
+}
+@ 
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Justify Standard Errors}
+  We could work out the math, but let's try the bootstrap.  Recall, we resample random variables.  Only $\epsilon$ is a random variable in linear regression.
+
+<<cache=TRUE>>=
+b <- boot(residuals(fit), breg, R=2000,
+          yhat=yhat, mtl=finch$middletoelength)
+apply(b$t, 2, sd)
+## boot.ci(b, type="bca", index=1) # intercept
+## boot.ci(b, type="bca", index=2) # slope
+@ 
+\end{frame}
+
+\section{References}
+\nocite{Paradis:2004,Wickham:2009,Diez:2015}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+\end{document}
