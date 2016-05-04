@@ -39,7 +39,7 @@ opts_knit$set(progress=FALSE)
 \begin{frame}[fragile]
   \frametitle{Fit Linear Regression}
 <<>>=
-fit <- lm(winglength \textasciitilde middletoelength, data=finch)
+fit <- lm(winglength {\textasciitilde} middletoelength, data=finch)
 ## summary(fit) # RStudio
 @ 
 \end{frame}
@@ -89,7 +89,7 @@ confint(fit)
 <<>>=
 breg <- function(d, i, yhat, mtl) {
     ystar <- yhat + d[i] # yhat + randomly sampled errors
-    fit <- lm(ystar \textasciitilde mtl)
+    fit <- lm(ystar {\textasciitilde} mtl)
     coef(fit)
 }
 @ 

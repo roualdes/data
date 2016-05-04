@@ -324,7 +324,7 @@ Some residuals will be positive and some negative.
 <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center", cache=TRUE>>=
 w1 <- with(finch, which(middletoelength < 17))[1]
 w2 <- with(finch, which(winglength > 77))[1]
-fit <- lm(winglength\textasciitildemiddletoelength, data=finch)
+fit <- lm(winglength{\textasciitilde}middletoelength, data=finch)
 p + stat_smooth(method="lm", se=FALSE) +
       geom_segment(aes(x = finch[w1,"middletoelength"],
                        y = finch[w1,"winglength"],
@@ -365,7 +365,7 @@ p + stat_smooth(method="lm", se=FALSE) +
   \frametitle{Simple Linear Regression in \texttt{R}}
 In \texttt{R} we use the function \texttt{lm} to fit linear regression.  The format is much the same as that for \texttt{aov}.
 <<cache=TRUE>>=
-fit <- lm(winglength\textasciitildemiddletoelength, data=finch)
+fit <- lm(winglength{\textasciitilde}middletoelength, data=finch)
 ## summary(fit) # RStudio
 @ 
 \end{frame}
@@ -422,7 +422,7 @@ with(elmhurst,
 \begin{frame}[fragile]
   \frametitle{Elmhurst College Data}
   <<fig.align="center", fig.width=3, fig.height=3, cache=TRUE>>=
-  elmReg <- lm(gift_aid \textasciitilde family_income, data=elmhurst)
+  elmReg <- lm(gift_aid {\textasciitilde} family_income, data=elmhurst)
   # summary(elmReg) ## RStudio
   @ 
 \end{frame}

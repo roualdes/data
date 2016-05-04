@@ -85,7 +85,7 @@ The hypothesis test above has a natural and informative interpretation in most c
 <<>>=
 url <- "https://roualdes.us/data/elmhurst.csv"
 elmhurst <- read.csv(url)
-elmReg <- lm(gift_aid \textasciitilde family_income, data=elmhurst)
+elmReg <- lm(gift_aid {\textasciitilde} family_income, data=elmhurst)
 # summary(elmReg) # RStudio
 @ 
 \end{frame}
@@ -172,7 +172,7 @@ Extrapolation is in general dangerous.  Sometimes it works, but not often so wat
 \end{frame}
 
 <<echo=FALSE>>=
-elmReg <- lm(gift_aid \textasciitilde family_income, data=elmhurst)
+elmReg <- lm(gift_aid {\textasciitilde} family_income, data=elmhurst)
 beta <- coef(elmReg)
 @ 
 
