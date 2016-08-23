@@ -103,7 +103,7 @@ library(ggplot2)
   \end{block}
 
   \begin{block}{numerical}
-    Numerical data is quantitative; e.g.\ it tkaes on numerical values and all mathematical operations $(+, -, *, /, <, >, =, \ldots)$ make sense with these values.
+    Numerical data is quantitative; e.g.\ it takes on numerical values and all mathematical operations $(+, -, *, /, <, >, =, \ldots)$ make sense with these values.
   \end{block}
 \end{frame}
 
