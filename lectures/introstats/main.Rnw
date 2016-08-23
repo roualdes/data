@@ -8,7 +8,7 @@ opts_knit[["set"]](progress=FALSE)
 library(ggplot2)
 @
 \title{Introduction to Statistics}
-\institute{CSU, Chico Math 314} 
+\institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
 
@@ -72,7 +72,7 @@ library(ggplot2)
 
 \begin{frame}
   \frametitle{Sample}
-  
+
   \begin{block}{Example}
     \begin{itemize}
     \item<2-> alumni from the class of $2008$
@@ -112,7 +112,7 @@ library(ggplot2)
   Consider a dataset about and named \texttt{email}.  Here is one of many ways to read data into \texttt{R}
 <<>>=
 email <- read.csv("https://roualdes.us/data/email.csv")
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -132,7 +132,7 @@ library(xtable)
 
   <<>>=
   is.factor(email$number)
-  @ 
+  @
 \end{frame}
 
 \begin{frame}[fragile]
@@ -140,21 +140,21 @@ library(xtable)
 The variable \texttt{spam} should reasonably be considered a factor.
 <<>>=
 # R doesn't agree and that's probably good
-is.factor(email$spam) 
+is.factor(email$spam)
 is.numeric(email$spam)
 head(email$spam) # 0 = not spam, 1 = spam
 is.factor(factor(email$spam)) # coerce to factor
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Numerical Data Types in \texttt{R}}
-  
-  There are two sub-types of numerical data: discrete and continuous.  \texttt{R} calls a numerical variable of either sub type numeric.
-  
+
+  There are two sub-types of numerical data: discrete and continuous.  \texttt{R} calls a numerical variable of either sub-type numeric.
+
   <<>>=
   is.numeric(email$num_char)
-       @ 
+       @
 \end{frame}
 
 \begin{frame}
@@ -173,7 +173,7 @@ is.factor(factor(email$spam)) # coerce to factor
   \end{block}
 
   \begin{block}{statistic}
-    Characteristics that describe, and are calculated from, a sample are called statistics.  
+    Characteristics that describe, and are calculated from, a sample are called statistics.
   \end{block}
 \end{frame}
 
@@ -191,8 +191,8 @@ Different data types require different statistics.
   \item<3-> mean
   \item<3-> median
   \item<3-> percentiles
-  \item<3-> IQR
   \item<3-> variance / standard deviation
+  \item<3-> IQR
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -212,12 +212,12 @@ The \textbf{sample proportion} summarizes multiple observations of a categorical
 <<>>=
 phat <- sum(email$spam)/length(email$spam)
 phat == mean(email$spam)
-@ 
+@
 \end{frame}
 
  \begin{frame}
    \frametitle{Mean}
-The \textbf{sample mean} gives a summary of the middle of  multiple observations of a numeric variable: add up all the numbers and divide by however many there are.;
+The \textbf{sample mean} gives a summary of the middle of  multiple observations of a numeric variable: add up all the numbers and divide by however many there are,
 
 \[ \bar{x} = \frac{\sum_{i=1}^n x_i}{n}. \]
  \end{frame}
@@ -228,7 +228,7 @@ The \textbf{sample mean} gives a summary of the middle of  multiple observations
 
    <<>>=
    mean(email$num_char) # sample mean, xbar
-   @ 
+   @
 \end{frame}
 
  \begin{frame}
@@ -247,7 +247,7 @@ The \textbf{sample median} gives a (different) summary of the middle of multiple
 
    <<>>=
    median(email$num_char) # sample median
-   @ 
+   @
 
 \end{frame}
 
@@ -277,7 +277,7 @@ The \textbf{sample median} gives a (different) summary of the middle of multiple
 
   <<>>=
   quantile(email$num_char, probs=c(0.25, 0.5, 0.75))
-  @ 
+  @
 \end{frame}
 
 \begin{frame}[fragile]
@@ -286,7 +286,7 @@ The \texttt{R} function \texttt{summary} will produce a $6$ number summary of a 
 
 <<>>=
 summary(email$num_char)
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -295,7 +295,7 @@ summary(email$num_char)
   \begin{itemize}
   \item<2-> re \texttt{num\_char}: something near $5$ or $10$
   \item<3-> U.S.\ adult heights
-  \item<4-> weight of dogs 
+  \item<4-> weight of dogs
   \end{itemize}
 \end{frame}
 
@@ -304,22 +304,7 @@ summary(email$num_char)
   Next, we'll look at how wide the data are.  We generally refer to these statistics as measures of spread.  These statistics no longer tell us about where, instead about how variable.
 \end{frame}
 
-\begin{frame}
-  \frametitle{Interquartile Range}
-The \texttt{interquartile range} (IQR) is defined as the difference between the third and the first quartile:
 
-\[ IQR = Q_3 - Q_1. \]
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Interquartile Range}
-In \texttt{R}, we can calculate the IQR with the function \texttt{IQR}.
-
-<<>>=
-IQR(email$num_char)
-@ 
-This \textit{one} number tells us how far away $Q_3$ is from $Q_1$, hence it measures spead (width).
-\end{frame}
 
 \begin{frame}
   \frametitle{Variance / Standard Deviation}
@@ -348,6 +333,32 @@ You might see elsewhere, e.g.\ in \texttt{R}, the following definition for the s
 This is technically called the unbiased sample variance -- we'll mention bias a bit later.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Sample Standard Deviation, in \texttt{R}}
+  \texttt{R} will happily do this calculation for you.
+
+<<>>=
+sd(email$num_char) # sample Standard Deviation
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Interquartile Range}
+The \texttt{interquartile range} (IQR) is defined as the difference between the third and the first quartile:
+
+\[ IQR = Q_3 - Q_1. \]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Interquartile Range}
+In \texttt{R}, we can calculate the IQR with the function \texttt{IQR}.
+
+<<>>=
+IQR(email$num_char)
+@
+This \textit{one} number tells us how far away $Q_3$ is from $Q_1$, hence it measures spead (width).
+\end{frame}
+
 \section{Plots}
 
 \begin{frame}
@@ -371,13 +382,13 @@ This is technically called the unbiased sample variance -- we'll mention bias a 
 
 \begin{frame}[fragile]
   \frametitle{Tables}
-  
+
   Categorical data doesn't support mathematical operations; e.g.\ orange $+$ apple $=$ ?.  The best we can do is count observations
-  
+
   <<>>=
   table(email$spam)
     prop.table(table(email$spam))
-         @ 
+         @
 \end{frame}
 
 \begin{frame}[fragile]
@@ -386,7 +397,7 @@ This is technically called the unbiased sample variance -- we'll mention bias a 
   Two-way tables are similarly simple to make.
   <<>>=
   round(prop.table(table(email$spam, email$number)), 2)
-  @ 
+  @
 \end{frame}
 
 \begin{frame}[fragile]
@@ -395,8 +406,8 @@ This is technically called the unbiased sample variance -- we'll mention bias a 
 
 <<>>=
 library(ggplot2) # first load the library
-# ?qplot         # help files 
-@ 
+# ?qplot         # help files
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -404,7 +415,7 @@ library(ggplot2) # first load the library
 A \textbf{bar chart} plots the number of observations of each level of a given categorical variable.
   <<fig.width=3, fig.height=2.5, fig.align="center">>=
   qplot(number, data=email, geom="bar")
-  @ 
+  @
 \end{frame}
 
 \begin{frame}[fragile]
@@ -413,7 +424,7 @@ A \textbf{histogram} plots the numbers of observations that fall into numerical 
 
 <<fig.width=3, fig.height=2.5, fig.align="center">>=
 qplot(num_char, data=email, geom="histogram")
-@ 
+@
 
 \end{frame}
 
@@ -423,7 +434,7 @@ As you can see, \texttt{qplot} reminds us that we need to choose a binwidth.
 
 <<fig.width=3, fig.height=2.5, fig.align="center">>=
 qplot(num_char, data=email, geom="histogram", binwidth=10)
-@ 
+@
 
 \end{frame}
 
@@ -439,7 +450,7 @@ Some key facts about histograms:
 
 \begin{frame}
   \frametitle{Skew}
-  The \textbf{skew} of a dataset measures asymmetry.  Data with long right tails are said to be \textbf{right skewed}, while data with long left tails are said to be \textbf{left skewed}.  What is the variable \texttt{num\_char} above? 
+  The \textbf{skew} of a dataset measures asymmetry.  Data with long right tails are said to be \textbf{right skewed}, while data with long left tails are said to be \textbf{left skewed}.  What is the variable \texttt{num\_char} above?
 \end{frame}
 
 \begin{frame}[fragile]
@@ -449,7 +460,7 @@ Some key facts about histograms:
 <<>>=
 mean(email$num_char)
 median(email$num_char)
-@ 
+@
 
 \end{frame}
 
@@ -458,7 +469,7 @@ median(email$num_char)
 More on skew:
 \begin{itemize}
 \item<1-> What is a variable called where there is no skew?
-\item<2-> If the data were left skewed, which is bigger the mean or median? 
+\item<2-> If the data were left skewed, which is bigger the mean or median?
 \item<3-> Notice that the mean is pulled toward the extreme data.  Why?
 \end{itemize}
 \end{frame}
@@ -478,7 +489,7 @@ A \textbf{scatter plot} plots two numerical variables, observation by observatio
 
 <<fig.width=2.5, fig.height=2.5, fig.align="center">>=
 qplot(num_char, line_breaks, data=email)
-@ 
+@
 \end{frame}
 
 \begin{frame}
@@ -488,18 +499,18 @@ qplot(num_char, line_breaks, data=email)
 
 \begin{frame}[fragile]
   \frametitle{Plots, advanced}
-   Meshing the ideas of two different plots into one plot can help elucidate the story behind the data.  For instance, consider the dataset \texttt{datasets::CO2} where some ecologists measured the carbon dioxide \texttt{uptake} ($\mu mol/m^2$) of different grass species as related to ambient CO2 concentrations (\texttt{conc} $mL/L$).  
+   Meshing the ideas of two different plots into one plot can help elucidate the story behind the data.  For instance, consider the dataset \texttt{datasets::CO2} where some ecologists measured the carbon dioxide \texttt{uptake} ($\mu mol/m^2$) of different grass species as related to ambient CO2 concentrations (\texttt{conc} $mL/L$).
 <<>>=
 head(CO2[,c("uptake", "conc")]) # only first 6 obs
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Plots, advanced}
-  Because we have two numeric variables, \texttt{uptake} and \texttt{conc}, we should think scatter plot.  
+  Because we have two numeric variables, \texttt{uptake} and \texttt{conc}, we should think scatter plot.
 <<fig.width=4, fig.height=2.5, fig.align="center">>=
 qplot(conc, uptake, data=CO2)
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -508,7 +519,7 @@ But, \texttt{conc} only has $7$ values so we can think of it as a categorical va
 
 <<>>=
 length(unique(CO2$conc))
-@ 
+@
 \end{frame}
 
 \begin{frame}[fragile]
@@ -518,14 +529,14 @@ So, how about box plots by ``group''?
 <<fig.width=4, fig.height=2.5, fig.align="center">>=
 qplot(conc, uptake, data=CO2,
       geom="boxplot", group=conc)
-@ 
+@
 \end{frame}
 
 \section{Comparative Studies}
 
 \begin{frame}
   \frametitle{Comparative Studies}
-  
+
 So far, we've described the words / tools researchers use relative to general data sets.  More often researchers want to navigate the world of causality and they have a set of special words to help them compare differences between groups.
 \end{frame}
 
@@ -561,7 +572,7 @@ So far, we've described the words / tools researchers use relative to general da
   \frametitle{Explanatory and Response, caution}
 Labeling variables as explanatory and response does not guarantee the relationship between the two is actually causal, even if there is an association identified between the two variables.  We use these labels only to keep track of which variable we suspect affects the other.
 \begin{center}
-  \begin{tikzpicture}[-> ,shorten >=1pt, thick, 
+  \begin{tikzpicture}[-> ,shorten >=1pt, thick,
     every node/.style={font=\scriptsize, align=center}]
     \node (incomplete) {Explanatory \\ Variable};
     \node (invis1) [right=of incomplete] {};
@@ -580,14 +591,14 @@ Labeling variables as explanatory and response does not guarantee the relationsh
   \end{block}
 
   \begin{block}{experiment}
-     The researcher assigns the value of the explanatory variable for each unit. In other words, the researcher controls which subjects go into which treatment groups.  
+     The researcher assigns the value of the explanatory variable for each unit. In other words, the researcher controls which subjects go into which treatment groups.
   \end{block}
 
 \end{frame}
 
 \begin{frame}
   \frametitle{Observational  Studies, examples}
-  In general, observational studies can provide evidence of a naturally occurring association between variables, but they cannot by themselves show a causal connection.  
+  In general, observational studies can provide evidence of a naturally occurring association between variables, but they cannot by themselves show a causal connection.
 \end{frame}
 
 \begin{frame}
@@ -612,7 +623,7 @@ Labeling variables as explanatory and response does not guarantee the relationsh
 \begin{frame}
   \frametitle{Confounding Variables}
   Suppose an observational study tracked sunscreen use and skin cancer, and it was found that the more sunscreen someone used, the more likely the person was to have skin cancer. Does this mean sunscreen \emph{causes} skin cancer?  Or is there another variable we aren't accounting for?
-  
+
   \begin{figure}
     \centering
     \includegraphics[scale=0.7]{figs/confoundingsun.pdf}
@@ -622,7 +633,7 @@ Labeling variables as explanatory and response does not guarantee the relationsh
 \begin{frame}
   \frametitle{Confounding Variables}
   \begin{block}{confounding variable}
-  Confounding variables, or confounders, are variables that are correlated with both the explanatory variable and the response variable.  These variables are also known as lurking variables, because they are not always easily seen.    
+  Confounding variables, or confounders, are variables that are correlated with both the explanatory variable and the response variable.  These variables are also known as lurking variables, because they are not always easily seen.
   \end{block}
 \end{frame}
 
@@ -660,4 +671,3 @@ Labeling variables as explanatory and response does not guarantee the relationsh
 \end{frame}
 
 \end{document}
-
