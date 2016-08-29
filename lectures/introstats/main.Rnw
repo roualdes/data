@@ -335,7 +335,7 @@ This is technically called the unbiased sample variance -- we'll mention bias a 
 
 \begin{frame}[fragile]
   \frametitle{Sample Standard Deviation, in \texttt{R}}
-  \texttt{R} will happily do this calculation for you.
+  \texttt{R} will happily do calculate the $s$, the sample standard deviation, for you.
 
 <<>>=
 sd(email$num_char) # sample Standard Deviation

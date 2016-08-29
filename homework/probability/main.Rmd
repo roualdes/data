@@ -1,0 +1,19 @@
+---
+title: "Homework 02"
+output: html_document
+---
+
+Due date: 2016-09-09
+
+1. The airline company FlyMoar claims that of regularly scheduled flighs, departures and arrivals are on time $83$\% and $82$\% of the time, respectively.   The probability that a flight arrives and departs on time is $78$\%.
+    a. What is the probability that one of FlyMoar's flights arrived on time given that it departed on time?
+    b. What is the probability that one of FlyMoar's flights departed on time given that it arrived on time?
+
+2. $70$\% of the light aircraft that disappear while in flight in a certain county are subsequently discovered.  Of the aircraft that are discovered, $60$\% have an emergency locator, whereas $10$% of the aircraft not discovered have such a locator.  Suppose a light aircraft disaapears while in flight.
+    a. What is the probability that it has an emergency locator and it will not be discovered?
+    b. What is the probability that it has an emergency locator?
+    c. If it has an emergency locator, what is the probability that it will not be discovered?
+
+3. Suppose a card is drawn from a standard deck of cards.  Let $A$ be the event that the card drawn is an eight, and $B$ be the event that the card drawn is an ace.  Are these two events independent?
+
+4. Using R, simulate the probability of sampling a vowel from the alaphabet?  How close is your approximation?  How could you ensure your approximation is closer to the true answer?  Hint: ?letters, re: Lecture on Introduction to Probability, slide Probability, example
