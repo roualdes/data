@@ -1,4 +1,4 @@
-## Lab Probability; Due: 2016-09-05
+## Lab Probability; Due: 2016-09-06
 
 ## 1. re slide: probability.pdf -- Sample Space, examples
 ## a survey about people's belief in the future lifespan of PHP
