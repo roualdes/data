@@ -1,0 +1,580 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Random Variables}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Random Variables}
+\begin{frame}
+  \frametitle{Random Variables}
+Statistics is formed around the idea of a \textbf{random variable}, which means something a bit different than we normally think of when we use the word variable.
+
+\begin{block}{random variable}
+  A random variable is a variable that has a single numerical value, determined by chance, for each outcome of a procedure.
+\end{block}
+\end{frame}
+
+\subsection{Examples}
+
+\begin{frame}
+  \frametitle{Random Variables, examples}
+  Some random variables
+
+  \begin{itemize}
+  \item<1-> $\ldots$
+  \item<2-> adults heights
+  \item<3-> number of hacked Gmail accounts per week
+  \item<4-> time until your website crashes
+  \item<5-> current price of DJIA
+  \item<6-> $\ldots$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Random Variables, plotted}
+<<cache=TRUE, fig.align="center", fig.width=3, fig.height=2>>=
+df <- data.frame(x=sample(1:6, 100000, replace=TRUE))
+ggplot(df) + geom_bar(aes(x=x, y=..prop..))
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Random Variables Types}
+As before with different types of variables, we again have different types of random variables.
+  \begin{block}{discrete}
+    A discrete random variable has a sample space that is at most countable.
+  \end{block}
+
+\pause  \begin{block}{continuous}
+        A continuous random variable has a sample space that can take on any value within a given interval.
+  \end{block}
+\end{frame}
+
+\subsection{Discrete}
+\begin{frame}
+  \frametitle{Discrete Random Variable, example}
+A \textbf{discrete random variable} is often (but not always) described using a table.  Such tables denote the values the random variable can take on and the probability of each value.  Consider the random variable $X$ (capitlized) that takes on the following values $x$ (lower case).
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|cccc}
+    $x$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    $P(X = x)$ & $0.4$ & $0.3$ & $0.2$ & $0.1$ \\
+  \end{tabular}% example 3.2-3
+\end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability Mass Function}
+We call the function that describes an arbitrary discrete random variable $X$, the \textbf{probability mass function}.
+
+\begin{block}{probability mass function}
+  The PMF of a discrete random variable $X$ lists the probabilities associated with each value $x$ the random variables $X$ takes on.  % definition 2.3-2;
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{PMF, a simpler example}
+We should now start thinking of all simple examples of discrete random variables in terms of its PMF.  For instance, instead of infinitely flipping a coin, we maintain the following function
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|cc}
+    $x$ & $1$ (head) & $0$ (tail) \\
+    \hline
+    $P(X = x)$ & $0.5$ & $0.5$  \\
+  \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Discrete Random Variable, example}
+Consider again, the random variable $X$ from above (not the coin).  What is $P(X \leq 3)$?
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|cccc}
+    $x$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    $P(X = x)$ & $0.4$ & $0.3$ & $0.2$ & $0.1$ \\
+  \end{tabular} % example 3.2-3, what is the CDF?
+\end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cumulative Distribution Function}
+Probabilities of events of the form $\{X \leq x\}$ are defined generally with the term \textbf{cumulative distribution function}, for both discrete and continuous random variables.
+
+\begin{block}{cumulative distribution function}
+  The CDF of a random variable $X$ is defined to be $F_X(x) = P(X \leq x)$, for all numbers $x$.
+\end{block} % often of interest is defintion 3.2-4; and general (discrete/continuous) notation
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cumulative Distribution Function, example}
+What then is the CDF of the random variable $X$ above?
+\begin{table}
+  \centering
+  \begin{tabular}{c|cccc}
+    $x$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    $F_X(x)$ \only<2->{ & $0.4$ & $0.7$ & $0.9$ & $1.0$} \\
+  \end{tabular} % example 3.2-3, what is the CDF?
+\end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Notes on PMF}
+Some notes on PMFs
+\begin{itemize}
+\item<1-> $P(X = x) \geq 0$, for all $x$
+\item<2-> $\sum_{x \in \mathcal{S}_X} P(X = x) = 1$
+  \begin{itemize}
+  \item<3-> re CDF, $F_X(\infty) = 1$.
+  \end{itemize}
+\item<4-> $P(a < X \leq b) = \sum_{a < x_i \leq b} P(X = x_i) = F(b) - F(a)$
+\item<5-> watch the inequalities, $P(X \leq 3) \ne P(X < 3) = P(X \leq 2)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{PMF, another one}
+  <<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+  k <- 0:9
+  df <- data.frame(x=k, y=dbinom(k, 9, 0.65))
+  ggplot(data=df, aes(factor(x), y)) + geom_bar(stat="identity") + labs(x="x", y="P(X = x)")
+  @
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Parameters}
+  In statistics, we hypothesize that a population of interest follows the known pattern associated with a random variable.  Then we simply work with the function that describes the random variable.  For instance, a coin flip represented by the random variable $X$, where we denote heads by $1$ and tails by $0$, has expected value
+
+\[  1\cdot 0.5 + 0\cdot 0.5 = 0.5 \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Parameters}
+  The formula above is simply multiplying all possible outcomes by their respective probabilities (as assigned by the PMF that we assume fits fair coin flipping) and adding everything up.  We call this idea the \textbf{expected value}.
+
+\[ 1\cdot P(X = 1) + 0\cdot P(X = 0) \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expected Value, discrete random variable}
+Let's generalize the idea of the expected value of a coin flip to all discrete random variables.  The population mean of a discrete random variable is called the expected value.
+
+\begin{block}{expected value}
+  The expected value of a (discrete) random variable $X$ is defined to be
+  \[ E(X) = \sum_{x \in \mathcal{S}_X} x\cdot P(X = x). \]
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expected Value, discrete random variable, example}
+What is the expected value of the random variable we assume fits die rolling?
+
+\begin{align*}
+  E(X) & = \sum_{x \in \mathcal{S}_X} x\cdot P(X = x) \\
+  \only<2->{& = 1\cdot P(X = 1) + 2\cdot P(X = 2) + \ldots + 6\cdot P(X = 6)} \\
+  \only<3->{& = 1/6 + 2/6 + \ldots + 6/6} \\
+\end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expected Value, notes}
+
+Note about the expected value
+\begin{itemize}
+\item<2-> the most common \textbf{parameter} in statistics,
+\item<3-> the population analogue to sample mean; a measure of center
+\item<4-> this is essentially where the sample mean comes from.  We have $n$ randomly sampled (all occur with equal probability) outcomes, so that $P(X = x_i) = 1/n$.
+
+\[ \bar{X} = \sum_{i=1}^n x_i P(X = x_i) \]
+\end{itemize}
+
+\end{frame}
+
+\subsection{Continuous}
+
+\begin{frame}
+  \frametitle{Probability Density Function}
+  The continuous analogue to the PMF is the \textbf{probability density function}.
+
+  \begin{block}{probability density function}
+    The PDF of a continuous random variable $X$ is a nonnegative function $f_X$ under which we measure probability on intervals of interest, say $[a, b]$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probability Density Function}
+  The PDF of the random variable $Y$ allows us to calculate, $P(a < Y < b)$.  Specifically,
+
+\[ P(a < Y < b) = \int_a^b f_Y(y) dy.\]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cumulative Distribution Function}
+  The CDF of the continuous random variable $Y$ is defined similarly,
+
+\[ F_Y(y) = \int_{-\infty}^y f_Y(s) ds.\]
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Notes on PDF}
+Some notes on PDFs
+\begin{itemize}
+\item<1-> $f_Y(y) \geq 0$, for all $y$
+\item<2-> $\int_{-\infty}^{\infty} f_Y(y) dy = 1$
+  \begin{itemize}
+  \item<3-> re CDF, $F_Y(\infty) = 1$.
+  \end{itemize}
+\item<4-> $P(Y = y) = 0$, for all $y$
+\item<5-> $P(a < Y \leq b) = \int_a^b f_Y(y) dy = F(b) - F(a)$
+\item<6-> inequalities don't matter, $P(Y \leq 3) = P(Y < 3)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{PDF, via picture}
+  <<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+  x <- seq(-4, 4, length.out=1001)
+  df <- data.frame(x=x, y=dnorm(x))
+  qplot(x, y, data=df, geom="line", ylab=expression(f[X](x)))
+  @
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Expected Value, continuous random variable}
+The expected value for continuous random variables is defined similarly, but with integrals in place of sums.
+
+\[ E(X) = \int_{-\infty}^{\infty} x\cdot f(x) df \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Properties of Expected Value}
+The properties of expected value all follow from clever mathematics and the linearity of sums and integrals.  Suppose $h(X)$ is a function on $\mathcal{S}_X$.
+
+\begin{itemize}
+\item<2-> $E(h(X)) = \sum_{x \in \mathcal{S}_X} h(x) \cdot P(X = x)$
+\item<3-> $E(h(X)) = \int_{-\infty}^{\infty} h(x) \cdot f_X(x) dx$
+\item<4-> If $h(X) = aX + b$, then $E(h(X)) = aE(X) + b$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Motivating Variance}
+  The population variance and standard deviation are derived from the exact same strategy.  We assume a random variable with a known function describes the population of interest.  From this function we can derive the quantities of interest.  The variance is second most common \textbf{parameter} of random variables.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance}
+The population variance is defined via the expected value and the expected value property about any function $h$.
+
+\begin{block}{variance}
+  The variance is defined to be
+
+\[ Var(X) = \sigma_X^2 = E[(X - E(X))^2]. \]
+\end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance and Standard Deviation}
+  The relationship between the population variance and the population standard deviation is, again, simple.
+
+  \begin{block}{standard deviation}
+    The standard deviation is defined to be
+\[ \sigma_X = \sqrt{\sigma_X^2}. \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Properties of Variance}
+  Let's fill these in as practice with expectations later this week.
+  % short-cut algebra (not computer) formula
+  % Var(aX + b)
+\end{frame}
+
+\section{Distributions}
+
+\begin{frame}
+  \frametitle{Towards Distributions}
+  We're finally making our way towards official (named) probability models -- the ones we referenced earlier to stand in place of limiting relative frequency.  Probability distributions have common, named forms that vary by unkown \textbf{parameters}.  Different experiments, even if they follow the same form, may have different parameters.
+\end{frame}
+
+\subsection{Discrete Distributions}
+
+\begin{frame}
+  \frametitle{Bernoulli Distribution}
+One of the simpler discrete distributions is the \textbf{Bernoulli} random variable.  The Bernoulli random variable describes experiments that have only two outcomes, and the probability of success happens with constant probability $p$.  Some examples of Bernoulli trials
+
+\begin{itemize}
+\item<2-> coin flipping
+\item<3-> defective (or not) web page
+\item<4-> my jumping off of the roof and breaking (or not) my leg
+\item<5-> $\ldots$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bernoulli Distribution}
+
+The expected value of the random variable $X \sim Bernoulli(p)$ is simple to calculate.  We'll calculate its variance on Friday.
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|cc}
+    $x$ & $0$ & $1$ \\
+    \hline
+    $P(X=x)$ & $1-p$ & $p$
+  \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bernoulli Distribution}
+  It's also common to see the Bernoulli distribution written in terms of its probability mass function (PMF)
+
+\[ f(x|p) = p^x(1-p)^{1-x}, \]
+
+for $x \in \{0,1\}$.
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{PMF, Uniform Discrete}
+  The discrete uniform distribution $X \sim \mathcal{U}(a, b)$ has PMF
+
+\[ f(x|a,b) = \frac{1}{b-a+1} = \frac{1}{n}, \]
+
+where $n = b-a+1$.
+\end{frame}
+
+\subsection{Continuous Distributions}
+
+\begin{frame}
+  \frametitle{PDF, Uniform Continuous}
+The continuous uniform distribution $X \sim \mathcal{U}(a,b)$ has probability density function (PDF)
+
+\[ f(x|a,b) = \begin{cases}
+      \frac{1}{b-a} & x \in [a,b] \\
+      0 & \text{otherwise}
+   \end{cases}
+\]
+\end{frame}
+
+\begin{frame}
+  \frametitle{PDF, Exponential}
+  The exponential distribution $X \sim Exp(\lambda)$ has PDF
+
+\[ f(x|\lambda) =
+  \begin{cases}
+    \lambda \exp{(-\lambda x)} & x \geq 0 \\
+    0 & x < 0
+  \end{cases}
+\]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exponential, notes}
+  The exponential distribution is often used to compute the survival time of things.
+
+<<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+n <- 101
+lambda <- rep(c(1, 1/2, 1/10), each=n)
+x <- rep(seq(0, 15, length.out=n), each=length(lambda))
+df <- data.frame(x=x, y=dexp(x, lambda), l=as.character(lambda))
+qplot(x, y, data=df, geom="line", ylab="exponential density function", colour=l) + guides(colour=guide_legend(title=expression(1/lambda)))
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{PDF, Normal}
+  The normal (Gau$\beta$ian) distribution $X \sim \mathcal{N}(\mu, \sigma^2)$ has PDF
+
+\[ f(x|\mu,\sigma) = (2\pi \sigma^2)^{-1/2}\exp{\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\}}. \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Normal, notes}
+
+Notes on the normal distribution
+\begin{itemize}
+\item<2-> area under the curve is equal to 1,
+\item<3-> unimodal (one hump)
+\item<4-> perfectly symmetric about $\mu$,
+\item<5-> parameters: centered at $\mu$ with standard deviation $\sigma$,
+\item<6-> often $\mu = 0$, shifts the distribution,
+\item<7-> often $\sigma = 1$, scales the distribution,
+\item<8-> we write in short hand $N(\mu, \sigma^2)$,
+\item<9-> use $Z$ to denote $N(0,1)$
+\item<10-> \href{https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss}{Gau$\beta$}ian distribution
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Normal, notes}
+  The normal distribution shows up everywhere.
+
+<<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+n <- 101
+x <- seq(-4, 4, length.out=n)
+df <- data.frame(x=x, y=dnorm(x))
+qplot(x, y, data=df, geom="line", ylab="N(0,1)")
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Normal, notes}
+Normal distribution with different parameters.
+
+<<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+n <- 1001
+x <- seq(1, 9, length.out=n)
+df <- data.frame(x=x, y=dnorm(x, mean=5, sd=0.2))
+qplot(x, y, data=df, geom="line", ylab="N(5, 0.04)")
+@
+\end{frame}
+
+\section{Parameters of Distributions}
+% TODO add parameters of distribution functions PSR 3.3
+
+\begin{frame}
+  \frametitle{Parameters of Distributions}
+  Statistics assumes the data we observe, dependent on its type and support set, follow random variables that have known functional forms with unkown parameters.  From the sampled data, via the random variable's function (that we know), we estimate the parameters of the function.  Specifically, we calculate the parameters that would be most likely to generate the data we saw.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parameters of Distributions, more tangibly}
+  If we observe data $x$ that we assume was generated from the random variable $X \sim N(\mu, \sigma^2)$, then we can calculate the sample mean (estimating the population mean) and the sample variance (estimating the population variance).
+
+  \begin{table}
+    \centering
+    \begin{tabular}{c|c}
+      sample (statistic) & population (parameter) \\
+      \hline
+      $\bar{X}$ & $E(X), \mu$ \\
+      $\hat{\sigma}^2$ & $Var(X), \sigma^2$ \\
+      $\hat{\sigma}$ & $\sigma$ \\
+      $\ldots$ & $\ldots$ \\
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Expected Value, Bernoulli Distribution}
+The parameter of most interest with Bernoulli random variables is the probability of success $p$.  We estimate $p$ with $\bar{X}$\footnote{$E(X)$ is also sometimes called $\hat{p}$ for Bernoulli random variables}.  Since $\bar{X}$ is the sample analogue of $E(X)$, it makes sense that $\bar{X}$ estimates $p$.
+
+\[ E(X) = 1\cdot p + 0\cdot (1-p) = p \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance, Bernoulli Distribution}
+The variance of the Bernoulli distribution is
+
+\[ Var(X) = p(1-p). \]
+
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{Parameters, Exponential Distribution}
+%   \begin{itemize}
+%   \item<1-> Expected value, $1/\lambda$
+%     \begin{itemize}
+%     \item<2-> The expected value for the exponential distribution is $E(X) = 1/\lambda$.  Since $\bar{X}$ estimates $E(X)$, we can assume (correctly) that $1/\bar{X}$ estiamtes $\lambda$.
+%     \end{itemize}
+%   \item<3-> Variance, $1/\lambda^2$
+%   \end{itemize}
+
+% \end{frame}
+
+\begin{frame}
+  \frametitle{Expected Value, Normal Distribution}
+
+  \begin{itemize}
+  \item<1-> Expected value, $\mu$
+    \begin{itemize}
+    \item<2-> The expected value for the normal distribution is $E(X) = \mu$.  Since $\bar{X}$ is the sample analogue of $E(X)$, we know that $\bar{X}$ estimates $E(X) = \mu$.
+    \end{itemize}
+  \item<3-> Variance, $\sigma^2$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parameters of Distributions, summary}
+Let's summarize the notation we just spoke about.
+
+\begin{itemize}
+\item<1-> Bernoulli
+  \begin{itemize}
+  \item<1-> $\bar{X}( = \hat{p})$ estimates $E(X) = p$.
+  \item<2-> $\hat{\sigma}^2$ (or $s^2$) estimates $Var(X) = p(1-p)$.
+  \end{itemize}
+%\item<3-> Exponential
+  % \begin{itemize}
+  % \item<3-> $\bar{X} = 1/\hat{\lambda}$, so $1/\bar{X}$ estimates $1/\lambda$.
+  % \item<4-> $\hat{\sigma}^2$ (or $s^2$) estimates $Var(X) = \sigma^2 = 1/\lambda^2$.
+  % \end{itemize}
+\item<3-> Normal
+  \begin{itemize}
+  \item<4-> $\bar{X}( = \hat{\mu})$, estimates $E(X) = \mu$.
+  \item<5-> $\hat{\sigma}^2$ (or $s^2$) estimates $Var(X) = \sigma^2$.
+  \end{itemize}
+\end{itemize}
+
+
+\end{frame}
+
+\section{Take Away}
+
+% TODO add summary points, lead into R code of the above
+
+\begin{frame}
+  \frametitle{Take Away}
+  \begin{itemize}
+  \item<1-> Random variables are the main underlying object of interest to statisticians.
+  \item<2-> RVs allow us to calculate probability statements: from flipping a coin to probability we encounter a person taller than $7'9"$, without observing the limiting relative frequency.
+  \item<3-> RVs have distribution functions that we assume describe populations of interest,
+  \item<3-> these distributions have known functional forms indexed by unkown parameters.
+  \item<4-> Our goal is to estimate these parameters from sample data.
+  \end{itemize}
+\end{frame}
+
+
+\section{References}
+\nocite{Akritas:2016}
+\nocite{Dukkipati:2013}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
