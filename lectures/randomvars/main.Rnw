@@ -337,7 +337,7 @@ One of the simpler discrete distributions is the \textbf{Bernoulli} random varia
 \begin{itemize}
 \item<2-> coin flipping
 \item<3-> defective (or not) web page
-\item<4-> my jumping off of the roof and breaking (or not) my leg
+\item<4-> me jumping off of the roof and breaking (or not) my leg
 \item<5-> $\ldots$
 \end{itemize}
 \end{frame}
