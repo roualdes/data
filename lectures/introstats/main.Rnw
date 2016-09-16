@@ -88,7 +88,7 @@ library(ggplot2)
   Statistics seeks to describe characteristics of a \textbf{population} using a \textbf{random sample} from that population.  To do so we will study how to analyze and interpret data.
 
   \begin{block}{Nota Bene (N.B.)}
-    Random samples naturally lead to \textbf{sampling variability} -- the fact that characterstics of interest will vary from sample to sample.
+    Random samples naturally lead to \textbf{sampling variability} -- the fact that characteristics of interest will vary from sample to sample.
   \end{block}
 \end{frame}
 
@@ -127,7 +127,7 @@ library(xtable)
 \begin{frame}[fragile]
   \frametitle{Data Types in \texttt{R}}
   \begin{block}{categorical}
-    \texttt{R} calls a categorical variable a factor, and maintains the word \textbf{levels} to mean to the values the factor can take on.
+    \texttt{R} calls a categorical variable a factor, and maintains the word \textbf{levels} to mean the values the factor can take on.
   \end{block}
 
   <<>>=
@@ -159,7 +159,7 @@ is.factor(factor(email$spam)) # coerce to factor
 
 \begin{frame}
 \frametitle{Data Storage in \texttt{R}}
-  The data in Table~\ref{tab:email} represent a \textbf{data frame}, which is The way to organize data for statistical analysis\footnote{The article \textit{Tidy Data} by \citet{Wickham:2014a} provides an excellent, and thorough, discussion of proper data organization.}.  Each row represents a new \textbf{observation} (or \textbf{case}) and each column represents a new \textbf{variable}.  More observations are added to the data set by appending rows, and more variables are added by appending columns.
+  The data in Table~\ref{tab:email} represent a \textbf{data frame}, which is the way to organize data for statistical analysis\footnote{The article \textit{Tidy Data} by \citet{Wickham:2014a} provides an excellent, and thorough, discussion of proper data organization.}.  Each row represents a new \textbf{observation} (or \textbf{case}) and each column represents a new \textbf{variable}.  More observations are added to the data set by appending rows, and more variables are added by appending columns.
 \end{frame}
 
 \section{Summary Statistics}
@@ -200,7 +200,7 @@ Different data types require different statistics.
 \begin{frame}
   \frametitle{Proportion}
 
-The \textbf{sample proportion} summarizes multiple observations of a categorical variable: divide the number of ``successes'' by the number of observations;
+The \textbf{sample proportion} summarizes multiple observations of a categorical variable; divide the number of ``successes'' by the number of observations:
 
 \[ \hat{p} = \frac{\# successes}{\# observations}. \]
 \end{frame}
@@ -217,7 +217,7 @@ phat == mean(email$spam)
 
  \begin{frame}
    \frametitle{Mean}
-The \textbf{sample mean} gives a summary of the middle of  multiple observations of a numeric variable: add up all the numbers and divide by however many there are,
+The \textbf{sample mean} gives a summary of the middle of  multiple observations of a numeric variable; add up all the numbers and divide by however many there are:
 
 \[ \bar{x} = \frac{\sum_{i=1}^n x_i}{n}. \]
  \end{frame}
@@ -308,7 +308,7 @@ summary(email$num_char)
 
 \begin{frame}
   \frametitle{Variance / Standard Deviation}
-The most common measures of spread are the \textbf{variance} and the \textbf{standard deviation}.  Think of the varaince as the average squared distance away from the mean.  The standard deviation is the square root of the variance, which essentially gives us interpretable units (no longer squared).
+The most common measures of spread are the \textbf{variance} and the \textbf{standard deviation}.  Think of the variance as the average squared distance away from the mean.  The standard deviation is the square root of the variance, which essentially gives us interpretable units (no longer squared).
 \end{frame}
 
 \begin{frame}
