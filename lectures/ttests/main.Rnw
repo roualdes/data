@@ -1,0 +1,319 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+@
+
+\title{$t$-tests}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Recap}
+\begin{frame}
+  \frametitle{Recap: Inference}
+  Statistical inference revolves around a common theme: assume $Y$ is a random variable such that $E(Y) = \mu$ and $Var(Y) = \sigma^2$.  We estimate and/or make statements about $\mu$ with
+
+  \[ \bar{Y} \pm t_{df}^* \cdot s_{\bar{Y}},  \quad and\quad\quad t = \frac{\bar{Y} - \mu_0}{s_{\bar{Y}}}.\]
+\end{frame}
+
+\section{One Sample}
+
+\subsection{one sample}
+\begin{frame}[fragile]
+  \frametitle{One Sample t-test}
+  We have already been doing one sample t-tests and confidence intervals.
+
+<<eval=FALSE>>=
+## pseudocode
+## 95% CI for mu
+xbar + qt(c(0.025, 0.975), df)*s/sqrt(n)
+
+## test statistic for hypothesis test
+t <- (xbar - mu0)/(s/sqrt(n))
+
+## p-value for two sided test, H_1: mu != m
+2*(1-pt(abs(t), df))
+@
+\end{frame}
+
+\subsection{paired data}
+
+\begin{frame}
+  \frametitle{Paired Data, definition}
+
+  \textbf{Paired data} are somehow intimately connected.
+
+  \begin{block}{Paired Data}
+    Two sets of observations are paired if each observation in one set has a special correspondence or connection with exactly one observation in the other data set.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paired Data, by example}
+  Tell me whether or not these data are paired.
+
+  \begin{itemize}
+  \item<2-> two website's price for the same book
+  \item<3-> eye sight ratings by person
+  \item<4-> lines of code by program
+  \item<5-> upper verse lower bird beak lengths
+  \item<6-> weights of male and female babies
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paired Data, t-test}
+
+If the data are paired, their difference has direct and interpretable meaning both in english and in statistics; $X_{i,diff} = X_{i,a} - X_{i,b}$ has meaning.  Therefore
+
+\[ \bar{X}_{diff} \quad \text{ and } \quad s_{\bar{X}_{diff}} \]
+
+are simply fancy ways to write new random variables.
+\end{frame}
+
+\subsection{paired example}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+  Are textbooks actually cheaper online?  Compare the price of textbooks at the University of California, Los Angeles' (UCLA's) bookstore and prices at Amazon.com.  Seventy-three UCLA courses were randomly sampled in Spring 2010.
+
+<<>>=
+books <- read.csv("https://roualdes.us/data/books.csv")
+## look at data in RStudio
+## what plot should we make
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+  Plot the data!
+
+<<eval=FALSE>>=
+suppressMessages(library(ggplot2))
+qplot(1, uclaNew - amazNew, data=books, geom="boxplot")
+## or
+## qplot(uclaNew, amazNew, data=books) +
+##     geom_abline(intercept=0, slope=1)
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Paired Data, one sample t-test example}
+  Calculate and interpret a $95$\% confidence interval of the difference in Amazon.com versus UCLA's book prices.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+<<>>=
+suppressMessages(library(dplyr))
+bs <- mutate(books,
+             diff=uclaNew-amazNew)$diff # unpack this
+anyNA(bs) # any NAs?
+n <- length(bs)
+mean(bs) + qt(c(0.025, 0.975), n-1)*sd(bs)/sqrt(n)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+
+We are $95$\% confident that the true difference in price between Amazon.com and UCLA's books is between \$$\Sexpr{round(mean(bs) + qt(c(0.025), n-1)*sd(bs)/sqrt(n), 2)}$ and \$$\Sexpr{round(mean(bs) + qt(c(0.975), n-1)*sd(bs)/sqrt(n), 2)}$.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+  Set up, evaluate, and conclude in context a hypothesis test at $\alpha = 0.05$.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+  The natural hypotheses are
+
+\[ H_0: \mu_{diff} = 0 \text{ versus } H_1: \mu_{diff} \ne 0. \]
+
+<<>>=
+t <- (mean(bs) - 0) / (sd(bs)/sqrt(n)) # test statistic
+2*(1-pt(abs(t), n-1)) # p-value
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Paired Data, one sample t-test example}
+Becuase p-value$<0.0001 < \alpha = 0.05$, we reject $H_0$.  There is insufficient evidence to claim that Amazon.com and UCLA's book prices are the same.
+\end{frame}
+
+\section{Two Sample}
+
+\begin{frame}
+  \frametitle{Two Sample t-test}
+Two sample t-tests estimate the difference between two population means from two independent samples of data.  We estimate $\mu_a - \mu_b$ with the point estimator $\bar{X}_a - \bar{X}_b$.
+\end{frame}
+
+\subsection{standard error}
+
+\begin{frame}
+  \frametitle{Two Sample t-test, standard error}
+  We estimate the variance of the point estimator $\bar{X}_a - \bar{X}_b$, namely $Var(\bar{X}_a - \bar{X}_b) = \sigma^2_{\bar{X}_a - \bar{X}_b}$, with
+
+\[ s^2_{\bar{X}_a - \bar{X}_b} = \frac{s^2_a}{n_a} + \frac{s^2_b}{n_b}. \]
+\end{frame}
+
+\subsection{degrees of freedom}
+
+\begin{frame}
+  \frametitle{Two Sample t-test, degrees of freedom}
+  It's common to use a consertive approximation for the degrees of freedom for a t-test of the difference of two independent means,
+
+\[ df = \min{(n_a - 1, n_b - 1)}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Two Sample t-test, pooled standard deviation}
+  Sometimes it is reasonable to assume that the two populations of interest share a common variance.  In this case, we can estimate $\sigma^2_{\bar{X}_a - \bar{X}_b}$ with (something close to the average of the variances)
+
+\[ s^2_{pooled} = \frac{s^2_a (n_a - 1) + s^2_b (n_b - 1)}{n_a + n_b - 2}, \]
+
+with $df = n_a + n_b - 2$.
+
+\end{frame}
+
+\subsection{two sample example}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+Consider the data set \texttt{ape::carnivora}.  Calculate a $98$\% confidence interval for the difference in mean longevity between the two SuperFamilies Caniformia and Feliformia.
+<<>>=
+suppressMessages(library(ape))
+data(carnivora)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tangent on \texttt{NA}s}
+Some helpful functions to help you avoid \texttt{NA}s in \texttt{R} are
+
+<<eval=FALSE>>=
+anyNA()
+is.na()
+na.omit()
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+   A $98$\% CI, difference in longevity by Caniformia and Feliformia.
+
+<<>>=
+(d <- carnivora %>%
+    select(SuperFamily, LY) %>% # only two columns
+    na.omit() %>% # be careful with placement
+    group_by(SuperFamily) %>%
+    summarise(n=n(), v=var(LY), xbar=mean(LY)))
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+   A $98$\% CI, difference in longevity by Caniformia and Feliformia.
+
+<<>>=
+xbarC <- 192.4583; xbarF <- 171.96
+nC <- 24; nF <- 25
+vC <- 7139.216; vF <- 2576.04
+tstar <- qt(c(0.01, 0.99), min(c(nC, nF)-1))
+(xbarC - xbarF) + tstar*sqrt(vC/nC + vF/nF)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+We are $98$\% confident that the population difference in mean longevity between the SuperFamlies Caniformia and Feliformia is between $\Sexpr{round((xbarC - xbarF) + qt(0.01, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ and $\Sexpr{round((xbarC - xbarF) + qt(0.99, min(c(nC, nF)-1))*sqrt(vC/nC + vF/nF), 2)}$ months.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Two Sample t-test, example}
+  Set up, evaluate, and conclude in context a hypothesis test at $\alpha = 0.02$.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+  The natural hypotheses are
+
+\[ H_0: \mu_C = \mu_F \text{ versus } H_1: \mu_C \ne \mu_F. \]
+<<>>=
+t <- ((xbarC - xbarF) - 0) / sqrt(vC/nC + vF/nF) # test statistic
+2*(1-pt(abs(t), min(c(nC, nF)-1))) # p-value
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Two Sample t-test, example}
+Because p-value $=\Sexpr{round(2*(1-pt(abs(t), min(c(nC, nF)-1))), 2)} > \alpha = 0.02$, we fail to reject $H_0$.  There is insufficient evidence to claim that the true difference in mean longevity between Caniformia and Feliformia is different.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tangent on \texttt{R} code}
+  The above calculations were done for clarity, not cleanliness of code.  Here's what I would have done.
+
+<<>>=
+# Confidence Interval
+with(d, { # d is the summaraised data frame
+    tstar <- qt(c(0.01, 0.99), min(n-1))
+     -diff(xbar) + tstar*sqrt(sum(v/n))})
+
+# p-value
+with(d, {t <- -diff(xbar)/sqrt(sum(v/n))
+    2*(1-pt(abs(t), min(n-1)))})
+@
+\end{frame}
+
+\section{Take Away}
+
+\begin{frame}
+  \frametitle{Take Away}
+  We're just playing a game: find parameters of interest, insert point estimates, and calculate the standard error of the estimators.
+  \begin{itemize}
+  \item<2-> Paired data
+    \begin{itemize}
+    \item<2-> Two variables are intimately connected $\Rightarrow$ their difference has meaning
+    \item<3-> create one variable from the two $\Rightarrow$ one sample t-test
+    \end{itemize}
+
+  \item<4-> Two sample data
+    \begin{itemize}
+    \item<4-> Two variables are independent
+    \item<5-> Point estimate is difference of means
+    \item<6-> Standard error follows from independence
+    \end{itemize}
+
+  \item<7-> CLT via standardization is the real workhorse.
+  \end{itemize}
+
+\end{frame}
+\section{References}
+\nocite{Diez:2015,Wickham:2009}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
