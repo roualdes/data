@@ -1,0 +1,29 @@
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{caption}[numbered]
+\usepackage{url,lmodern}
+\usepackage{amsmath,amsfonts,amssymb,graphicx,
+  amsthm,subfigure,multirow,hyperref,textcomp,natbib}
+\usepackage[iso,american]{isodate}
+\usepackage{listings}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\defbeamertemplate*{footline}{infolines theme} { \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author
+        in head/foot}%
+      \usebeamerfont{author in
+        head/foot}\insertshortauthor%~~(\insertshortinstitute)
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title
+        in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date
+        in head/foot}%
+      \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+      \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}}%
+  \vskip0pt%
+}

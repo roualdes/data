@@ -1,0 +1,49 @@
+---
+title: "Homework 01"
+output: html_document
+---
+
+Due date: 2016-09-02
+
+1. Download and install [R](https://www.r-project.org/) and then [RStudio](https://www.rstudio.com/).  Then install some packages in R, using the following code.
+
+```{r, eval=FALSE}
+install.packages(c("ggplot2", "dplyr", "ape")) # copy and paste this line
+```
+
+Here's an example of loading an R package,
+
+```{r, eval=FALSE}
+library(ggplot2)
+```
+
+Ensure these three R packages are properly installed by loading each, very little should happen, but mainly no errors should occur.
+
+2. Pretend you are interested in the following and provide a reasonable statement about some potential difficulties of randomly sampling
+  - Gmail users with the password, password;
+  - average shoe size of NBA players;
+  - average number of gold fish in U.S. households with greater than 2 children.
+
+3. For the three examples in 2., state what variable type would be observed and what statistic(s) might be of interest.
+
+3. Identify a possible lurking variable that might affect the shoe size of NBA players.
+
+4. Using the email dataset, provide R code and full sentences describing the results for each of the following
+  - load the data, which will create an R data frame;
+  - find the mean and median of the variable line_breaks;
+  - fint the mean (proportion) and median of the variable spam;
+  - make appropriate plots for line_breaks and spam.
+
+5. The following plot displays the relationship between body weight and brain weight of animals of the order Carnivora, from the dataset ape::carnivora.
+
+```{r, fig.height=3, fig.width=3, fig.align="center", echo=FALSE}
+library(ggplot2)
+library(ape)
+data(carnivora)
+qplot(SW, SB, data=carnivora)
+```
+
+  - Describe the relationship between these two variables.
+  - Relative to members of the order Carnivora, can we say that fatness directly causes brain weight to increase? Why or why not?
+  - Identify a potential lurking variable between the relationship of body to brain weight for members of the order Carnivora.
+  - Give the R code to reproduce, in full, this plot.
