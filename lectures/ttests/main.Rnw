@@ -75,7 +75,7 @@ t <- (xbar - mu0)/(s/sqrt(n))
   \item<2-> two website's price for the same book
   \item<3-> eye sight ratings by person
   \item<4-> lines of code by program
-  \item<5-> upper verse lower bird beak lengths
+  \item<5-> upper versus lower bird beak lengths
   \item<6-> weights of male and female babies
   \end{itemize}
 \end{frame}
