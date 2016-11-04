@@ -1,0 +1,28 @@
+---
+title: "Homework 06"
+author: "your name here"
+output: html_document
+---
+
+Due date: 2016-10-29.
+
+You are to perform a complete analysis of the following two datasets, using the most advanced techniques we've learned thus far in this class.  Full sentences and a knitted R markdown file are required.  Follow these steps for your analyses.
+
+a. Introduction: describe the data, with words and statistics, and explain what you are interested in about these data.
+b. Plot data: in one or two plots showcase the data and provide a plot meaningful to your analysis.
+c. Analyze data: describe what type of analysis you have performed on these data, detailing anything pertinent about the set or the setup for your analysis.
+d. Conclude: describe what results you have gleaned from the analysis.
+
+Hint.  Check out the help files of the following functions.
+
+a. R's function t.test
+b. dplyr's function filter
+
+```{r, eval=FALSE}
+?mean
+```
+
+Datasets.
+
+1. [Soybean](https://roualdes.us/data/soybean.txt)
+2. [Siblings](https://roualdes.us/data/siblings.txt)
