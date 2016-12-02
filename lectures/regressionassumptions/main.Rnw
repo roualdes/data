@@ -1,0 +1,342 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+lmData <- function(n, int=-1, sd=1, slope=pi, from=0, to=10) {
+    x = seq(from=from, to=to, length.out=n)
+    y = int + slope*x + rnorm(n, sd=sd)
+    data.frame(x=x, y=y)
+}
+
+nlmData <- function(n, sign=1, sd=10, from=0, to=5) {
+    x = seq(from=from, to=to, length.out=n)
+    y = sign*exp(x) + rnorm(n, sd=sd)
+    data.frame(x=x, y=y)
+}
+library(ggplot2)
+library(dplyr)
+@
+
+\title{Simple Linear Regression, Assumptions}
+\institute{CSU Chico, Math 314}
+\date{\today}
+\maketitle
+
+\frame {\frametitle{outline}
+  \tableofcontents
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\section{Recap}
+
+\begin{frame}
+  \frametitle{recap, linear regression assumptions}
+  There are four assumptions about linear regression,
+  \begin{itemize}
+  \item<2-> Linearity -- the data should show a linear trend,
+  \item<3-> Independent observations -- no two points are dependent on each other,
+  \item<4-> Constant Variability -- variation of points around least squares line remains roughly constant, and
+  \item<5-> Normality -- the residuals should be nearly normal,
+  \end{itemize}
+\pause  three of which are easy to check.
+\end{frame}
+
+\section{Checking Assumptions}
+\subsection{Linearity and Constant Variation}
+
+\begin{frame}
+  \frametitle{Residuals on Fitted Values}
+
+Scatter plots of (standardized) residuals on fitted values help you check the assumptions
+
+\begin{enumerate}
+\item linearity
+\item constant variation
+\end{enumerate}
+\end{frame}
+
+
+\subsubsection{Linearity}
+\begin{frame}[fragile]
+  \frametitle{Linearity, residuals on fitted values}
+  Good.
+  <<linreg, echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
+  data <- lmData(113)
+  fit <- lm(y~x, data=data)
+  qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
+        geom_hline(aes(yintercept=0))
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity, residuals on fitted values}
+  What do we like about the above plot?
+  \begin{itemize}
+  \item Linearity?  Yes, because no consistent pattern to the data.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Linearity, residuals on fitted values}
+  Imagine we fit linear regression to non-linear data.
+
+  <<nonlinear, echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
+  data2 <- nlmData(104)
+  qplot(x, y, data=data2) + stat_smooth(method="lm", se=FALSE)
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity, residuals on fitted values}
+  Bad. The residuals are not randomly scattered about, but instead have a clear pattern.
+
+  <<echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
+  nlfit <- lm(y~x, data=data2)
+  qplot(fitted(nlfit), rstandard(nlfit), xlab=expression(hat(y)), ylab="Residuals") +
+        geom_hline(aes(yintercept=0))
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity, residuals on fitted values}
+  Good.
+  <<echo=FALSE, fig.align="center", fig.width=2.7, fig.height=2.7>>=
+  data <- lmData(113)
+  fit <- lm(y~x, data=data)
+  qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
+        geom_hline(aes(yintercept=0))
+@
+
+\begin{itemize}
+\item Residuals show no clear pattern as a function of $\hat{y}$.
+\end{itemize}
+\end{frame}
+
+\subsubsection{Constant Variation}
+\begin{frame}[fragile]
+  \frametitle{Linearity and Constant Variation, residuals on fitted values}
+  What do we like about the above plot?
+  \begin{itemize}
+  \item Linearity?  Yes, because no consistent trend to the data.
+  \item Constant Variability?  Yes, because no (horizontal) megaphone/cone (nor alligator/pacman mouth).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Constant Variation, residuals on fitted values}
+  Imagine we fit linear regression to data with non-constant variability.
+  <<echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
+  vardata <- lmData(125, sd=seq(1, 10, length.out=125))
+  qplot(x, y, data=vardata) + stat_smooth(method="lm", se=FALSE)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Constant Variation, residuals on fitted values}
+  Bad. The residuals have non-constant variation along the fitted values.
+
+  <<echo=FALSE, fig.align="center", fig.width=3, fig.height=3>>=
+  vardata <- lmData(125, sd=seq(1, 10, length.out=125))
+  varfit <- lm(y~x, data=vardata)
+  qplot(fitted(varfit), rstandard(varfit), xlab=expression(hat(y)), ylab="Residuals") +
+        geom_hline(aes(yintercept=0))
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity and Constant Variation, residuals on fitted values}
+  Good.
+  <<echo=FALSE, fig.align="center", fig.width=2.7, fig.height=2.7>>=
+  data <- lmData(113)
+  fit <- lm(y~x, data=data)
+  qplot(fitted(fit), rstandard(fit), xlab=expression(hat(y)), ylab="Residuals") +
+        geom_hline(aes(yintercept=0))
+@
+
+\begin{itemize}
+\item residuals show no clear pattern as a function of $\hat{y}$, and
+\item all residuals have roughly equal (vertical) width.
+\end{itemize}
+\end{frame}
+
+\subsubsection{\texttt{R} code}
+
+\begin{frame}[fragile]
+  \frametitle{Residuals on Fitted Values}
+  To make plots of the residuals on the fitted values,
+  <<eval=FALSE>>=
+  ## fake code
+  model <- lm(y~x, data=data) # first fit a model
+  e <- rstandard(model) # vector of standardized residuals
+  yhat <- fitted(model) # vector of fitted values
+  qplot(yhat, e) + geom_hline(aes(yintercept=0))
+  @
+\end{frame}
+
+\subsection{Normality}
+
+\begin{frame}[fragile]
+  \frametitle{Histogram of Residuals}
+  To check the normality of the residuals, make a histogram of the residuals.  Ask, do they seem normal-ish?
+  <<echo=FALSE, fig.align="center", fig.height=3, fig.width=3>>=
+  qplot(rstandard(fit), geom="histogram", binwidth=1/3)
+  @
+\end{frame}
+
+\subsubsection{\texttt{R} code}
+
+\begin{frame}[fragile]
+  \frametitle{Histogram of Residuals }
+  To make histograms of standardized residuals,
+  <<eval=FALSE>>=
+  ## fake code
+  model <- lm(y~x, data=data) # first fit a model
+  e <- rstandard(model) # vector of standardized residuals
+  qplot(e, geom="histogram", binwidth=1/3)
+  @
+\end{frame}
+
+\subsection{Independence}
+
+\begin{frame}
+  \frametitle{Independence, residuals by time}
+If the information is available, you could plot residuals in the order that they were recorded, though this information is not always available.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Independence, up to you}
+Often times you simply need think carefully about how the data were collected.
+\end{frame}
+
+\subsection{Potential Outliers}
+
+\begin{frame}
+  \frametitle{Potential Outliers}
+  We could define outliers as observations that have large residuals.  Naturally then, the next question is, ``How large is large?''  We use the normality assumption to help answer this question.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Potential Outliers}
+   Let's standardize the residuals to the standard normal distribution, $N(0,1)$.  Since the mean of the residuals will always\footnote{This is a mathematical fact.} be equal to zero, we simply divide by the appropriate standard deviation
+\[ r_i = \frac{e_i}{\sigma_{e_i}}. \]
+
+The \texttt{R} function \texttt{rstandard} will do this for you.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Potential Outliers}
+  Any observation more than three standard deviations away from the mean could be considered an outlier.  It isn't difficult to find such standardized residuals, but it is difficult to find the observations these large residuals correspond to.
+
+<<eval=FALSE>>=
+## fake code
+e <- rstandard(model) # vector of standardized residuals
+## named vector of indices where expression is true
+which(abs(e) > 3)
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Potential Outliers, what to do}
+  Outliers in linear regression are tough.  Sometimes they heavily influence your least squares line.  General recommendations:
+
+  \begin{itemize}
+  \item<2-> fit linear regression with and without outliers
+  \item<3-> report qualitative and quantitative differences in the models
+  \item<4-> if you are convinced that the outlier is in error
+    \begin{itemize}
+    \item<4-> you better have good reason to justify its exclusion, state the reason
+    \item<5-> not liking the model with the point(s) included is not good reason
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{Example}
+
+\begin{frame}[fragile]
+  \frametitle{Elmhurst College Data}
+  Let's return to the data frame \texttt{openintro::elmhurst}.  First use linear regression to predict \texttt{gift\_aid} with \texttt{family\_income}, then calculate the data we need.
+<<>>=
+suppressMessages(library(ggplot2))
+url <- "https://roualdes.us/data/elmhurst.csv"
+elmhurst <- read.csv(url)
+fit <- lm(gift_aid ~ family_income, data=elmhurst)
+yhat <- fitted(fit)
+e <- rstandard(fit)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Residuals on Fitted Values}
+  <<fig.width=3, fig.height=3, fig.align="center">>=
+  qplot(yhat, e) + geom_hline(aes(yintercept=0))
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Histogram of Residuals}
+  <<fig.width=3, fig.height=3, fig.align="center">>=
+  qplot(e, geom="histogram", binwidth=1/3)
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Identifying Outliers}
+  Any outliers?
+
+  <<>>=
+  (idx <- which(abs(e) > 3))
+  (jdx <- which(abs(e) > 2))
+  (xout <- elmhurst[jdx, "family_income"])
+  (yout <- elmhurst[jdx, "gift_aid"])
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Identifying Outliers}
+  <<echo=FALSE, fig.height=3, fig.width=3, fig.align="center">>=
+  qplot(family_income, gift_aid, data=elmhurst,
+          ylab="Gift aid ($1000)",
+          xlab="Family income ($1000)") + stat_smooth(method="lm", se=FALSE) +
+        geom_point(data=data.frame(x=xout, y=yout), aes(x, y), colour="red")
+  @
+\end{frame}
+
+\section{Take Away}
+
+\begin{frame}
+  \frametitle{Take Away}
+  Checking model assumptions is not easy.  Plots, yet again, help.
+  \begin{itemize}
+  \item Use standardized residuals.
+  \item<2-> Common plots to help check assumptions
+    \begin{itemize}
+    \item<2-> Residuals on fitted -- scatter plot
+    \item<2-> histogram of residuals
+    \end{itemize}
+  \item<3-> Outliers are tough.
+    \begin{itemize}
+    \item<4-> You better have good, explicitly stated reason to report only the data set and subsequent model with them removed.
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\section{References}
+\nocite{Wickham:2009,Diez:2015}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+\end{document}

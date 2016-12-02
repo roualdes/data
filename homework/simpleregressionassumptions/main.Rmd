@@ -1,0 +1,25 @@
+---
+title: "Homework 08: Simple Linear Regression and Assumptions"
+output: html_document
+---
+
+Due date: 2016-12-02
+
+From the dataset ape::carnivora, fit a simple linear regression model -- you choose appropriate variables.  Full sentences and a knitted R markdown file are required.  Follow these steps for your analyses.
+
+a. Introduction: describe the data, with words and statistics, and explain what you are interested in about these data.
+b. Plot data: in one or two plots showcase the data and provide a plot meaningful to your analysis.
+c. Analyze data: describe what type of analysis you have performed on these data, detailing anything pertinent about the set or the setup for your analysis.
+d. Conclude: describe what results you have gleaned from the analysis.
+
+Further, your analysis should include:
+
+  a. A correlation calculation, and a corresponding bootstrapped confidence interval.
+  b. An appropriate plot to display the data with respect to your analysis.
+  c. A discussion of the appropriateness of simple linear regression's assumptions.
+  d. Formal hypothesis tests or confidence intervals.
+  e. A formal conclusion in both Statistics and in English.
+  f. An interpretation of your model in context -- intercept, slope, adjusted $R^2$.
+  g. The value your model predicts when the explanatory variable is equal to its mean and a sentence describing this value.
+  h. A formal check of the assumptions of linear regression.
+  i. The \texttt{R} code used to produce the analysis.

@@ -1,0 +1,226 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+@
+
+\title{Multiple Linear Regression, Example}
+\institute{CSU Chico, Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+  \frametitle{Carnivora Data}
+  Let's consider our dataset \texttt{ape::carnviora}.  We'll investigate the relationship between \texttt{SW}, \texttt{BW}, and \texttt{SB}, by \texttt{Family}.
+<<cache=TRUE, fig.width=3, fig.height=3, fig.align="center">>=
+suppressMessages({library(ape)
+    library(ggplot2)
+    library(dplyr)})
+data(carnivora)
+carnivs <- filter(carnivora, # easier interpretations
+                  Family %in% c("Canidae",
+                                "Felidae",
+                                "Mustelidae")) %>%
+    droplevels %>%
+    select(Family, BW, SW, SB) %>%
+    na.omit
+# ?carnivora # to get units
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Step 1?}
+Step 1?
+\end{frame}
+
+\section{Multiple Regression}
+
+\begin{frame}
+  \frametitle{Recap, multiple linear regression}
+  Written in short hand, the multiple linear regression model is
+
+  \[ Y_i \sim N(\beta_0 + \sum_{j=1}^J X_{ij}\beta_j, \sigma^2). \]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression}
+  Let's fit a model to predict \texttt{SW} using \texttt{Family} and \texttt{BW}.
+<<>>=
+# same slope, different intercepts
+fit <- lm(SW ~ Family + BW + SB, data=carnivs)
+# summary(fit) # RStudio
+# write down fitted regression equation
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multiple Regression, controls}
+  Often we expect only one, or a few, variables to lead the ``explanation'' of the response, and the rest of the variables are controlling for excess variation.  They thus call the variables of secondary importance, \textbf{controls} or \textbf{control variables}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Multiple Regression, interpret coefficients}
+  \pause After controlling for Family, for every one gram increase in birth weight, average body weight increases by $0.1048$ kilograms.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, interpret coefficients}
+  Let's fit a model to predict \texttt{SW} using \texttt{Family} and \texttt{BW}.
+<<>>=
+# same intercept, different slopes
+fit <- lm(SW ~ Family:BW + SB, data=carnivs)
+# summary(fit) # RStudio
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, interpret coefficients}
+  Let's fit a model to predict \texttt{SW} using \texttt{Family} and \texttt{BW}.
+<<>>=
+## Let's pretend this is our 'final' model
+# different intercepts and slopes
+fit <- lm(SW ~ Family + Family:BW + SB, data=carnivs)
+# summary(fit) # RStudio
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, check assumptions}
+  Formally check the assumptions of our linear regression model.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, hypothesis tests}
+  What are the inherent hypothesis tests for each row of the output?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, interpret confidence intervals}
+Calculate and interpret confidence intervals for the coefficients of interest.
+<<eval=FALSE>>=
+confint(fit)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple Regression, interpret adjusted $R^2$}
+  \begin{itemize}
+  \item Interpret adjusted $R^2$.
+  \item Calculate the correlation coefficient.
+  \item Describe in words the correlation coefficient.
+  \end{itemize}
+\end{frame}
+
+
+
+\section{Maximum Likelihood Estimates}
+
+\begin{frame}
+  \frametitle{Maximum Likelihood for Multiple Regression}
+We need to calculate the residuals and then convert that to \texttt{R} code.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Maximum Likelihood for Multiple Regression}
+Sum of residuals squared in \texttt{R}.
+<<>>=
+l <- function(theta, X, Y) {
+    residuals <- Y - apply(X, 1, function(x) {
+        sum(x*theta, na.rm=TRUE)
+    })
+    sum(residuals^2)
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Maximum Likelihood for Multiple Regression}
+Minimize sum of squared residuals.
+<<>>=
+X <- model.matrix(~ Family + Family:BW + SB,
+                  data=carnivs) # inspect
+dim(X)
+optim(rnorm(7), l, method="BFGS",
+      X=X, Y=carnivs$SW)$par
+@
+\end{frame}
+
+
+\section{Bootstrapped Standard Errors}
+
+\begin{frame}[fragile]
+  \frametitle{Bootstrapped Standard Errors}
+  Instead of calculating the standard errors, let's estimate them with the bootstrap.
+
+<<>>=
+suppressMessages(library(boot))
+yhat <- fitted(fit)
+r <- residuals(fit)
+breg <- function(d, i, yhat, X) {
+    ystar <- yhat + d[i] # yhat + randomly sampled errors
+    optim(rnorm(7), l, method="BFGS",
+          X=X, Y=ystar)$par
+    ## fit <- lm(ystar ~ -1 + X)
+    ## coef(fit)
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Bootstrapped Standard Errors}
+  Instead of calculating the standard errors, let's estimate them with the bootstrap.
+<<>>=
+b <- boot(r, breg, R=1000,
+          yhat=yhat, X=X
+          ## parallel="multicore", # divide and conquer
+          ## ncpus=4 # insist on # cores
+          )
+apply(b$t, 2, sd)
+@
+\end{frame}
+
+\section{Take Away}
+
+\begin{frame}
+  \frametitle{Take Away}
+  \begin{itemize}
+  \item<1-> Interpretations -- crucial to your success in this class.
+  \item<2-> Likelihood
+    \begin{itemize}
+    \item<2-> a common framework for calculating best guesses
+    \item<2-> from linear to non-linear (think neural networks) regression
+    \end{itemize}
+  \item<3-> Bootstrap
+    \begin{itemize}
+    \item<3-> estimates standard error when math is too cumbersome/difficult/impossible
+    \item<3-> enables confidence intervals and p-values for complex models
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{References}
+\nocite{Diez:2015,Wickham:2014,Wickham:2009,Paradis:2004}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
