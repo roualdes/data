@@ -1,0 +1,29 @@
+---
+title: "Homework 01: Getting Setup"
+output: html_document
+---
+
+Due date: 2017-01-27
+
+1. Download and install [R](https://www.r-project.org/) and then [RStudio](https://www.rstudio.com/).  Then install some packages in R, using the following code.
+
+```{r, eval=FALSE}
+install.packages(c("tidyverse", "ape")) # copy and paste this line
+```
+
+Here's an example of loading an R package,
+
+```{r, eval=FALSE}
+library(tidyverse)
+```
+
+Ensure these two R packages are properly installed by loading each, very little should happen, but mainly no errors should occur.
+
+2. Pretend you are interested in the following and provide a reasonable statement about some potential difficulties of randomly sampling
+  - Ashley Madison user characteristics;
+  - average inflation pressure of Tom Brady's game time footballs;
+  - average weight of U.S.\ children's goldfish.
+
+3. For the three examples in 2., state what variable type would be observed and what statistic(s) might be of interest.
+
+3. Identify two possible lurking variable that might affect Tom Brady's game time football inflation pressure.
