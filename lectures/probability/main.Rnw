@@ -357,7 +357,7 @@ We want to find the probability the second traffic light is green.  What do we k
   \item<1-> probability first light is green, $P(A) = 0.55.$
   \item<1-> probability first light is red, $1 - P(A) = P(A^c) = 0.45$
   \item<1-> probability second light is green, given first light is green, $P(B|A) = 0.75$
-  \item<1-> probability second light is green, given first light is red, $P(B|A^c) = 0.9$
+  \item<1-> probability second light is green, given first light is red, $P(B|A^c) = 0.09$
   \end{itemize}
 \item<2-> Want
   \begin{itemize}
@@ -376,8 +376,8 @@ We want to find the probability the second traffic light is green.  What do we k
   \item<1-> $P(A) = 0.55.$
   \item<1-> $P(A^c) = 0.45$
   \item<1-> $P(B|A) = 0.75$
-  \item<1-> $P(B|A^c) = 0.9$
-  \item<1-> $P(B) = 0.8175$
+  \item<1-> $P(B|A^c) = 0.09$
+  \item<1-> $P(B) = 0.453$
   \end{itemize}
 \item<2-> Want
   \begin{itemize}
@@ -400,19 +400,8 @@ We want to find the probability the second traffic light is green.  What do we k
 \section{Independence}
 
 \begin{frame}
-  \frametitle{Motivating Independence}
-  It is through probability that we formalize statements like
-
-  \begin{itemize}
-  \item<2-> two coin flips have nothing to do with each other
-  \item<3-> the probability of rolling a $1$ is the same as rolling a $2$
-  \item<4-> $\ldots$
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
   \frametitle{Independence, intuition}
-  The intuition of independence is mathematically defined via conditional probability,
+  The intuition of independence is best seen mathematically via conditional probability,
 
 \[ P(B|A) = P(B). \]
 
