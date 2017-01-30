@@ -5,12 +5,17 @@
 <<setup, include=FALSE>>=
 options(replace.assign=TRUE, width=40)
 opts_knit[["set"]](progress=FALSE)
-library(ggplot2)
+library(tidyverse)
 @
 \title{Introduction to Statistics}
 \institute{CSU, Chico Math 314}
 \date{\today}
 \maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
 
 \AtBeginSection[]
 {
@@ -19,7 +24,6 @@ library(ggplot2)
     \tableofcontents[currentsection]
   \end{frame}
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -111,7 +115,8 @@ library(ggplot2)
   \frametitle{Data Types in \texttt{R}}
   Consider a dataset about and named \texttt{email}.  Here is one of many ways to read data into \texttt{R}
 <<>>=
-email <- read.csv("https://roualdes.us/data/email.csv")
+url <- "https://roualdes.us/data/email.csv"
+suppressMessages(email <- read.csv(url))
 @
 \end{frame}
 
@@ -476,11 +481,20 @@ More on skew:
 
 \begin{frame}
   \frametitle{Box Plot}
-A \textbf{box plot} is a great way to visualize something close to the $6$ number summary produced by \texttt{R}'s function \texttt{summary}.
+A \textbf{box plot}\footnote{Wikipedia provides some of the more common variations on the whiskers of a \href{https://en.wikipedia.org/wiki/Box_plot}{box plots}.} is a great way to visualize something close to the $6$ number summary produced by \texttt{R}'s function \texttt{summary}.
 
   \begin{center}
     \includegraphics[scale=0.6]{figs/boxplot_explained.pdf}
   \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Box Plot}
+  It is more common for box plots to have a numerical variable on the y-axis and a categorical (recognized as a factor) variable on the x-axis.
+
+<<fig.width=2.5, fig.height=2, fig.align="center">>=
+qplot(factor(spam), num_char, data=email, geom="boxplot")
+@
 \end{frame}
 
 \begin{frame}[fragile]

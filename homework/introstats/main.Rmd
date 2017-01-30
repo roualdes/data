@@ -1,0 +1,26 @@
+---
+title: "Homework 02: Introduction to Statistics"
+output: html_document
+---
+
+Due date: 2017-02-03
+
+1. Using the [email](https://roualdes.us/data/email.csv) dataset, provide R code and full sentences describing the summary statistics and plots for the following:
+  - load the data, which will create an R data frame;
+  - find the mean and median of the variable num_char;
+  - find the mean (proportion) and median of the variable html;
+  - make appropriate plots for num_char, html, and num_char together with html.
+
+2. The following plot displays the relationship between body weight and brain weight of animals of the order Carnivora, from the dataset ape::carnivora.
+
+```{r, fig.height=3, fig.width=3, fig.align="center", echo=FALSE}
+suppressMessages(library(tidyverse))
+library(ape)
+data(carnivora)
+qplot(SW, SB, data=carnivora)
+```
+  - Describe the relationship between these two variables.
+  - Relative to members of the order Carnivora, can we say that fatness directly causes brain weight to increase? Why or why not?
+  - Identify a potential lurking variable between the relationship of body to brain weight for members of the order Carnivora.
+
+3. Produce a scatter plot of your own, using appropriate variables.  Include both the plot and the R code.
