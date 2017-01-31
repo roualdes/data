@@ -1,0 +1,188 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+library(ggplot2)
+@
+\title{Introduction to Probability, Examples}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Set Operations}
+
+\begin{frame}
+  \frametitle{Set Operations, example}
+  Suppose you have a vector of indices of the months from $2011$ to $2012$, let's call it \texttt{time}, and further that you have two other vectors of indices \texttt{winter2011} and \texttt{winter2012}, which store the indices of the winter months from their respective years.  Use set operations to find the indices of the non-winter months.
+\end{frame}
+
+\section{Mutual Independence}
+
+\begin{frame}
+  \frametitle{Mutual Independence, example}
+  Roll a die once.  Let $E_1 = \{1,2,3\}, E_2 = \{3,4,5\},$ and $E_3=\{1,2,3,4\}$.  Does
+
+  \[ P(E_1 \cap E_2 \cap E_3) = P(E_1)P(E_2)P(E_3)? \]
+
+  Are $E_1$ and $E_2$ independent?
+\end{frame}
+
+\section{Systems Reliability}
+
+\begin{frame}
+  \frametitle{System Reliability, motivation}
+  \begin{figure}
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm, semithick]
+
+      \node[state] (1)        {$A$};
+      \node[state] (0) [left  of=1]  {in};
+      \node[state] (2) [right of=1]  {$B$};
+      \node[state] (3) [right of=2] {$C$};
+      \node[state] (4) [right of=3]  {out};
+
+      \path
+      (0) edge node {} (1)
+      (1) edge node {} (2)
+      (2) edge node {} (3)
+      (3) edge node {} (4);
+    \end{tikzpicture}
+    \caption{Sequential system}
+  \end{figure}
+
+    \begin{figure}
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm, semithick]
+
+      \node[state] (1)        {$A$};
+      \node[state] (2) [below of=1]  {$B$};
+      \node[state] (3) [below of=2]  {$C$};
+      \node[state] (0) [left  of=2]  {in};
+      \node[state] (5) [right of=2]  {out};
+
+      \path
+      (0) edge node {} (1)
+      (0) edge node {} (2)
+      (0) edge node {} (3)
+      (1) edge node {} (5)
+      (2) edge node {} (5)
+      (3) edge node {} (5);
+    \end{tikzpicture}
+    \caption{Parallel system}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 1}
+  The three components of the sequential system, $A, B,$ and $C$, will fail with probabilities $p_A = 0.1, p_B = 0.15,$ and $p_C=0.2$, independently of each other.  What is the probability the sequential system will fail?
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 1: solution 1}
+Any subset of the systems could fail, while the complement (if any) works.
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 1: solution better}
+If we could easily find $P(no component fails)$ then set operations could save us.
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 2}
+  The three components of the parallel system, $A, B,$ and $C$, will function with probabilities $p_A = 0.9, p_B = 0.85,$ and $p_C=0.8$, independently of each other.  What is the probability the parallel system will function?
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 2: solution 1}
+Let $F$ be the event that the parallel system functions.  Because any one system serves as a backup for the other two, if they were to fail, $F = A \cup B \cup C$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{System Reliability, example 2: solution better}
+Same trick works here, too.  First compute $E^c$.
+\end{frame}
+
+% \begin{frame}
+%   \frametitle{Example 1: Conditional Probability}
+% Consider these fabricated data about employees at Giggle and FaceSpace and whether or not they have Python experience.
+
+% \begin{table}
+%   \centering
+%   \begin{tabular}{lccc}
+%     & Python & no Python & Total \\
+%     \hline
+%     Giggle & 460 & 40 & 500 \\
+%     FaceSpace & 140 & 260 & 400 \\
+%     \hline
+%     Total & 600 & 300 & 900
+%   \end{tabular}
+% \end{table}
+
+% \begin{enumerate}
+% \item Find $P(python), P(python \cap giggle)$. % P(py) = 600/900, P(py and giggle) = 460/900
+% \item Find $P(giggle|python)$.                % P(giggle|py) = 460/600
+% \item Find $P(python|giggle)$.                % P(py|giggle) = 460/500
+% \end{enumerate}
+% \end{frame}
+
+
+
+% \begin{frame}
+%   \frametitle{Example 2: Total Probability}
+% Suppose you then polled these Giggle and FaceSpace employees and found that $36$ employees with Python experience and $12$ without Python experience would prefer to use Clojure.  What is the probability that an employee of one of these tech companies would prefer to use Clojure?
+
+%   \begin{enumerate}
+%   \item<2-> We know $P(python) = 600/900$.
+%   \item<3-> We are given $P(clojure|python) = 36/600$ and $P(clojure|python^c) = 12/300$.
+%   \item<4-> Need $P(no Python) = P(python^c)$.
+%   \item<5-> How do we use these to find $P(clojure)$?
+%   \end{enumerate}
+% \end{frame}
+
+% \begin{frame}
+%   \frametitle{Example 3: Bayes' Theorem}
+% What is the probability that an employee has Python experience given that they are a Clojure enthusiast?
+
+% \begin{enumerate}
+% \item<2-> Have $P(clojure|python) = 36/600, P(python) = 600/900$, and $P(clojure) = 4/75$.
+% \item<3-> Need $P(python \cap clojure)$.
+% \item<4-> How do we use these to find $P(python|clojure)$?
+% \end{enumerate}
+% \end{frame}
+
+% \begin{frame}
+%   \frametitle{Example 4: Independent Events}
+%   Are Python experience and working at Giggle independent events?
+
+%   \begin{enumerate}
+%   \item<2-> Ask, $P(python \cap giggle) = P(python)P(giggle)$?
+%   \item<3-> Have $P(python \cap giggle) = 460/900, P(python) = 600/900$, and $P(giggle) = 500/900$.
+%   \item<4-> How do we use these to determine if Python experience and working at Giggle independent.
+%   \end{enumerate}
+% \end{frame}
+
+% \nocite{Walpole:2007}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
