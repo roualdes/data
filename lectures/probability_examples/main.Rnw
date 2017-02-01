@@ -101,7 +101,7 @@ Any subset of the systems could fail, while the complement (if any) works.
 
 \begin{frame}
   \frametitle{System Reliability, example 1: solution better}
-If we could easily find $P(no component fails)$ then set operations could save us.
+If we could easily find $P(\text{no component fails})$ then set operations could save us.
 \end{frame}
 
 \begin{frame}
