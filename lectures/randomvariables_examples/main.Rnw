@@ -78,12 +78,12 @@ ggplot(data.frame(x=c(-4,4)), aes(x)) + stat_function(fun=dnorm, geom="line") +
 
 \begin{frame}
   \frametitle{Normal Distribution, example}
-  A well known example of the normal distribution is SAT scores.  Let $X \sim N(1500, 300)$ be the distribution of SAT scores with population mean $\mu = 1500$ and population variance $\sigma^2 = 300$.
+  A well known example of the normal distribution is SAT scores.  Let $X \sim N(1500, 300^2)$ be the distribution of SAT scores with population mean $\mu = 1500$ and population variance $\sigma^2 = 300^2$.
 \end{frame}
 
 \begin{frame}
   \frametitle{Normal Distribution, example}
-SAT scores: $X \sim N(1500, 300)$.
+SAT scores: $X \sim N(1500, 300^2)$.
 <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
 ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
     stat_function(fun=dnorm, geom="line",
@@ -110,7 +110,7 @@ ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
 
 \begin{frame}
   \frametitle{Z-score, shift}
-  If SAT scores, $X$, are distributed $N(1500, 300)$, then $X-\mu = X-1500$ is distributed as $N(0,300)$.
+  If SAT scores, $X$, are distributed $N(1500, 300^2)$, then $X-\mu = X-1500$ is distributed as $N(0,300^2)$.
   <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
   ggplot(data.frame(x=c(-4*sqrt(300),4*sqrt(300))), aes(x)) +
         stat_function(fun=dnorm, geom="line",
@@ -122,7 +122,7 @@ ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
 
 \begin{frame}
   \frametitle{Z-score, scale}
-  If $(X - 1500) \sim N(0,300)$, then $\frac{x-1500}{\sqrt{300}} = z \sim N(0,1)$.
+  If $(X - 1500) \sim N(0,300^2)$, then $\frac{x-1500}{300} = z \sim N(0,1)$.
   <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
   ggplot(data.frame(x=c(-4,4)), aes(x)) +
         stat_function(fun=dnorm, geom="line",
@@ -145,7 +145,7 @@ ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
 
 \begin{frame}
   \frametitle{Z-score, example}
-  Suppose SAT scores follow a normal distribution, $X \sim N(1500,300)$ and that Ann got $1800$. What proportion of SAT takers did worse than Ann?
+  Suppose SAT scores follow a normal distribution, $X \sim N(1500,300^2)$ and that Ann got $1800$. What proportion of SAT takers did worse than Ann?
 
 Steps
 \begin{enumerate}
@@ -267,7 +267,7 @@ This is \texttt{R}'s version of
 
 \begin{frame}
   \frametitle{Z-score, another example}
-  Suppose SAT scores are distributed $X \sim N(1500, 300)$ and ACT scores are distributed $N(21, 5)$.  If Ann scored $1800$ on the SAT and Tom scored $24$ on the ACT, who performed better?
+  Suppose SAT scores are distributed $X \sim N(1500, 300^2)$ and ACT scores are distributed $N(21, 5^2)$.  If Ann scored $1800$ on the SAT and Tom scored $24$ on the ACT, who performed better?
 
   \begin{enumerate}
   \item<2-> draw pictures.
