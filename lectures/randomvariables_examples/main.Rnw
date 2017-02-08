@@ -1,0 +1,438 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+suppressMessages({library(ggplot2)
+    library(dplyr)})
+@
+
+\title{Random Variables, examples}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\frame {\frametitle{outline}
+  \tableofcontents
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Discrete Distrbutions}
+\begin{frame}
+  \frametitle{Probability, Uniform Distribution}
+  What's the probability of rolling one die greater than $3$?
+
+  \begin{itemize}
+  \item<2-> What's the probability mass function of rolling dice?
+  \item<3-> We want to calculate $P(X > 3)$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Probability, Uniform Distribution}
+  Let $X \sim U(1,6)$.  Find $P(X > 3)$.
+
+\[ P(X > 3) = \sum_{x > 3} P(X = x) = 3/6.  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Discrete CDF}
+  If the random variable $X$ has the following cumulative distribution function, calculate the PMF.
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|cccc}
+    $x$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    F(x) & $0.4$ & $0.7$ & $0.9$ & $1.0$ \\
+  \end{tabular} % example 3.2-3, what is the PMF?
+\end{table}
+\end{frame}
+
+\section{Continuous Distributions}
+\subsection{Probabilities in \texttt{R} via the normal distribution}
+\begin{frame}[fragile]
+  \frametitle{Normal Distribution}
+  The \textbf{normal distribution} is ubiquitous in statistics.
+<<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+ggplot(data.frame(x=c(-4,4)), aes(x)) + stat_function(fun=dnorm, geom="line") +
+    labs(x="", y="") +
+    theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Normal Distribution}
+  The probability density function for the normal distribution is
+  \[ f(x) = (2\sigma^2\pi)^{-1/2} \exp \left\{ \frac{-(x-\mu)^2}{2\sigma^2} \right\}. \]
+
+  Probability statements about the normal distribution take the form
+
+  \[ P(a < X < b) = \int_a^b f(x) dx. \]
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Normal Distribution, example}
+  A well known example of the normal distribution is SAT scores.  Let $X \sim N(1500, 300)$ be the distribution of SAT scores with population mean $\mu = 1500$ and population variance $\sigma^2 = 300$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Normal Distribution, example}
+SAT scores: $X \sim N(1500, 300)$.
+<<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
+    stat_function(fun=dnorm, geom="line",
+                  args=list(mean=1500, sd=sqrt(300))) +
+    labs(x="", y="") +
+    theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score}
+  \begin{block}{Z-score}
+    The Z-score of an observation is the number of standard deviations the observation lies above or below the mean.  We compute the Z-score for an observation $x$ that follows a distribution with mean $\mu$ and standard deviation $\sigma$ using
+\[ z = \frac{x - \mu}{\sigma}. \]
+  \end{block}
+
+  We'll often use the Z-score with data that are nearly normal, but this is a technique used for any distribution.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, notes}
+    The Z-score simply shifts and scales the distribution so that $z$ follows a $N(0,1)$ distribution.  Why?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, shift}
+  If SAT scores, $X$, are distributed $N(1500, 300)$, then $X-\mu = X-1500$ is distributed as $N(0,300)$.
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  ggplot(data.frame(x=c(-4*sqrt(300),4*sqrt(300))), aes(x)) +
+        stat_function(fun=dnorm, geom="line",
+                        args=list(mean=0, sd=sqrt(300))) +
+          labs(x="", y="") +
+            theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+  @
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, scale}
+  If $(X - 1500) \sim N(0,300)$, then $\frac{x-1500}{\sqrt{300}} = z \sim N(0,1)$.
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  ggplot(data.frame(x=c(-4,4)), aes(x)) +
+        stat_function(fun=dnorm, geom="line",
+                        args=list(mean=0, sd=1)) +
+          labs(x="", y="") +
+      theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, notes}
+  The Z-score is a unitless number.  Why?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, idea}
+  By definition, if an observation is $1$ standard deviation above its mean, the Z-score is $1$.  If an observation is $1.5$ standard deviations below the mean, its Z-score is $-1.5$.
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Z-score, example}
+  Suppose SAT scores follow a normal distribution, $X \sim N(1500,300)$ and that Ann got $1800$. What proportion of SAT takers did worse than Ann?
+
+Steps
+\begin{enumerate}
+\item<2-> draw picture
+\item<3-> Z-score: \only<4->{$z = \frac{1800 - 1500}{300} = 1$}
+\item<5-> $P(Z < 1)$?
+\end{enumerate}
+\end{frame}
+
+<<>>=
+
+@
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, example}
+Picture of proportion of SAT takers that did worse than Ann: $P(Z < 1)$
+<<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+p <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+    stat_function(fun=dnorm, geom="line",
+                  args=list(mean=0, sd=1)) +
+    labs(x="", y="") +
+    theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+d <- ggplot_build(p)$data[[1]]
+p + geom_area(data=subset(d, x<1), aes(x=x, y=y), fill="black", colour="black") +
+    theme(axis.text.y=element_blank(),
+          axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, finding probability}
+Use \texttt{R} to find $P(Z<1)$.
+
+<<>>=
+pnorm(1) # = P(Z<1)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\texttt{pnorm}}
+  The function \texttt{pnorm} in \texttt{R} calculates for us the area under the curve that's less than the value provided.
+
+<<eval=FALSE>>=
+?pnorm
+@
+
+What is the stats name of this function?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Arithmetic with Densities}
+  Since all the area under the normal curve is equal to one, we can easily manipulate the output of \texttt{pnorm} to find areas greater than some value, or in between two values.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, example $2$}
+  Shannon is a randomly selected SAT taker, and nothing is known about Shannon's SAT aptitude. What is the probability Shannon scores at least 1630 on her SATs? \\
+  Steps
+  \begin{enumerate}
+  \item<2-> draw picture.
+  \item<3-> Z-score: $z = $
+  \item<4-> $P(Z > z)$?
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, example $2$}
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  p <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+    stat_function(fun=dnorm, geom="line",
+                  args=list(mean=0, sd=1)) +
+    labs(x="", y="") +
+    theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+  d <- ggplot_build(p)$data[[1]]
+  p
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, example $2$}
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  p + geom_area(data=subset(d, x>0.43), aes(x=x, y=y),
+                  fill="black", colour="black") +
+      theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, finding probability}
+  We get $z = 0.43$.  Use \texttt{R} to find $P(Z>0.43)$.
+
+<<>>=
+1 - pnorm(0.43) # = P(Z>0.43)
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, example $3$}
+  What's the probability that Edward scores in between Ann and Shannon?  Picture?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, finding probability}
+$P(0.43 < z < 1)$?
+<<>>=
+pnorm(1) - pnorm(0.43)
+@
+
+This is \texttt{R}'s version of
+
+\[ P(a < Y < b) = \int_a^b f_Y(y) dy = F(b) - F(a). \]
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, another example}
+  Because the $Z-score$ is unitless, we can compare the likelihood of different events even if they are measured in different units.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Z-score, another example}
+  Suppose SAT scores are distributed $X \sim N(1500, 300)$ and ACT scores are distributed $N(21, 5)$.  If Ann scored $1800$ on the SAT and Tom scored $24$ on the ACT, who performed better?
+
+  \begin{enumerate}
+  \item<2-> draw pictures.
+  \item<3-> Z-scores: $z_A = 1$ and $z_T = \frac{24-21}{5} = 0.6$.
+  \item<4-> Want to find $P(Z>1)$ and $P(Z>0.6)$.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, example}
+Proportion who scored better than Ann
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  p <- ggplot(data.frame(x=c(-4,4)), aes(x)) +
+      stat_function(fun=dnorm, geom="line", args=list(mean=0, sd=1)) +
+        labs(x="", y="") +
+          theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+  d = ggplot_build(p)$data[[1]]
+  p + geom_area(data=subset(d, x>1), aes(x=x, y=y), fill="black", colour="black") +
+        theme(axis.text.y=element_blank(),
+                axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, example}
+Proportion who scored better than Tom
+  <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
+  p + geom_area(data=subset(d, x>0.6), aes(x=x, y=y), fill="black", colour="black") + theme(axis.text.y=element_blank(), axis.ticks=element_blank())
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Z-score, finding probability}
+Use \texttt{R} to find $P(Z>1)$ and $P(Z>0.6)$.
+
+<<>>=
+1 - pnorm(1) # = P(Z>1), Ann
+1 - pnorm(0.6) # = P(Z>0.6), Tom
+@
+
+Conclusion?
+\end{frame}
+
+\subsection{Normal Rule}
+
+\begin{frame}
+  \frametitle{Normal Distribution, 68, 95, 99.7 Rule}
+  \begin{center}
+  \includegraphics[scale=0.8]{figs/rule.pdf}
+  \end{center}
+\end{frame}
+
+\subsection{Percentiles}
+
+\begin{frame}
+  \frametitle{Percentiles}
+  Edward earned a 1400 on his SAT.  What is his percentile? \\
+  Steps
+  \begin{enumerate}
+  \item<2-> draw picture.
+  \item<3-> Z-score: $z = (1400 - 1500)/300 = -0.33$.
+  \item<4-> $P(Z<-0.33)$?
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Percentiles}
+  The probability $P(Z < -0.33)$ can also be thought of as a percentile.
+  <<>>=
+  pnorm(-0.33)
+  @
+  Edward is at the $37$th percentile.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Percentiles}
+  We can essentially ask the previous questions backwards.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Percentiles, example}
+  Atahualpa's SAT score is at the $90$th percentile.  What score did he receive? \\
+  Steps
+  \begin{enumerate}
+  \item<2-> Draw picture.
+  \item<3-> find Z-score.
+  \item<4-> solve for SAT score.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Percentiles, example}
+  Find Z-score
+  <<>>=
+  qnorm(0.9) # finds Z-score z that puts 90% <
+  @
+\end{frame}
+
+\begin{frame}
+  \frametitle{Percentiles, example}
+  With $z = \Sexpr{round(qnorm(0.9),2)}$, we can solve for Atahualpa's SAT score.
+
+  \[ z = \Sexpr{round(qnorm(0.9),2)} = \frac{x - 1500}{300}. \]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\texttt{qnorm}}
+  The function \texttt{qnorm} in \texttt{R} calculates for us the Z-score $z$ that puts the supplied probability less than $z$.
+<<eval=FALSE>>=
+?qnorm
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Distribution Functions in \texttt{R}}
+  Notice that all random variables in \texttt{R} follow the same naming convention
+<<eval=FALSE>>=
+?pexp
+?pnorm
+?punif
+?pbinom # to get the Bernoulli use size=1
+@
+\end{frame}
+
+\subsection{Integrate to $1$}
+
+\begin{frame}
+  \frametitle{Exponential Distribution, integrates to $1$}
+  Recall, all distribution functions sum or integrate to one.  Let's try one.  Calculate
+
+\[ \int_0^{\infty} \lambda \exp{(-\lambda x)} dx. \]
+\end{frame}
+
+\subsection{Expected Value}
+
+\begin{frame}
+  \frametitle{Exponential Distribution, expected value}
+The previous integral wasn't that bad, but they get ugly quick.  Calculate the expected value of the exponential distribution.
+
+\[ \int_0^{\infty} x \lambda\exp{(-\lambda x)} dx. \]
+\end{frame}
+
+\section{Working with the Variance}
+\subsection{Properties of Variance}
+
+\begin{frame}
+  \frametitle{Properties of Variance}
+  Since we can derive the following properties of the variance using only the expectation operator, these properties hold for both discrete and continuous random variables.  Let's derivde on the board
+
+  \begin{enumerate}
+  \item the short cut formula, and
+  \item $V(aX + b)$
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Variance of Bernoulli}
+  Let's calculate on the board the variance of the Bernoulli distribution.
+\end{frame}
+
+\section{References}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
