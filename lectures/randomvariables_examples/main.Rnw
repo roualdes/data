@@ -85,9 +85,9 @@ ggplot(data.frame(x=c(-4,4)), aes(x)) + stat_function(fun=dnorm, geom="line") +
   \frametitle{Normal Distribution, example}
 SAT scores: $X \sim N(1500, 300^2)$.
 <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
-ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
+ggplot(data.frame(x=c(1500-4*300,1500+4*300)), aes(x)) +
     stat_function(fun=dnorm, geom="line",
-                  args=list(mean=1500, sd=sqrt(300))) +
+                  args=list(mean=1500, sd=300)) +
     labs(x="", y="") +
     theme(axis.text.y=element_blank(), axis.ticks=element_blank())
 @
@@ -112,9 +112,9 @@ ggplot(data.frame(x=c(1500-4*sqrt(300),1500+4*sqrt(300))), aes(x)) +
   \frametitle{Z-score, shift}
   If SAT scores, $X$, are distributed $N(1500, 300^2)$, then $X-\mu = X-1500$ is distributed as $N(0,300^2)$.
   <<echo=FALSE, fig.width=4, fig.height=2.5, fig.align="center">>=
-  ggplot(data.frame(x=c(-4*sqrt(300),4*sqrt(300))), aes(x)) +
+  ggplot(data.frame(x=c(-4*300,4*300)), aes(x)) +
         stat_function(fun=dnorm, geom="line",
-                        args=list(mean=0, sd=sqrt(300))) +
+                        args=list(mean=0, sd=300)) +
           labs(x="", y="") +
             theme(axis.text.y=element_blank(), axis.ticks=element_blank())
   @
