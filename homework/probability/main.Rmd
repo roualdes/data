@@ -13,7 +13,7 @@ b. What is the probability that one of FlyMoar's flights departed on time given 
 2. After randomly assigning 60 guinea pigs to receive one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two supplements, orange juice (OJ) or ascorbic acid (a form of vitamin C encoded as ‘VC’), researchers recorded the length of odontoblasts (cells responsible for tooth growth).
 
    a. Is this an experiment or an observational study?  Explain.
-   b. State why the following plot shows that on average OJ causes higher odontoblast length than does VB.
+   b. State why the following plot shows that on average OJ causes higher odontoblast length than does VC.
    ```{r, fig.width=5, fig.height=3.5, fig.align="center", echo=FALSE}
    suppressMessages(library(tidyverse))
    qplot(factor(dose), len, data=ToothGrowth, geom="boxplot", colour=supp)
