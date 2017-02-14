@@ -67,7 +67,7 @@ As before with different types of variables, we again have different types of ra
 
 \begin{frame}
   \frametitle{Discrete Random Variable}
-  We theorize that data are generated from a function that only takes on mass at each value in the sample space.  Probability statements are made from area under the curve.
+  We theorize that data are generated from a function that only takes on mass at each value in the sample space.  Probability statements are made from area under the function.
 \end{frame}
 
 \begin{frame}
