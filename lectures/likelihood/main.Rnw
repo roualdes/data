@@ -1,0 +1,181 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Likelihood Function}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Review}
+
+\begin{frame}
+  \frametitle{Review: estimating parameters}
+  Recall that statistics attempts to estimate the (population) parameters of interest via an assumed known functional form.  The population parameters are in reality unknown variables of a probility mass/distribution function.
+\end{frame}
+
+\section{Motivation}
+\begin{frame}
+  \frametitle{Motivating Likelihood}
+  If we know the distribution function from which a sample of data was generated, we should be able to estimate the parameter(s) of the distribution that is most likely to have generated these data.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivating Likelihood}
+  Suppose we randomly sampled $5$ people and found heights $69, 72, 70, 68, 71, 71$ inches.  What are the parameters that are most likely to have brought about these data?
+
+<<echo=FALSE, fig.width=4, fig.height=2.75, fig.align="center">>=
+ggplot(data.frame(x=c(70-5, 70+5)), aes(x)) +
+    stat_function(fun=dnorm, geom="line",
+                  args=list(mean=70, sd=1.5)) +
+    labs(x="", y="") +
+    theme(axis.text.y=element_blank(),
+          axis.text.x=element_blank(),
+          axis.ticks=element_blank())
+@
+\end{frame}
+
+\section{Likelihood}
+
+\begin{frame}
+  \frametitle{Likelihood Function}
+Consider $n$ observations $x_1, \ldots, x_n$ independently drawn from the distribution $G(x|\theta)$.  We seek to find the parameter $\theta$ that is most likely to have generated the data $\mathbf{x}$.
+
+\only<2->{
+\begin{block}{likelihood function}
+\[ L(\theta | \mathbf{x}) = \prod_{i=1}^n G(x_i | \theta) .\]
+\end{block}
+}
+\end{frame}
+
+\section{Example I}
+
+\begin{frame}
+  \frametitle{Bernoulli Example}
+  Suppose we observed $x_1, \ldots, x_n \sim_{iid}$ Bernoulli$(p)$.  What is the MLE for $p$?
+
+  \[ f(x|p) = p^x(1-p)^{1-x} \]
+
+\end{frame}
+
+\section{Likelihood Notes}
+
+\begin{frame}
+  \frametitle{Likelihood Function, notes}
+  \begin{itemize}
+  \item<1-> We think about $L$ as a function of $\theta$ instead of $\mathbf{x}$.
+  \item<2-> All observations are independent and identically distributed, $iid$.
+  \item<3-> $\hat{\theta} = \argmax_{\theta} L$, is the mathematical equivalent of ``parameters most likely to have generated the observed data.''
+  \item<4-> It should be immediately clear that nobody wants to work with $L(\theta|\mathbf{x})$, itself.
+  \end{itemize}
+\end{frame}
+
+\section{Maximum Likelihood}
+
+\begin{frame}
+  \frametitle{Maximum Likelihood}
+  Estimators derived via the likelihood function are called \textbf{maximum likelihood estimators} or \textbf{MLE}s.  MLE estimators estimate parameters of interest by maximizing the likelihood function.  That is $\hat{\theta}$ is the MLE if
+
+\[ \hat{\theta} = \argmax_{\theta} L(\theta|\mathbf{x}). \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Maximum Likelihood, computation}
+So how does one find $\hat{\theta}$?
+
+\begin{itemize}
+\item<2-> Calculus.
+\item<3-> It's immensely helpful to work with the natural log of the likelihood function.
+\item<4-> Maximize $L$ as a function of $\theta$ just as we would any other function $f$ in calculus.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Detour the First}
+How can we rewrite (simplify?) the following equations?
+\begin{itemize}
+\item<2-> $\log{(a \cdot b)}$?
+\item<3-> $\log{(x_1 \cdot x_2)}$?
+\item<4-> $\log{(x_1 \cdot x_2 \cdot \ldots \cdot x_n)}$?
+\item<5-> $\log{(\prod_{i=1}^n x_i)}$?
+\item<6-> $\log{(\prod_{i=1}^n f(x_i))}$?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Likelihood Function, computation}
+  Use properties about the natural log to manipulate the likelihood function $L$ into a reasonable function to optimize.
+
+\[ \ell (\theta|\mathbf{x}) = \log{L(\theta|\mathbf{x}) = \sum_{i=1}^n \log{G(x_i|\theta)}}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Log Likelihood Function, notes}
+The log-likelihood function $\ell$ has a two main advantages over $L$.
+
+\begin{itemize}
+\item<2-> $\ell$ is easier to optimize for both humans and computers.
+\item<3-> $\hat{\theta} = \argmax_{\theta} \ell (\theta|\mathbf{x}) = \argmax_{\theta} L(\theta|\mathbf{x})$ because $\log()$ is monotone.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Detour the Second}
+How can we rewrite (simplify?) the following equations?
+\begin{itemize}
+\item<2-> $\frac{d}{d \theta} \{a \cdot \theta + b \cdot \theta\}$?
+\item<3-> $\frac{d}{d \theta} \{x_1 \cdot \theta + x_2 \cdot \theta\}$?
+\item<4-> $\frac{d}{d \theta} \{x_1 \cdot \theta + \ldots + x_n \cdot \theta\}$?
+\item<5-> $\frac{d}{d \theta} \{\sum_{i=1}^n x_i \cdot \theta \}$?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Detour the Third}
+  Evaluate the following expression,
+
+\[ \frac{d}{d \theta} = x\cdot \log{(1-\theta)}. \]
+\end{frame}
+
+\section{Example II}
+
+\begin{frame}
+  \frametitle{Exponential Example}
+  Suppose we observed $x_1, \ldots, x_n \sim_{iid}$ Exponential$(\lambda)$.  What is the MLE for $\lambda$?
+
+\[ f(x|\lambda) = \lambda \exp{(-\lambda x)} \]
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Examples via a Computer}
+  Note, we are going to brush over many topics that are often at least one class worth of material: optimization techniques.
+<<eval=FALSE>>=
+?optim
+?rbinom
+?rpois
+@
+\end{frame}
+
+\section{References}
+\nocite{Akritas:2016}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
