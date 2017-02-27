@@ -1,0 +1,65 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Sampling Distributions, examples}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Estimate Bias}
+
+\begin{frame}
+  \frametitle{Bias}
+  Recall, bias is defined as $Bias(\hat{\theta}) = E(\hat{\theta}) - \theta$.  How does one estimate $E(\hat{\theta})$?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Estimate Bias}
+  Assume $X_1, \ldots, X_n \sim U(a, b)$.  Estimate the bias of the estimator $\bar{X}$.  Steps:
+
+  \begin{enumerate}
+  \item Randomly sample $n$ observations from $U(a, b)$ -- we have to choose $a$ and $b$.
+  \item Calculate $\bar{X}$.
+  \item Calculate and store bias: $bias_r = \bar{X} - \frac{a+b}{2}$.
+  \item Repeat steps $1$ through $3$ $R$ times and calculate $B = R^{-1}\sum_{r=1}^R bias_r$.
+  \end{enumerate}
+\end{frame}
+
+\section{Central Limit Theorem}
+
+\begin{frame}
+  \frametitle{Can we touch the CLT?}
+  Assume $X_1, \ldots, X_n \sim G(\theta)$.  Simulate the sampling distribution of $T(x)$.
+
+  \begin{enumerate}
+  \item Randomly sample $n$ observations from $G(\theta)$ -- choose appropriate parameters.
+  \item Calculate and store $T_r(\mathbf{X})$.
+  \item Repeat steps $1$ through $3$ $R$ times.
+  \item Make a histogram of $T_1, \ldots, T_R$.
+  \end{enumerate}
+\end{frame}
+
+
+\section{References}
+\nocite{Akritas:2016,Diez:2015}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
