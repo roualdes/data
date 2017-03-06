@@ -5,7 +5,7 @@ output: html_document
 
 Due date: 2017-03-10
 
-1. Showing your work, derive the maximum likelihood estimator for $\alpha of the gamma distribution, with probability density function
+1. Showing your work, derive the maximum likelihood estimator for $\alpha$ of the gamma distribution, with probability density function
 
    \[ f(x|\alpha,\beta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)}x^{\alpha-1} \exp{(-\beta x)} \]
 
