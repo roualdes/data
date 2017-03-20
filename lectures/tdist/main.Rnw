@@ -1,0 +1,220 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+library(ggplot2)
+library(dplyr)
+@
+
+\title{$t$-Distribution}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Recap}
+\begin{frame}
+  \frametitle{Recap: Confidence Intervals}
+ Confidence intervals and hypothesis tests (as of yet) require knowledge of $\sigma$
+
+  \[ \bar{X} \pm z^* \cdot \sigma_{\bar{X}},  \quad and\quad\quad z = \frac{\bar{X} - \mu_0}{\sigma_{\bar{X}}}.\]
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+  \frametitle{Confidence Intervals, from now on}
+ Confidence intervals and hypothesis tests (from now on) do not require knowledge of $\sigma$
+
+  \[ \bar{X} \pm t_{df}^* \cdot s_{\bar{X}},  \quad and\quad\quad t_{df} = \frac{\bar{X} - \mu_0}{s_{\bar{X}}}.\]
+\end{frame}
+
+\section{$t$-distribution}
+
+\subsection{definition}
+
+\begin{frame}
+  \frametitle{$t$-distribution, definition}
+  The \textbf{$t$-distribution} is the name of a new distribution function, which accounts for the added uncertainty of having to estimate $\sigma$ in the process of estimating $\mu$.
+
+  \begin{block}{$t$-distribution}
+    The $t$-distribution is a (standard) normal-looking probability density function that is always centered at zero, has fatter tails than the normal distribution, and has a single parameter, \textbf{degrees of freedom}.
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{$t$, plot}
+  <<echo=FALSE, fig.width=8, fig.height=5, fig.align="center">>=
+  x <- seq(-5, 5, length.out=1001)
+  df <- data.frame(stdNormal=dnorm(x), t1 = dt(x, df=1),
+                     t3 = dt(x, df=3), t8 = dt(x, df=8))
+  df <- stack(df)
+  df[,"x"] <- rep(x, 4)
+  ggplot(df, aes(x, values, colour=factor(ind), linetype=factor(ind))) +
+        labs(ylab="density") + geom_line(size=1) +
+  guides(colour=guide_legend(title="distribution"),
+  linetype=guide_legend(title="distribution"))
+@
+\end{frame}
+
+\subsection{degrees of freedom}
+
+\begin{frame}
+  \frametitle{$t$, degrees of freedom}
+  \begin{block}{degrees of freedom}
+    The degrees of freedom describe the heaviness of the tails of the $t$-distribution.  The larger the degrees of freedom, the more closely the distribution looks like a standard normal, $N(0, 1)$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$-distribution, mathematical definition}
+  The $t$-distribution is the ratio of $Z \sim N(0, 1)$ and $V \sim \Gamma(\nu/2, 2)$\footnote{Otherwise known as the chi-squared distribution, $V \sim \chi^2(\nu)$.}
+
+\[ t = \frac{Z}{\sqrt{V/\nu}} \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$, df for sample mean}
+  If the sample has n observations and we are examining a single mean, then we use the $t$-distribution with $df = n-1$ degrees of freedom.
+\end{frame}
+
+\subsection{notes}
+
+\begin{frame}
+  \frametitle{$t$, notes}
+  Notes on the $t$-distribution
+  \begin{itemize}
+  \item<1-> watch for skew
+  \item<2-> heavy tails of $t$ account for estimation of $\sigma$
+  \item<3-> must standardize random variable of interest
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{$t$, in \texttt{R}}
+  The function in \texttt{R} to deal with the $t$-distribution follow the same pattern
+<<eval=FALSE>>=
+?pt
+@
+\end{frame}
+
+\section{Examples}
+
+\subsection{Confidence Interval}
+\begin{frame}
+  \frametitle{$t$, confidence intervals}
+  Confidence intervals under the $t$-distribution are nearly identical,
+
+  \[ \bar{X} \pm t_{df}^* \cdot s_{\bar{X}}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$, confidence interval example}
+  To investigate the average mercury content in dolphin muscle, we collect a sample of $19$ dolphins from the Taiji area in Japan.  We calculate a sample mean of $4.4 \mu g$ of mercury per gram of muscle with a sample standard deviation of $2.3$.  Make a $95$\% confidence interval of the mercury content found in Taiji dolphins.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{$t$, CI example}
+  Put the pieces of the puzzle together and interpret.
+  <<>>=
+  xbar <- 4.4   # mean(x)
+  n <- 19       # length(x)
+  s <- 2.3      # sd(x)
+  t <- qt(0.975, n-1)
+  xbar - t*s/sqrt(n)
+  xbar + t*s/sqrt(n)
+  @
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$, CI example}
+  We are $95$\% confident the poulation average mercury content of muscles in Taiji area dolphins is between $3.29$ and $5.51 \mu g/g$.
+\end{frame}
+
+\subsection{Hypothesis Test}
+
+\begin{frame}
+  \frametitle{$t$, hypothesis tests}
+  Hypothesis tests under the $t$-distribution are nearly identical,
+
+  \[ t_{df} = \frac{\bar{X} -\mu_0}{s_{\bar{X}}}. \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$, HT example}
+The population mean running time for The Cherry Blossom Race in $2006$ was $93.29$ minutes.  We want to test whether or not participants in the $2012$ Cherry Blossom Race are getting faster or slower, versus the other possibility that there has been no change.  The sample mean and sample standard deviation of the sample of $100$ runners from the $2012$ Cherry Blossom Race are $95.61$ and $15.78$ minutes, respectively.  Set up and evaluate the appropriate hypothesis test using the $t$-distribution, and compare you answer to the normal distribution.
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$, HT example}
+  First set up the null and alternative hypotheses and choose a level of significance.
+
+  \only<2->{ We test
+    \begin{align*}
+      H_0: \quad & \mu_{2012} = 93.29 \\
+      H_A: \quad & \mu_{2012} \ne 93.29
+    \end{align*}
+with $\alpha = 0.05$.
+}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{$t$, HT example}
+  Hypothesis testing follows the same framework.  We calculate the test statistic, now calling it $t$ because we will use the $t$-distribution.
+<<>>=
+n <- 100
+t <- (95.61 - 93.29)/(15.78/sqrt(n))
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{$t$, HT example}
+  Calculate p-value from test statistics under both $t$ and normal distribution.
+
+<<>>=
+2*(1-pt(abs(t), n-1))
+2*(1-pnorm(abs(t))) # only for comparison
+@
+\end{frame}
+
+\begin{frame}
+  \frametitle{$t$-distribution, take away}
+  \begin{itemize}
+  \item<1-> When $\sigma$ unknown, replace $Z$ with $t$-distribution.
+    \begin{itemize}
+    \item<1-> watch for skew.
+    \end{itemize}
+  \item<2-> single mean degrees of freedom, $df = n-1$
+  \item<3-> large degrees of freedom makes $t$-distribution look like standard normal
+  \item<4-> must standardize random variables with $t$
+  \item<5-> safe bet: use $t$-distribution instead of $Z$ everywhere!
+  \end{itemize}
+\end{frame}
+
+\section{References}
+\nocite{Diez:2015,Wickham:2009}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+
+\end{document}
