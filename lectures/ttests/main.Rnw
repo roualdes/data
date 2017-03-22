@@ -72,7 +72,7 @@ t <- (xbar - mu0)/(s/sqrt(n))
   Tell me whether or not these data are paired.
 
   \begin{itemize}
-  \item<2-> two website's price for the same book
+  \item<2-> two websites' prices for the same book
   \item<3-> eye sight ratings by person
   \item<4-> lines of code by program
   \item<5-> upper versus lower bird beak lengths
