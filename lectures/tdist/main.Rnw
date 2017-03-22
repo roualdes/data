@@ -160,9 +160,8 @@ library(dplyr)
 
 \begin{frame}
   \frametitle{$t$, HT example}
-The population mean running time for The Cherry Blossom Race in $2006$ was $93.29$ minutes.  We want to test whether or not participants in the $2012$ Cherry Blossom Race are getting faster or slower, versus the other possibility that there has been no change.  The sample mean and sample standard deviation of the sample of $100$ runners from the $2012$ Cherry Blossom Race are $95.61$ and $15.78$ minutes, respectively.  Set up and evaluate the appropriate hypothesis test using the $t$-distribution, and compare you answer to the normal distribution.
+The population mean running time for The Cherry Blossom Race in $2006$ was $93.29$ minutes.  We want to test whether or not participants in the $2012$ Cherry Blossom Race are getting faster or slower, versus the other possibility that there has been no change.  The sample mean and sample standard deviation of the sample of $100$ runners from the $2012$ Cherry Blossom Race are $95.61$ and $15.78$ minutes, respectively.  Set up and evaluate the appropriate hypothesis test using the $t$-distribution, and compare your answer to the normal distribution.
 \end{frame}
-
 \begin{frame}
   \frametitle{$t$, HT example}
   First set up the null and alternative hypotheses and choose a level of significance.
