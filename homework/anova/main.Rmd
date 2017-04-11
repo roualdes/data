@@ -1,0 +1,15 @@
+---
+title: "Homework 09: ANOVA"
+output: html_document
+---
+
+Due date: 2017-04-14
+
+Pick a dataset, that I haven't previously used, from my website or from an R package, run ANOVA on it, and describe your analysis.  You need at least the following items in your write up:
+
+1. A description of the data -- the variables, the origin of the data and the data set (such that I could find it and replicate your work).
+2. An appropriate plot to display the data with respect to your analysis.
+3. A statement about the validity of ANOVA via its assumptions.
+4. A formal hypothesis.
+5. A formal conclusion in both Statistics and in English.
+6. The R code used to produce the analysis.
