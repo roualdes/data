@@ -3,7 +3,7 @@ title: "Homework 09: ANOVA"
 output: html_document
 ---
 
-Due date: 2017-04-14
+Due date: 2017-04-17
 
 Pick a dataset, that I haven't previously used, from my website or from an R package, run ANOVA on it, and describe your analysis.  You need at least the following items in your write up:
 

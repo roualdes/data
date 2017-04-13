@@ -1,0 +1,109 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit[["set"]](progress=FALSE)
+suppressMessages(library(ggplot2))
+@
+
+\title{Bootstrap, Examples}
+\institute{CSU, Chico Math 314}
+\date{\today}
+\maketitle
+
+\begin{frame}
+  \frametitle{outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% frames %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Difference of Two Medians}
+\begin{frame}
+  \frametitle{Difference of two medians}
+  Consider the hypothesis
+  \begin{align*}
+    H_0: & median_1 = median_2 \\
+    H_1: & median_1 \ne median_2
+  \end{align*}
+  at $\alpha = 0.01$.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two medians, Birth Weight by SuperFamily}
+  We need some libraries.
+<<>>=
+suppressMessages({library(ape)
+    data(carnivora)
+    library(ggplot2)
+    library(dplyr)
+    library(boot)
+})
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two medians, Birth Weight by SuperFamily}
+  Step 1?
+  \pause
+<<fig.width=3, fig.height=2.5, fig.align="center">>=
+qplot(SuperFamily, BW, data=carnivora, geom="boxplot", na.rm=TRUE)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two means, Birth Weight by SuperFamily}
+For comparison, difference of two means.
+<<>>=
+t.test(BW~SuperFamily, data=carnivora, conf=0.95)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two medians, Birth Weight by SuperFamily}
+  We need a function that returns the statistic of interest.
+<<>>=
+diff_medians <- function(data, i) {
+    data[i,] %>%
+        group_by(SuperFamily) %>%
+        summarise(m=median(BW)) %>%
+        .[['m']] %>% # extract column named m
+        diff %>%     # take difference in
+        `*`(-1)      # same order as t.test
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two medians, Birth Weight by SuperFamily}
+  We need a function that returns the statistic of interest.
+<<cache=TRUE>>=
+b <- carnivora %>%
+    select(BW, SuperFamily) %>%
+    na.omit %>%
+    boot(., statistic=diff_medians, R=2000,
+         parallel="multicore", ncpus=3) # dope
+bCI <- boot.ci(b, conf=0.95, type="bca")
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Difference of two medians, Birth Weight by SuperFamily}
+  Results.
+<<>>=
+bCI
+@
+\end{frame}
+
+\end{document}
