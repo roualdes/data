@@ -1,0 +1,208 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+lmData <- function(n, int=-1, sd=1, slope=pi, from=0, to=10) {
+    x = seq(from=from, to=to, length.out=n)
+    y = int + slope*x + rnorm(n, sd=sd)
+    data.frame(x=x, y=y)
+}
+
+nlmData <- function(n, sign=1, sd=10, from=0, to=5) {
+    x = seq(from=from, to=to, length.out=n)
+    y = sign*exp(x) + rnorm(n, sd=sd)
+    data.frame(x=x, y=y)
+}
+library(ggplot2)
+library(dplyr)
+@
+
+\title{Simple Linear Regression, Inference}
+\institute{CSU Chico, Math 314} 
+\date{\today}
+\maketitle
+
+\frame {\frametitle{outline}
+  \tableofcontents
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\section{Recap}
+
+\begin{frame}
+  \frametitle{Recap, linear regression}
+  Linear regression is a method to fit a line through a scatter plot of data in a ``best'' sense.  Often, interest lies in the relationship between the explanatory and the response variable.
+\end{frame}
+
+\section{Estimating $\beta_0, \beta_1$}
+\begin{frame}
+  \frametitle{Inference, $\beta_0, \beta_1$}
+  Linear regression estimates the population parameters $\beta_0$ (intercept) and $\beta_1$ (slope), just like every other parameter we have estimated.  As such, the estimators $\hat{\beta}_0$ and $\hat{\beta}_1$ of these parameters have their own sampling distributions.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Inference, $\beta_0, \beta_1$}
+  It turns out that the estimators $\hat{\beta}$ are also approximately normally distributed when the sample size is sufficiently large,
+
+\[ \frac{\hat{\beta} - \beta}{\sigma_{\hat{\beta}}} \sim N(0,1). \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Inference, hypothesis tests}
+  Hypothesis testing naturally follows.  The most common hypothesis test for linear regression parameters is
+
+  \begin{align*}
+    H_0: \quad & \beta = 0 \\
+    H_A: \quad & \beta \ne 0.
+  \end{align*}
+with $\alpha = 0.05$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Inference, a note}
+  A small but often missed point.  Hypothesis testing is meaningless if the model is wrong.
+
+  \begin{block}{George E.\ P.\ Box}
+    Essentially, all models are wrong, but some are useful.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Standard Output}
+The hypothesis test above has a natural and informative interpretation in most contexts.
+
+<<>>=
+url <- "https://roualdes.us/data/elmhurst.csv"
+elmhurst <- read.csv(url)
+elmReg <- lm(gift_aid ~ family_income, data=elmhurst)
+# summary(elmReg) # RStudio
+@ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standard Output}
+  Be sure to understand and be able to find
+
+  \begin{itemize}
+  \item standard errors
+  \item t values
+  \item p-values
+  \item adjusted $R^2$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Inference, confidence intervals}
+If we can do hypothesis testing, we can do confidence intervals.  The function \texttt{confint} in \texttt{R} is extremely helpful.
+
+<<>>=
+# use lm fitted model, elmReg from above
+confint(elmReg) # default is 95%
+confint(elmReg, level=0.99) # can specify confidence
+@   
+\end{frame}
+
+\section{$R^2$}
+
+\begin{frame}
+  \frametitle{$R^2$}
+  It is common to use the square of the (Pearson) correlation to explain the strength of a linear fit.
+
+  \begin{block}{$R^2$}
+    The $R^2$ of a linear model describes the amount of variation in the response variable $y$ that is explained by the least squares line on the explanatory variable $x$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{$R^2$, example}
+  Using the data frame \texttt{elmhurst}, the correlation between gift aid and family income is $R = \Sexpr{round(with(elmhurst, cor(gift_aid, family_income)), 4)}$.  Thus, $R^2 = \Sexpr{round(with(elmhurst, cor(gift_aid, family_income)^2), 4)}$.  We say $\Sexpr{round(with(elmhurst, 100*cor(gift_aid, family_income)^2), 2)}$\% of the variation in \texttt{gift\_aid} is explained by the least squares line on \texttt{family\_income}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Adjusted $R^2$}
+  It is almost\footnote{Except when the adjusted $R^2$ is negative.} always better to use the ``Adjusted R-squared'' value that \texttt{R} gives you in all linear regression output.  The problem with the $R^2$ above is that the more explanatory variables you use the higher this value is -- this doesn't always conform to reality.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Adjusted $R^2$}
+    \begin{block}{adjusted $R^2$}
+    The adjusted $R^2$ of a linear model describes the amount of variation in the response variable $y$ that is explained by the least squares line on the explanatory variable $x$, after taking into account the number of explanatory variables.
+  \end{block}
+\end{frame}
+
+\section{Extrapolation}
+
+\begin{frame}
+  \frametitle{Extrapolation, example}
+  At age $8$, Shaquille O'Neal was 4'8".  At age $16$, he was 6'8".  Can we use these data to predict how tall Shaq is now that he is $43$?
+
+\only<2->{In eight years, Shaq grew $2'$.  $27$ years later, Shaq should be $6'9"$ taller than he was at $16$, thus $13'7"$.  Sound reasonable?}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extrapolation}
+
+Extrapolation is in general dangerous.  Sometimes it works, but not often so watch out.
+
+  \begin{block}{extrapolation}
+    Applying a model to values outside of the range of the original data is called extrapolation.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extrapolation, example}
+  How much gift aid would a student expect to receive if their family income was $\$1$ million?
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  suppressMessages(library(openintro))
+  qplot(family_income, gift_aid, data=elmhurst,
+          ylab="Gift aid ($1000)",
+          xlab="Family income ($1000)") + stat_smooth(method="lm", se=FALSE)
+  @ 
+\end{frame}
+
+<<echo=FALSE>>=
+elmReg <- lm(gift_aid ~ family_income, data=elmhurst)
+beta <- coef(elmReg)
+@ 
+
+\begin{frame}
+  \frametitle{Extrapolation, example}
+  How much would gift aid would a student expect to receive if their family income\footnote{Don't forget family income is in units of $\$1000$.} was $\$1$ million?  Using our least squares line,
+\[ \widehat{aid} = \Sexpr{round(beta[1], 2)} + \Sexpr{round(beta[2], 2)} \times family\_income \]
+\noindent we'd estimate $\Sexpr{round(beta[1] + 1000*beta[2], 2)}$ thousand dollars.
+
+<<eval=FALSE>>=
+?predict.lm
+@ 
+\end{frame}
+
+\section{Take Away}
+\begin{frame}
+  \frametitle{Take away}
+  \begin{itemize}
+  \item<1-> Hypothesis testing and confidence intervals live on
+  \item<2-> most linear regression software output defaults to two-sided alternatives
+  \item<3-> Too many people rely on $R^2$, use adjusted $R^2$ instead.
+  \item<4-> Extrapolation is dangerous -- be careful.
+  \end{itemize}
+\end{frame}
+
+\section{References}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \nocite{Wickham:2009,Diez:2015}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+\end{document}
