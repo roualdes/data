@@ -1,0 +1,16 @@
+---
+title: "Homework 11: Simple Linear Regression"
+output: html_document
+---
+
+Due date: 2017-05-01
+
+Pick a dataset, that I haven't previously used, from my website, from an R package, or supply your own, run simple linear regression on it, and describe your analysis.  You need at least the following items in your write up:
+
+1. A description of the data -- the variables, the origin of the data and the data set (such that I could find it and replicate your work).
+2. An appropriate plot to display the data with respect to your analysis.
+3. An interpretation in context of both the slope and the intercept.
+4. An interpretation of adjusted $R^2$.
+4. A formal hypothesis.
+5. A formal conclusion in both Statistics and such that your Grandmother could understand.
+6. The R code used to produce the analysis.
