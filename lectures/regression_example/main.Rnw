@@ -1,0 +1,179 @@
+\documentclass{beamer}
+\input{BeamOptions.tex}
+
+\begin{document}
+
+<<setup, include=FALSE>>=
+options(replace.assign=TRUE, width=40)
+opts_knit$set(progress=FALSE)
+@
+
+\title{Simple Linear Regression, Examples}
+\institute{CSU Chico, Math 314}
+\date{\today}
+\maketitle
+
+\section{Assumptions}
+\begin{frame}
+  \frametitle{Hypothesis}
+  Does a cars weight predict its gas mileage?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plot the data!}
+  <<>>=
+  suppressMessages({library(ggplot2)
+        library(dplyr)
+        library(boot)})
+  @
+\end{frame}
+
+\begin{frame}
+Step 1?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plot the data!}
+  <<>>=
+p <- qplot(wt, mpg, data=mtcars,
+        xlab="Weight (1000lbs)", ylab="Mile per gallon") +
+      stat_smooth(method="lm")
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Plot the data!}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  p
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Fit Linear Regression}
+<<results="hide">>=
+fit <- lm(mpg ~ wt, data=mtcars)
+## then check assumptions
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Check Assumptions}
+<<>>=
+r <- rstandard(fit)
+yhat <- fitted(fit)
+linearity <- qplot(yhat, r)
+normality <- qplot(r, geom="histogram", binwidth=2/3)
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linearity?}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  linearity
+  @
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Normality?}
+  <<echo=FALSE, fig.width=3, fig.height=3, fig.align="center">>=
+  normality
+  @
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Standard Output}
+<<>>=
+summary(fit)
+@
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Interpretations}
+<<>>=
+confint(fit)
+@
+\pause
+Slope: We are $95$\% confident that when weight increases by
+$1000$ pounds, gas mileage goes down by between $-6.5$ and $-4.2$
+miles per gallon.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{$\hat{y}$ by hand}
+  Need a function to predict the response variable, $y$.
+<<>>=
+estimates <- coef(fit)
+predict_y <- function(modelmatrix, betahat) {
+    apply(modelmatrix, 1, # apply function to each row of X
+          function(row) {
+              sum(row*betahat)
+          })
+}
+modmat <- model.matrix(~mtcars$wt)
+all.equal(predict_y(modmat, estimates), yhat,
+          check.attributes=FALSE)
+@
+\end{frame}
+
+\section{Likelihood}
+
+\begin{frame}[fragile]
+  \frametitle{Regression via Likelihood}
+  We need to write the simplified log-likelihood as a function in \texttt{R}.
+<<>>=
+ll <- function(beta, data) {
+    yhat <- predict_y(data[["X"]], beta)
+    sum((data[["y"]] - yhat)^2)
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Regression via Likelihood}
+  Now let's set up data structures for optim.
+<<>>=
+betahat <- list(y=mtcars$mpg, X=modmat) %>%
+    optim(c(1,2), ll, method="BFGS", data=.) %>%
+    .[["par"]]
+all.equal(betahat, estimates, check.attributes=FALSE)
+@
+\end{frame}
+
+\section{Bootstrap Standard Errors}
+\begin{frame}[fragile]
+  \frametitle{BootstrapStandard Errors}
+  We could work out the math, but let's try the bootstrap.  Recall, we resample random variables.  Only $\epsilon$ is a random variable in linear regression.
+
+<<>>=
+coef_reg <- function(data, index, yhat, X, est) {
+    ystar <- yhat + data[index]
+    fit <- lm(ystar ~ -1 + X)
+    coef(fit)
+}
+@
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Bootstrap Standard Errors}
+  We could work out the math, but let's try the bootstrap.  Recall, we resample random variables.  Only $\epsilon$ is a random variable in linear regression.
+
+<<>>=
+yhat <- fitted(fit)
+r <- residuals(fit)
+b <- boot(r, coef_reg, R=2000,
+          yhat=yhat, X=modmat)
+apply(b$t, 2, sd)
+## boot.ci(b, type="bca", index=1) # intercept
+## boot.ci(b, type="bca", index=2) # slope
+@
+\end{frame}
+
+\section{References}
+\nocite{Wickham:2009}
+\begin{frame}[allowframebreaks]
+  \frametitle{references}
+  \bibliographystyle{plainnat} \bibliography{../../ref}
+\end{frame}
+\end{document}
