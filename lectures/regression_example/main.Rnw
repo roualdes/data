@@ -20,7 +20,7 @@ opts_knit$set(progress=FALSE)
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Plot the data!}
+  Load some libraries.
   <<>>=
   suppressMessages({library(ggplot2)
         library(dplyr)
@@ -96,7 +96,7 @@ confint(fit)
 @
 \pause
 Slope: We are $95$\% confident that when weight increases by
-$1000$ pounds, gas mileage goes down by between $-6.5$ and $-4.2$
+$1000$ pounds, gas mileage goes down by between $4.2$ and $6.5$
 miles per gallon.
 \end{frame}
 
@@ -147,7 +147,7 @@ all.equal(betahat, estimates, check.attributes=FALSE)
   We could work out the math, but let's try the bootstrap.  Recall, we resample random variables.  Only $\epsilon$ is a random variable in linear regression.
 
 <<>>=
-coef_reg <- function(data, index, yhat, X, est) {
+coef_reg <- function(data, index, yhat, X) {
     ystar <- yhat + data[index]
     fit <- lm(ystar ~ -1 + X)
     coef(fit)
