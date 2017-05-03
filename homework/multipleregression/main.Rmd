@@ -1,0 +1,17 @@
+---
+title: "Homework 10: Multiple Regression"
+output: html_document
+---
+
+Due date: 2017-05-08
+
+Consider the [hospital](https://roualdes.us/data/hospital.csv) dataset.
+
+1. Fit multiple regression using `lm()` and all the numerical explanatory variables.
+2. Simplify the model by removing useless explanatory variables, one at a time.  Don't remove the intercept.
+3. Check the assumptions of your reduced model.
+4. Interpret two slopes in context of the data.
+5. Calculate 99% confidence intervals for the coefficients and interpret one of them in context.
+6. Conclude an implicit hypothesis test about a coefficient with the appropriate confidence interval.
+7. Now using `optim()` and `boot()`, estimate the coefficients, and their standard errors, of your multiple linear regression model.
+8. Pick one numerical explanatory variable. Using `lm()` fit multiple linear regression with unique slopes, on the numerical explanatory variable, and intercepts amongst the categorical explanatory variable named region.  You can try to use `optim()` here, but results may vary by starting values.
