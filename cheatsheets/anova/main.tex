@@ -1,0 +1,256 @@
+\documentclass[final,9pt,fleqn]{beamer}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\input{BeamOptions.tex}
+\usepackage{eso-pic}
+\setlength{\paperwidth}{11in}
+\setlength{\paperheight}{7in}
+\setlength{\mathindent}{5pt}
+\setbeamerfont{frametitle}{size=\Huge}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\hfill {\footnotesize \href{https://creativecommons.org/licenses/by-sa/4.0/}{CC BY-SA 4.0} $\circ$ Edward A. Roualdes $\circ$ \href{https://roualdes.us}{roualdes.us} $\circ$ version $0.0.1$ $\circ$ updated: \today} \hspace {0.1in} \vspace{0.1in}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+
+\newcommand\AtPagemyUpperLeft[1]{\AtPageLowerLeft{%
+    \put(\LenToUnit{0.81\paperwidth},\LenToUnit{0.925\paperheight}){#1}}}
+\AddToShipoutPictureFG{
+  \AtPagemyUpperLeft{{
+      \href{http://dplyr.tidyverse.org}{\includegraphics[scale=0.2,keepaspectratio]{dplyr.png}}
+      \hspace{0.025in}
+      \href{http://ggplot2.tidyverse.org}{\includegraphics[scale=0.2,keepaspectratio]{ggplot.png}}
+      \hspace{0.025in}
+      \href{https://www.r-project.org/}{\includegraphics[scale=0.05,keepaspectratio]{Rlogo.png}}
+      \hspace{0.025in}
+      \href{https://www.csuchico.edu}{\raisebox{-0.1\height}{\includegraphics[scale=0.13]{chico_seal.eps}}}
+}}
+}%
+
+
+
+\begin{frame}[fragile]
+  \frametitle{ \underline{Analysis of Variance} :: {\Large \textbf{CHEAT SHEET}} }
+  \hspace{0.1in}
+  \begin{columns}
+
+    \begin{column}{0.03\paperwidth}
+    \end{column}
+
+    \begin{column}{0.3\paperwidth}
+      \begin{block}{{\huge Basics}}
+
+        Are the means amongst the $k$ levels equal? \\
+        \vspace{-0.1in}
+        \begin{align*}
+          H_0: \quad  & \mu_1 = \mu_2 = \mu_3 = \ldots = \mu_K \\
+          H_1: \quad  & \text{at least one mean is different} \\
+          \alpha = 0.01 &  \\
+        \end{align*}
+      \end{block}
+      \vspace{-0.25in}
+      Step $1$, plot the data!
+      \vspace{-0.1in}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{(df,} \hlkwd{aes}\hlstd{(Factor, Numerical))} \hlopt{+}
+    \hlkwd{geom_jitter}\hlstd{(}\hlkwc{width}\hlstd{=}\hlnum{0.1}\hlstd{,} \hlkwc{colour}\hlstd{=}\hlstr{"grey75"}\hlstd{)} \hlopt{+}
+    \hlkwd{stat_summary}\hlstd{(}\hlkwc{fun.data}\hlstd{=}\hlstr{"mean_cl_boot"}\hlstd{,}
+                 \hlkwc{colour}\hlstd{=}\hlstr{"cornflowerblue"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figures/main-unnamed-chunk-1-1} 
+
+\end{knitrout}
+
+\vspace{-0.1in}
+\begin{knitrout}\large
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(Numerical} \hlopt{~} \hlstd{Factor,} \hlkwc{data}\hlstd{=df)}
+\hlkwd{print}\hlstd{(}\hlkwd{anova}\hlstd{(fit),} \hlkwc{signif}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Numerical
+##            Df Sum Sq Mean Sq F value Pr(>F)
+## Factor      3     14    4.67    2.71  0.048
+## Residuals 109    187    1.72
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\vspace{-0.1in}
+
+  \begin{block}{{\huge Assumptions}}
+
+  \begin{enumerate}
+  \item independent observations $y_{nk}$ for $n=1, \ldots, N$,
+  \item within each group $k=1, \ldots, K$, data are normal, and
+  \item the variability of each group is equal.
+  \end{enumerate}
+
+  \end{block}
+\end{column}
+
+\begin{column}{.03\paperwidth}
+\end{column}
+
+\begin{column}{0.3\paperwidth}
+
+  \begin{block}{{\huge Intuition}}
+    Generally, means will be different when the average square error amongst the groups is significantly larger than average square error within the groups.
+  \end{block}
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figures/main-unnamed-chunk-3-1} 
+\includegraphics[width=\maxwidth]{figures/main-unnamed-chunk-3-2} 
+
+\end{knitrout}
+\vspace{-0.2in}
+
+\begin{centering}
+\[ F_{K-1, N-K} = \frac{\text{average square error amongst the groups}}{\text{average square error within the group}} \]
+\end{centering}
+
+
+
+\begin{block}{{\huge F distribution}}
+
+  The $F$-distribution is a probability density function over non-negative numbers.  P-values are strictly calculated from the right tail.  Large $F$ statistics indicate evidence against the null hypothesis.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figures/main-unnamed-chunk-4-1} 
+
+}
+
+
+
+\end{knitrout}
+\end{block}
+
+\vspace{-0.2in}
+
+\begin{block}{{\huge Details}}
+
+  ANOVA decomposes observation $n$ into three pieces: the first group's mean $\alpha$, the offset $\beta_k$ for group $k$, and an error term $\epsilon_{nk}$.  Each $x_{nk}$ is a numerically encoded, binary variable that indicates when observation $n$ belongs to group $k$.
+  \vspace{-0.15in}
+
+  \[ y_{nk} = \alpha + \beta_1  x_{n1} + \ldots + \beta_{K-1} x_{n,K-1} + \epsilon_{nk}, \quad \epsilon_{nk} ~ \mathcal{N}(0, \sigma^2)\]
+\end{block}
+
+\end{column}
+
+\begin{column}{0.03\paperwidth}
+\end{column}
+
+\begin{column}{0.25\paperwidth}
+
+  \begin{block}{{\huge Coefficients}}
+    The coefficients $\beta_k$ are group offsets relative to the first group: group $k$'s mean is equal to $\hat{\alpha} + \hat{\beta_k}$.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##           [,1]
+## alpha   4.8607
+## beta_1 -0.4670
+## beta_2 -0.9337
+## beta_3 -0.4795
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  \end{block}
+
+  \begin{block}{{\huge Group Means}}
+    The expected value of $y_{nk}$, $E(y_{nk}|x_{nk})$, is found by averaging over the observations within group $k$.  If observation $n=5$ belongs to group $k=3$ then
+
+    \begin{align*}
+      \hat{y}_{5,3} = E(y_{5,3}|x_{5,3} == 1) & = \hat{\alpha} + \hat{\beta_3} \\
+                              & = 4.8607 + -0.4795 \\
+                              & = 3.927 \\
+    \end{align*}
+
+    Notice $\hat{y}_{5,3}$ is exactly equal to group $3$'s mean.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{df} \hlopt{%>%}
+    \hlkwd{group_by}\hlstd{(Factor)} \hlopt{%>%}
+    \hlkwd{summarise}\hlstd{(}\hlkwc{group_mean}\hlstd{=}\hlkwd{mean}\hlstd{(Numerical))}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 4 x 2
+##   Factor group_mean
+##   <fctr>      <dbl>
+## 1      1      4.861
+## 2      2      4.394
+## 3      3      3.927
+## 4      4      4.381
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  \end{block}
+\end{column}
+
+
+\end{columns}
+\end{frame}
+\end{document}

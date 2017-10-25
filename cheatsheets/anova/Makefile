@@ -5,17 +5,17 @@
 #
 # Description of File:
 # Makefile for knitr compiling
-# 
+#
 ################################################################################
 all:pdf  # default rule DO NOT EDIT
 ################################################################################
 MAINFILE  := main
-RNWFILES  := 
-RFILES    := 
-TEXFILES  := 
+RNWFILES  :=
+RFILES    :=
+TEXFILES  :=
 CACHEDIR  := cache
 FIGUREDIR := figures
-LATEXMK_FLAGS := 
+LATEXMK_FLAGS :=
 ##### Explicit Dependencies #####
 ################################################################################
 RNWTEX = $(RNWFILES:.Rnw=.tex)
@@ -28,11 +28,11 @@ ALLTEX = $(MAINTEX) $(RNWTEX) $(TEXFILES)
 # Dependencies
 $(RNWTEX): $(RDATAFILES)
 $(MAINTEX): $(RNWTEX) $(TEXFILES)
-$(MAINPDF): $(MAINTEX) $(ALLTEX) 
+$(MAINPDF): $(MAINTEX) $(ALLTEX)
 
 .PHONY:pdf tex clean clearcache cleanall
 pdf: $(MAINPDF)
-tex: $(RDATAFILES) $(ALLTEX) 
+tex: $(RDATAFILES) $(ALLTEX)
 
 $(CACHEDIR):
 	mkdir $(CACHEDIR)
@@ -73,9 +73,13 @@ clearcache:
 cleanall: clean clearcache
 	-rm $(MAINPDF)
 
-handout:
+open:
+	open -a Skim $(MAINPDF)
+
+handout: pdf
 	gsed 's/documentclass/documentclass[handout]/' main.tex >main_handout.tex
 	latexmk -pdf main_handout.tex
 
-open:
-	open -a Skim $(MAINPDF)
+copy: handout
+	cpy $(CURDIR)/$(MAINPDF)
+	cpy $(CURDIR)/$(MAINFILE)_handout.pdf
