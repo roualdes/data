@@ -30,3 +30,7 @@ figures
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+
+### python files
+.ipynb_checkpoints/
