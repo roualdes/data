@@ -15,7 +15,6 @@ from statsmodels.formula.api import ols
 
 $$H_0: \mu_1 = \mu_2 = \ldots = \mu_k$$
 
-
 ```python
 mlb = pd.read_csv('https://roualdes.us/data/mlb.csv')
 ```
@@ -114,7 +113,7 @@ for idx, (name, grp) in enumerate(carnivs.groupby('Family')):
     xticklabs.append(name)
     xticks.append(idx)
 ax = plt.xticks(xticks, xticklabs)
-bp.point(np.array(xticks), 
+bp.point(np.array(xticks),
          carnivs.groupby('Family')['SB'].agg({'mean'})['mean'].values,
         color='tab:red', size=150, shape='d')
 ```
@@ -308,7 +307,7 @@ model.fittedvalues
     32     -23.235000
     33     -21.485000
     34     -21.485000
-              ...    
+              ...
     50     -24.985000
     51      12.015000
     52      22.815000
@@ -382,7 +381,7 @@ model.resid
     32     -23.235000
     33     -21.485000
     34     -21.485000
-              ...    
+              ...
     50     -24.985000
     51      12.015000
     52      22.815000
@@ -414,5 +413,3 @@ model.resid
     110     14.400000
     111     23.400000
     Length: 75, dtype: float64
-
-
