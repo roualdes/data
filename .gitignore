@@ -31,6 +31,9 @@ figures
 ehthumbs.db
 Thumbs.db
 
-
 ### python files
 .ipynb_checkpoints/
+
+### gitbook stuff
+node_modules
+_book

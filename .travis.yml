@@ -1,0 +1,19 @@
+language: python
+cache:
+  packages: true
+  directories:
+  - "$TRAVIS_BUILD_DIR/_bookdown_files"
+  - node_modules
+sudo: false
+install:
+  # 722d4f7c511022b17747c89fd6e43fdc22649976
+  - npm install -g gitbook-cli
+env:
+  global:
+    secure: "oc7PTdh0VglFEmupNzBZGcoJjjvu5ns/iRjq+wkxJviLPTTV55ukJPQuHwfvQ/ZZIZADmAHG5quZ4SffOCpK35mwyCoHDOCA8jS/W5YYuvEyb8Wg30aQ7/Y+2YGZrGa2i3ghAHa3SdXA1LUR/c0QcBHxWbS+ZkzTismHTMiQ7temYo5OygEx7/MIOb+4o7uK7Q56DS/ylxBUZEBjvDap4jChjeZRBtSFoKPSm6F2HPPXn3WpA4H9WJIlEdAHoPwdn+AbtQNPfCeNycDxIkrZDbG7ZEXCaRcqdlwPk3xGEP3jeKxFyQrWKbWq4K5viEjuDndckZMvAC6fg43EryycEIgVZpKjsdYsSjsJwJ17sHnZ/QyWgVsdFpRrHCctNFVlBHenKivlnV5mgYyXgpgkJ/WuUiq70Q+WbmpMq8YomBfp/eTbxBV9GlHalfGN81V0fJas2NPoZgGAE//vGTVcxrJpYLYxWd9SpUjbpQGSpaukDwDfVHwDfse8QtVV6fCatKfW9pseaFpru/sg+eutwvrgTGI9lQDA/E1juXbkcZEghnzjsD2HrCjevmsTXOFTtMJZTuXfQeMPdwSPitgYF1qfJV32NbIsk6lXnG7QwjslXN+XruOA2wFVEsrJlU/ML9Qr8x+WNTAxMIDS2evVPX0fXxRKNCPadsh0IP0o6PE="
+before_script:
+- chmod +x ./_build.sh
+- chmod +x ./_deploy.sh
+script:
+- "./_build.sh"
+- "./_deploy.sh"
