@@ -13,7 +13,6 @@
 *.snm
 *.toc
 *.ttt
-*.txt
 *.vrb
 
 ### R nonsense ###
@@ -32,7 +31,7 @@ ehthumbs.db
 Thumbs.db
 
 ### python files
-.ipynb_checkpoints/
+.ipynb_checkpoints
 
 ### gitbook stuff
 node_modules
