@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gitbook install && gitbook build
+python3 convert_notebooks.py && gitbook install && gitbook build

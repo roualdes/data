@@ -1,16 +1,21 @@
 language: python
+python:
+- "3.6"
 cache:
-  packages: true
+  bundler: true
+  - pip
   directories:
-  - "$TRAVIS_BUILD_DIR/_bookdown_files"
   - node_modules
 sudo: false
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y python-numpy
 install:
-  # 722d4f7c511022b17747c89fd6e43fdc22649976
   - npm install -g gitbook-cli
+  - pip install -r requirements.txt
 env:
   global:
-    secure: "oc7PTdh0VglFEmupNzBZGcoJjjvu5ns/iRjq+wkxJviLPTTV55ukJPQuHwfvQ/ZZIZADmAHG5quZ4SffOCpK35mwyCoHDOCA8jS/W5YYuvEyb8Wg30aQ7/Y+2YGZrGa2i3ghAHa3SdXA1LUR/c0QcBHxWbS+ZkzTismHTMiQ7temYo5OygEx7/MIOb+4o7uK7Q56DS/ylxBUZEBjvDap4jChjeZRBtSFoKPSm6F2HPPXn3WpA4H9WJIlEdAHoPwdn+AbtQNPfCeNycDxIkrZDbG7ZEXCaRcqdlwPk3xGEP3jeKxFyQrWKbWq4K5viEjuDndckZMvAC6fg43EryycEIgVZpKjsdYsSjsJwJ17sHnZ/QyWgVsdFpRrHCctNFVlBHenKivlnV5mgYyXgpgkJ/WuUiq70Q+WbmpMq8YomBfp/eTbxBV9GlHalfGN81V0fJas2NPoZgGAE//vGTVcxrJpYLYxWd9SpUjbpQGSpaukDwDfVHwDfse8QtVV6fCatKfW9pseaFpru/sg+eutwvrgTGI9lQDA/E1juXbkcZEghnzjsD2HrCjevmsTXOFTtMJZTuXfQeMPdwSPitgYF1qfJV32NbIsk6lXnG7QwjslXN+XruOA2wFVEsrJlU/ML9Qr8x+WNTAxMIDS2evVPX0fXxRKNCPadsh0IP0o6PE="
+    secure: "WOqlWFcEaFJdoki7XUELuEEmIHV3pXmhVx5VmGGFk0m1ySdzcMvMHcgZTL4yLIZ2W/4GWwAHxrs0cWBdGRH22a26hzkxrWPoKSQAMypv05uk5H0mVuD84PQvQ16Ld2ZW8VKL8z4LYF2KXuhgD6BfAMaVxMVbsJD60hhJzO2GvL/ILF4756RrvkkH8ngILlGehCWwWHGS/5qWueO1JIGyJdqTP92w3Pk2vE8inVzWGWiNheVudKIgk6tNag6+/BnDwuZ/dKrOKS10aXCmjLRboXDin+Ifpy5qXsoNES6AdVcAgodfgoBpJQWBbH1h3q38fYW2/2/S0Of0VRnLvVshbVEz1YMr1nM8hwM+5EvIxvvPw7vM6pAw3AVRyIIp6ZQiKyM0MrWsG1xCkLf3DKLJrV7ugVOHLgAaxilVW9dyixqiWMPdmhoYiijPkdC0yHYJhJX4LaXPsgYMyAfCsa8vsxnQrb3ZWSCgzt83gIxWthGkl0aihZXvcwEecuxIl7OgpYU5/OvvuOUBu8997KZhPciJRjwcrS2hcaExXRcM6dfO31ZJXj5fI68jAhENOv0eKys6dgQe9fZQryjQJs4DfprICpSUH3mVD03nakngmzuWhpVXtIX+svwug1pMceiS+UoIDzzlQGhvNKxDlSbEwuMw6a9ujX7j4t76qZ+k7XU="
 before_script:
 - chmod +x ./_build.sh
 - chmod +x ./_deploy.sh
