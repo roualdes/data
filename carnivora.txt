@@ -1,0 +1,53 @@
+carnivora                 package:ape                  R Documentation
+
+Carnivora body sizes and life history traits
+
+Description:
+
+     Dataset adapted from Gittleman (1986), including 2 morphological
+     variables (body and brain sizes), 8 life history traits variables
+     and 4 taxonomic variables.
+
+Usage:
+
+     data(carnivora)
+
+Format:
+
+     A data frame with 112 observations on 17 variables.
+
+        [,1]  Order        factor   Carnivora order
+        [,2]  SuperFamily  factor   Super family (Caniformia or Feliformia)
+        [,3]  Family       factor   Carnivora family
+        [,4]  Genus        factor   Carnivora genus
+        [,5]  Species      factor   Carnivora species
+        [,6]  FW           numeric  Female body weight (kg)
+        [,7]  SW           numeric  Average body weight of adult male and adult female (kg)
+        [,8]  FB           numeric  Female brain weight (g)
+        [,9]  SB           numeric  Average brain weight of adult male and adult female (g)
+       [,10]  LS           numeric  Litter size
+       [,11]  GL           numeric  Gestation length (days)
+       [,12]  BW           numeric  Birth weigth (g)
+       [,13]  WA           numeric  Weaning age (days)
+       [,14]  AI           numeric  Age of independance (days)
+       [,15]  LY           numeric  Longevity (months)
+       [,16]  AM           numeric  Age of sexual maturity (days)
+       [,17]  IB           numeric  Inter-birth interval (months)
+
+Source:
+
+     Gittleman, J. L. (1986) Carnivore life history patterns:
+     allometric, phylogenetic and ecological associations. _American
+     Naturalist_, *127*: 744-771.
+
+Examples:
+
+       data(carnivora);
+       # This is figure 1 of Gittleman 1986:
+       library(lattice)
+       trellis.device(color=FALSE)
+       xyplot(BW ~ FW, groups=Family, data=carnivora, auto.key=TRUE, xlog=TRUE,
+           scale=list(log=TRUE), ylim=c(1, 2000))
+       trellis.device(color=FALSE)
+       xyplot(BW ~ FB, groups=Family, data=carnivora, auto.key=TRUE, xlog=TRUE,
+           scale=list(log=TRUE), ylim=c(1, 2000))

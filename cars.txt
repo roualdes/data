@@ -1,0 +1,50 @@
+cars                 package:openintro                 R Documentation
+
+cars
+
+Description:
+
+     A data frame with 54 rows and 6 columns. The columns represent the
+     variables ‘type’, ‘price’, ‘mpgCity’, ‘driveTrain’, ‘passengers’,
+     ‘weight’ for a sample of 54 cars from 1993. This data is a subset
+     of the ‘Cars93’ data set from the ‘MASS’ package.
+
+Usage:
+
+     cars <- read.csv("https://roualdes.us/data/cars.csv")
+
+Format:
+
+     A data frame with 54 observations on the following 6 variables.
+
+     ‘type’ The vehicle type with levels ‘large’, ‘midsize’, and
+          ‘small’.
+
+     ‘price’ Vehicle price (USD).
+
+     ‘mpgCity’ Vehicle mileage in city (miles per gallon).
+
+     ‘driveTrain’ Vehicle drive train with levels ‘4WD’, ‘front’, and
+          ‘rear’.
+
+     ‘passengers’ The vehicle passenger capacity.
+
+     ‘weight’ Vehicle weight (lbs).
+
+Details:
+
+     These cars represent a random sample for 1993 models that were in
+     both _Consumer Reports_ and _PACE Buying Guide_. Only vehicles of
+     type ‘'small'’, ‘'midsize'’, and ‘'large'’ were include.
+
+     Further description can be found in Lock (1993). Use the URL <
+     http://www.amstat.org/publications/jse/v1n1/datasets.lock.html>.
+
+Source:
+
+     Lock, R. H. (1993) 1993 New Car Data. _Journal of Statistics
+     Education_ 1(1).
+
+References:
+
+     < http://www.openintro.org/>

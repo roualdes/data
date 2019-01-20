@@ -1,0 +1,33 @@
+MLB                 package:openintro                  R Documentation
+
+Salary data for Major League Baseball (2010)
+
+Description:
+
+     Salary data for Major League Baseball players in the year 2010.
+
+Usage:
+
+     data(MLB)
+     
+Format:
+
+     A data frame with 828 observations on the following 4 variables.
+
+     ‘player’ Player name
+
+     ‘team’ Team
+
+     ‘position’ Field position
+
+     ‘salary’ Salary (in $1000s)
+
+Source:
+
+     Collected from the following page (and its linked pages) on
+     February 23rd, 2011:
+
+     <
+     http://content.usatoday.com/sportsdata/baseball/mlb/salaries/team>
+     
+

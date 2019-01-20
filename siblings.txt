@@ -1,0 +1,32 @@
+siblings                                                R Documentation
+
+Sibling pairs of salmon
+
+Description:
+
+    A random sample of 30 sibling pairs was taken to test the
+    effectiveness of a hormone on the oxygen consumption of salmon.
+    One sibling was randomly selected to receive the hormone and while
+    the other sibling acted as a control.  Each salmon swam for 15
+    minutes under the same conditions and the measure Scope was
+    recorded.  Scope is defined as the difference between the maximum
+    and minimum oxygen consumption during the 15 minute experiment on
+    each salmon.
+
+Usage:
+
+    siblings <- read.csv("https://roualdes.us/data/siblings.csv")
+
+Format:
+
+    A data frame with 60 observations on the following 3 variables.
+
+    'scope' A measure of oxygen consumption.
+
+    'treatment' The treatment assigned to each fish.
+
+    'siblingpair' Denotes which fish are siblings.
+
+Source:
+
+    A fellow colleague here at CSU, Chico collected these data.

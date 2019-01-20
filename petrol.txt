@@ -1,0 +1,46 @@
+                 package:                  R Documentation
+
+Petrol consumption by state in 1980.
+
+Description:
+
+    For one year, the consumption of petrol was measured in 48 states.
+    The relevant variables are the petrol tax, the per capita income,
+    the number of miles of paved highway, and the proportion of the
+    population with driver's licenses.
+
+Usage:
+
+    read.csv("https://roualdes.us/data/petrol.csv")
+
+Format:
+
+     A data frame with 48 observations on the following 5 variables.
+
+     'tax' petrol tax (cents per gallon)
+
+     ‘income' average income (dollars)
+
+     ‘highway' paved highways (miles)
+
+     ‘dl' proportion of population with driver's licenses
+
+     'consumption' petrol consumption (millions of gallons)
+
+Source:
+
+     Collected from the following page (and its linked pages) on
+     February 15rd, 2018:
+
+     <http://people.sc.fsu.edu/~jburkardt/datasets/regression/x16.txt>
+
+     Reference:
+
+     Helmut Spaeth,
+     Mathematical Algorithms for Linear Regression,
+     Academic Press, 1991,
+     ISBN 0-12-656460-4.
+
+     S Weisberg,
+     Applied Linear Regression,
+     New York, 1980, pages 32-33.

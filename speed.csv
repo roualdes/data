@@ -1,0 +1,137 @@
+system,mips,year,cores
+UNIVAC I,0.002,1951,1
+IBM System/370 158,0.64,1972,1
+Intel 8080,0.29,1974,1
+MOS Technology 6502,0.43,1975,1
+Intel 8080A,0.435,1976,1
+Zilog Z80,0.58,1976,1
+Motorola 6809,0.42,1977,1
+Motorola 6802,0.5,1977,1
+IBM System/370 158-3,0.73,1977,1
+VAX-11/780,1,1977,1
+Fujitsu FACOM 230-75 APU,2,1977,1
+Intel 8086,0.33,1978,1
+Intel 8088,0.75,1979,1
+Motorola 68000,1.4,1979,1
+Zilog Z8001/Z8002,1.5,1979,1
+Zilog Z80/Z80H,1.16,1981,1
+Motorola 6802,1.79,1981,1
+Zilog Z8001/Z8002B,2.5,1981,1
+MOS Technology 6502,2.522,1981,1
+Sega G80 (3 cores),7.4,1981,3
+Intel 286,1.28,1982,1
+Motorola 68000,2.188,1982,1
+Motorola 68010,2.407,1982,1
+NEC V20,4,1982,1
+Namco Pole Position (7 cores),8.141,1982,7
+LINKS-1 Computer Graphics System (257 cores),642.5,1982,257
+Texas Instruments TMS32010,5,1983,1
+NEC V30,5,1983,1
+Motorola 68010,3.209,1984,1
+Motorola 68020,4.848,1984,1
+Hitachi HD63705,2,1985,1
+Intel i386DX,2.15,1985,1
+Hitachi-Motorola 68HC000,3.5,1985,1
+Intel 8751,8,1985,1
+Sega System 16 (4 cores),16.33,1985,4
+ARM2,4,1986,1
+Texas Instruments TMS34010,6,1986,1
+NEC V70,6.6,1987,1
+Motorola 68030,9,1987,1
+Gmicro/200,10,1987,1
+Texas Instruments TMS320C20,12.5,1987,1
+Analog Devices ADSP-2100,12.5,1987,1
+Texas Instruments TMS320C25,25,1987,1
+Motorola 68020,10,1988,1
+Motorola 68030,18,1988,1
+Namco System 21 (10 cores),73.927,1988,10
+Intel i386DX,4.3,1989,1
+Intel i486DX,8.7,1989,1
+NEC V80,16.5,1989,1
+Intel i860,25,1989,1
+Atari Hard Drivin' (7 cores),33.573,1989,7
+NEC SX-3 (4 cores),680,1989,4
+Motorola 68040,44,1990,1
+Namco System 21 (Galaxian³) (96 cores),1660.386,1990,96
+AMD Am386,9,1991,1
+Intel i486DX,11.1,1991,1
+Intel i860,50,1991,1
+Intel i486DX2,25.6,1992,1
+DEC Alpha 21064 EV4,86,1992,1
+DEC Alpha 21064 EV4,135,1993,1
+MIPS R4400,85,1993,1
+Gmicro/500,132,1993,1
+IBM-Motorola PowerPC 601,157.7,1993,1
+SGI Onyx RealityEngine2 (36 cores),2640,1993,36
+Namco Magic Edge Hornet Simulator (36 cores),2880,1993,36
+Fujitsu-NAL Numerical Wind Tunnel (168 cores),10718.4,1993,168
+ARM7,40,1994,1
+Intel DX4,70,1994,1
+Motorola 68060,110,1994,1
+Intel Pentium,188,1994,1
+Microchip PIC16F,5,1995,1
+IBM-Motorola PowerPC 603e,188,1995,1
+ARM 7500FE,35.9,1996,1
+IBM-Motorola PowerPC 603ev,423,1996,1
+Intel Pentium Pro,541,1996,1
+Hitachi SH-4,360,1997,1
+IBM-Motorola PowerPC 750,525,1997,1
+Zilog eZ80,80,1999,1
+Intel Pentium III,2054,1999,1
+Sega Naomi Multiboard (32 cores),6400,1999,32
+Freescale MPC8272,760,2000,1
+AMD Athlon,3561,2000,1
+Sony-Toshiba Emotion Engine (PS2),6000,2000,1
+Silicon Recognition ZISC 78,8600,2000,1
+"NEC SX-6 (Single Node, 8 cores)",44208,2001,8
+"NEC SX-6 (128 Node, 1024 cores)",5658624,2001,1024
+ARM11,515,2002,1
+NEC Earth Simulator (5120 cores),28293540,2002,5120
+AMD Athlon XP 2500+,7527,2003,1
+Pentium 4 Extreme Edition,9726,2003,1
+Microchip PIC10F,1,2004,1
+ARM Cortex-M3,125,2004,1
+Nios II,190,2004,1
+MIPS32 4KEc,356,2004,1
+VIA C7,1799,2005,1
+ARM Cortex-A8,2000,2005,1
+AMD Athlon FX-57,12000,2005,1
+AMD Athlon 64 3800+ X2 (Dual core),14564,2005,2
+ARM Cortex-R4,450,2006,1
+MIPS32 24K,604,2006,1
+PS3 Cell BE (PPE only),10240,2006,1
+"Xbox360 IBM ""Xenon"" (Triple core)",19200,2005,3
+AMD Athlon FX-60 (Dual core),18938,2006,2
+Intel Core 2 Extreme X6800 (Dual core),27079,2006,2
+Intel Core 2 Extreme QX6700 (Quad core),49161,2006,4
+MIPS64 20Kc,1370,2007,1
+P.A. Semi PA6T-1682M,8800,2007,1
+Qualcomm Scorpion (Cortex A8-like),2100,2008,1
+Intel Atom N270 (Single core),3846,2008,1
+Intel Core 2 Extreme QX9770 (Quad core),59455,2008,4
+Intel Core i7 920 (Quad core),82300,2008,4
+ARM Cortex-M0,45,2009,1
+ARM Cortex-A9 (Dual core),7500,2009,2
+AMD Phenom II X4 940 Black Edition,42820,2009,1
+Fujitsu SPARC64 VIIIfx,113471.314,2009,1
+AMD Phenom II X6 1100T,78440,2010,1
+Intel Core i7 Extreme Edition 980X (Hex core),147600,2010,6
+"Tianhe-1A (186,368 cores)",2670000000,2010,186368
+ARM Cortex A5,1256,2011,1
+ARM Cortex A7,2850,2011,1
+"Qualcomm Krait (Cortex A15-like, Dual core)",9900,2011,2
+AMD E-350 (Dual core),10000,2011,2
+Nvidia Tegra 3 (Quad core Cortex-A9),13800,2011,4
+Samsung Exynos 5250 (Cortex-A15-like Dual core),14000,2011,2
+Intel Core i5-2500K (Quad core),83000,2011,4
+Intel Core i7 875K,92100,2011,1
+AMD FX-8150 (Eight core),108890,2011,8
+Intel Core i7 2600K,117160,2011,1
+Intel Core i7 Extreme Edition 3960X (Hex core),176170,2011,1
+"Fujitsu K computer (705,024 cores)",10000000000,2011,705024
+AMD FX-8350,97125,2012,1
+Intel Core i7 3770K,106924,2012,1
+Intel Core i7 3630QM,113093,2012,1
+Intel Core i7 4770K,133740,2013,1
+Intel Core i7 5960X,238310,2014,1
+Raspberry Pi 2,4744,2014,1

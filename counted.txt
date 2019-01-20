@@ -1,0 +1,33 @@
+2016 Police Killings in the United States up to 2016-09-25.
+
+Description:
+
+     Data for police killings in the United States.
+
+Usage:
+
+    read.csv("https://roualdes.us/data/counted.csv")
+
+Format:
+
+     A data frame with 306 observations on the following 5 variables.
+
+     'state_population' 2010 state population.
+
+     'state' State abbreviation.
+
+     'raceethnicity' Race or ethnicity of people killed.
+
+     'population' Number of residents of given race or ethnicity living in each state as of 2010 Census.
+
+     'numkilled' The number of people killed in each state.
+
+
+Source:
+
+     ~~ < https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database> ~~
+     ~~ < https://factfinder.census.gov/faces/nav/jsf/pages/download_center.xhtml> ~~
+
+Examples:
+
+    read.csv("https://roualdes.us/data/counted.csv")

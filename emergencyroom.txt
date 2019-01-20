@@ -1,0 +1,29 @@
+Hospital data to assess likelihood of patients contracting an infection
+
+Description:
+
+     A random of sample of hospitals in the United States.  Infection risk was measured for emergency room patients only.  Region denotes different regions of the United States.
+
+Usage:
+
+     er <- read.csv("https://roualdes.us/data/emergencyroom.csv")
+
+Format:
+
+     A data frame with 113 observations on the following 2 variables.
+
+     ‘infection_risk’ likelihood a patient will acquire an infection
+
+     ‘region’ numerically encoded region in which hospital is located
+
+Source:
+
+     https://onlinecourses.science.psu.edu/stat501/node/292
+
+     Applied Regression Models, (4th edition), Kutner, Neter, and
+     Nachtsheim
+
+References:
+
+     Applied Regression Models, (4th edition), Kutner, Neter, and
+     Nachtsheim

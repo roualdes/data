@@ -1,0 +1,30 @@
+Data frame representing computer speeds for various systems
+
+Description:
+
+     These data represent various computing systems and their speeds
+     from 1951 to 2014.
+
+Usage:
+
+     comps <- read.csv("https://roualdes.us/data/speed.csv")
+
+Format:
+
+     Data frame has 136 observations on the following 4 variables.
+
+     'system' Categorical variable of the sysem name.
+
+     'year' The year the system was produced.
+
+     'cores' The number of cores in the system.
+
+     'mips' Millions of instructions per second (mips) executed by the system.
+
+Source:
+
+     https://en.wikipedia.org/wiki/Instructions_per_second#Millions_of_instructions_per_second
+
+References:
+
+     See references at link.

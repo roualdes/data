@@ -1,0 +1,42 @@
+Hospital data to assess likelihood of patients contracting an infection
+
+Description:
+
+     A random of sample of hospitals in the United States.  Aspects of
+     both the hospital and the patients within each hospital were
+     collected.  All patient level variables are averages of the
+     patients at that particular hospital.
+
+Usage:
+
+     hospital <- read.csv("https://roualdes.us/data/hospital.csv")
+
+Format:
+
+     A data frame with 113 observations on the following 7 variables.
+
+     ‘stay’ average length of patient stay (days)
+
+     ‘age’ average patient age (years)
+
+     ‘infection_risk’ likelihood a patient will acquire an infection
+
+     ‘xray’ average number of x-rays given in the hospital per year
+
+     ‘beds’ number of beds in hospital
+
+     ‘region’ numerically encoded region in which hospital is located
+
+     ‘nurses’ number of nurses in hospital
+
+Source:
+
+     https://onlinecourses.science.psu.edu/stat501/node/292
+
+     Applied Regression Models, (4th edition), Kutner, Neter, and
+     Nachtsheim
+
+References:
+
+     Applied Regression Models, (4th edition), Kutner, Neter, and
+     Nachtsheim

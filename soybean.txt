@@ -1,0 +1,30 @@
+Data frame representing soybean seeds that failed to germinate
+
+Description:
+
+     These data represent 5 plots, of 20 soybean seeds each, randomly assigned
+     to different fertilizers (treatments).  After treatment, the
+     plots were given 30 days to germinate.  The number of seeds that
+     did not germinate were recorded as failed.
+
+Usage:
+
+     comps <- read.csv("https://roualdes.us/data/soybean.csv")
+
+Format:
+
+     Data frame has 25 observations on the following 3 variables.
+
+     'treatment' Categorical variable indicating the treatment recieved.
+
+     'block' The plot to which the treatment was applied.
+
+     'failed' The number of seeds that did not germinate.
+
+Source:
+
+    TBA.
+
+References:
+
+    TBA.
