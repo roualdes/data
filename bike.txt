@@ -76,10 +76,10 @@ Both hour.csv and day.csv have the following fields, except hr which is not avai
 		- 2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist
 		- 3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds
 		- 4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog
-	- temp : Temperature in Celsius divided by 41 (max)
-	- atemp: Apparent (feels like) temperature in Celsius divided by 50 (max)
-	- hum: Normalized humidity. The values are divided to 100 (max)
-	- windspeed: Normalized wind speed. The values are divided to 67 (max)
+	- temp : temperature in Celsius divided by 41 (max)
+	- atemp: apparent (feels like) temperature in Celsius divided by 50 (max)
+	- hum: humidity divided by 100 (max)
+	- windspeed: wind speed divided to 67 (max).
 	- casual: count of casual users
 	- registered: count of registered users
 	- cnt: count of total rental bikes including both casual and registered
