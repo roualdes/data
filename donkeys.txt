@@ -1,0 +1,60 @@
+donkeys {paranomo}	R Documentation         Donkey measurements
+
+Description
+
+A dataset of donkey sizes and weights collected in Kenya 2010, on
+behalf of The Donkey Sanctuary.
+
+Format
+
+A data frame with 544 rows and 8 variables
+
+Details
+The variables are:
+
+BCS. Body condition score: an ordinal scale running from 1 (emaciated) to 5 (obese) in steps of 0.5
+
+Age. Age in intervals: <2, 2-5, etc
+
+Sex. Sex: stallion, gelding, female
+
+Length. Length in cm
+
+Girth. Girth in cm
+
+Height. Height in cm
+
+Weight. Weight in kg
+
+WeightAlt. Reweights for a subset
+
+Details of these measurements are available in the paper cited
+below. BCS, Age and Sex are represented as unordered factors. The
+WeightAlt variable was used to check the accuracy of the weighing
+process, and may be deleted.
+
+References
+
+K. Milner and J.C. Rougier, 2014, How to weigh a donkey in the Kenyan
+countryside, Signifiance Magazine, volume 11 issue 4, pages 40-43,
+DOI:10.1111/j.1740-9713.2014.00768.x.
+
+@Article{,
+    title = {How to weigh a donkey in the Kenyan countryside},
+    author = {K. Milner and J.C. Rougier},
+    journal = {Significance},
+    year = {2014},
+    volume = {11},
+    number = {4},
+    pages = {40-43},
+}
+
+The Donkey Sanctuary, registered UK charity number 264818,
+http://www.thedonkeysanctuary.org.uk/
+
+Examples
+
+donkeys <- read.csv("https://raw.githubusercontent.com/roualdes/data/master/donkeys.csv")
+head(donkeys)
+
+[Package paranomo version 1.1 Index]
