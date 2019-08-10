@@ -1,0 +1,23 @@
+Self-Reported Heights
+
+Description:
+
+     Self-reported heights in inches for males and females.
+
+Usage:
+
+    read.csv("")
+
+Format:
+
+     An object of class ‘"data.frame"’.
+
+Details:
+
+        • sex. Male or Female.
+
+        • height. Height in inches.
+
+Examples:
+
+    read.csv("")

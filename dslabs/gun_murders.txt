@@ -1,0 +1,34 @@
+US gun murders by state for 2010
+
+Description:
+
+     Gun murder data from FBI reports. Also contains the population of
+     each state.
+
+Usage:
+
+    read.csv("")
+
+Format:
+
+     An object of class ‘"data.frame"’.
+
+Details:
+
+        • state. US state
+
+        • abb. Abbreviation of US state
+
+        • region. Geographical US region
+
+        • population. State population (2010)
+
+        • total. Number of gun murders in state (2010)
+
+Source:
+
+     Wikipedia
+
+Examples:
+
+    read.csv("")

@@ -1,0 +1,45 @@
+Gender bias in research funding in the Netherlands
+
+Description:
+
+     Table S1 from paper title "Gender contributes to personal research
+     funding success in The Netherlands"
+
+Usage:
+
+    read.csv("")
+
+Format:
+
+     An object of class ‘"data.frame"’.
+
+Details:
+
+        • discipline. Research area discipline.
+
+        • applications_total. Total applications.
+
+        • applications_men. Total applications by men.
+
+        • applications_women. Total applications by women.
+
+        • awards_total. Total awards.
+
+        • awards_men. Total awards received by men.
+
+        • awards_women. Total awards received by women.
+
+        • success_rates_total. Overall success rate.
+
+        • success_rates_men. Success rate for men.
+
+        • success_rates_women. Success rate for women.
+
+Source:
+
+     van der Lee and Ellemers (2015) PNAS <URL:
+     http://www.pnas.org/content/112/40/12349.abstract>
+
+Examples:
+
+    read.csv("")

@@ -1,0 +1,39 @@
+Contagious disease data for US states
+
+Description:
+
+     Yearly counts for Hepatitis A, Measles, Mumps, Pertussis, Polio,
+     Rubella, and Smallpox for US states. Original data courtesy of
+     Tycho Project (http://www.tycho.pitt.edu/).
+
+Usage:
+
+    read.csv("")
+
+Format:
+
+     An object of class ‘"data.frame"’.
+
+Details:
+
+        • disease. A factor containing disease names.
+
+        • state. A factor containing state names.
+
+        • year.
+
+        • weeks_reporting. Number of weeks counts were reported that
+          year.
+
+        • count. Total number of reported cases.
+
+        • population. State population, interpolated for non-census
+          years.
+
+Source:
+
+     Tycho Project
+
+Examples:
+
+    read.csv("")
