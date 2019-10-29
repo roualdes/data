@@ -1,0 +1,28 @@
+Observations of different attributes between finches from Santa Cruz, CA, San Cristobal, Mexico, and Floreana, Equador
+
+Every observation within this data set contains a valid entry for each attribute. 
+
+No units were made available within this data set. Millimeters (mm) is most likely for measurements.
+
+
+Attribute	Range				Description
+---------	-----				----------------
+
+island		santacruz, sancristobal		Notes the location of finch in the observation
+		floreana
+
+winglength	58.0 - 79.0			The length of the finches' wingspan
+
+taillength	35.0 - 48.5			The length of the finches' tail
+
+beakwidth	5.0 - 12.5			The width of the finches' beak
+
+beakheight	5.2 - 16.5			The height of the finches' beak
+
+lowerbeaklength	6.0 - 11.0			The length of the finches' lower beak
+
+upperbeaklength	9.0 - 20.2			The length of the finches' upper beak
+
+tarsuslength	20.0 - 24.5			The length of the finches' tarsus (the 'ankle' of the finches' leg)
+
+middletoelength	15.0 - 21.5			The length of the finches' middle toe
