@@ -11,7 +11,8 @@ another. While the Vacuum is collected from and has effect on the Steam Turbine,
 three of the ambient variables effect the GT performance.
 
 For comparability with our baseline studies, and to allow 5x2 fold statistical tests be
-carried out, we provide the data shuffled five times. For each shuffling 2-fold CV i carried out and the resulting 10 measurements are used for statistical testing.
+carried out, we provide the data shuffled five times. For each shuffling 2-fold CV i
+carried out and the resulting 10 measurements are used for statistical testing.
 
 We provide the data both in .ods and in .xlsx formats.
 
