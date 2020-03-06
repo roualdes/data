@@ -27,6 +27,9 @@ sources are sometimes very faint with only a handful of photons
 arriving over the observation, and sometimes orders of magnitude
 brighter.
 
+The time between the arrival times of these photons can be viewed as
+random observations from an Exponential distribution.
+
 
 
 Usage:
@@ -37,11 +40,11 @@ Format:
 
      A data frame with 209 observations on the following 3 variables.
 
-     'time' arrival time of X-ray (hour)
+     'time' arrival time of flares (hours)
 
-     'energy' energy of X-ray (Kelvin)
+     'energy' energy of flares (Kelvin)
 
-     'diff' time between arrival of X-rays
+     'diff' time between arrival of flares
 
 Source:
 
