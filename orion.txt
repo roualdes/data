@@ -1,0 +1,51 @@
+Orion stare flares
+
+Description:
+
+Our Sun and ordinary stars we see at nighttime appear constant in
+brightness to our naked eyes.  But at other wavelengths of light where
+the stars are much fainter (such as radio, X-ray and gamma-rays), the
+stars are violently variable on rapid timescales.  These emission
+arises from explosive releases of energy at the stellar surface
+associated with magnetic fields.  These solar or stellar flares occur
+when magnetic fields generated in the stellar interior erupt on the
+surface and, due to convective motions, are twisted until a sudden
+reconfiguation occurs.  The process resembles the spark appearing when
+two wires are crossed in an electric circuit.  The result is a sudden
+acceleration of particles to extremely high energies, and the heating
+of gas trapped in magnetic loops to X-ray emitting temperatures
+(106-108 degrees Kelvin).
+
+Ordinary stars exhibit their highest levels of magnetic activity, and
+their strongest flares, during the youngest pre-main sequence phases
+(Feigelson & Montmerle 1999).  X-ray telescopes such as the Chandra
+X-ray Observatory provide an excellent view of these flares.  The most
+extensive dataset obtained in this field was the Chandra Orion
+Ultradeep Project (COUP), where Chandra observed the Orion Nebula
+region of young stars for nearly two weeks continuously.  The X-ray
+sources are sometimes very faint with only a handful of photons
+arriving over the observation, and sometimes orders of magnitude
+brighter.
+
+
+
+Usage:
+
+df <- read.csv("https://raw.githubusercontent.com/roualdes/data/master/orion.csv")
+
+Format:
+
+     A data frame with 209 observations on the following 3 variables.
+
+     'time' arrival time of X-ray (hour)
+
+     'energy' energy of X-ray (Kelvin)
+
+     'diff' time between arrival of X-rays
+
+Source:
+
+     Collected from the following page (and its linked pages) on
+     March 6, 2020:
+
+     <https://astrostatistics.psu.edu/datasets/Chandra_flares.html>
