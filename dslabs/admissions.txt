@@ -9,7 +9,7 @@ Description:
 
 Usage:
 
-     data(admissions)
+     read.csv("https://raw.githubusercontent.com/roualdes/data/master/dslabs/admissions.csv")
 
 Format:
 
@@ -21,14 +21,10 @@ Details:
 
         • gender. Men or women.
 
-        • admitted. Percent of students admitted.
+        • admitted. Number of students admitted.
 
         • applicants. Total number of applicants.
 
 Source:
 
      PJ Bickel, EA Hammel, and JW O'Connell. Science (1975)
-
-Examples:
-
-    read.csv("")
