@@ -10,7 +10,7 @@ Description:
 
 Usage:
 
-     possum <- read.csv("https://roualdes.us/data/possum.csv")
+     possum <- read.csv("https://raw.githubusercontent.com/roualdes/data/master/possum.csv")
 
 Format:
 
