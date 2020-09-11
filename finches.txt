@@ -1,0 +1,40 @@
+finches             R Documentation
+
+Size measurements for adult finches on various Galapagos islands
+
+Description:
+
+     Includes measurements for finch species, on islands Floreana, San
+     Cristobal, and Santa Cruz.  All units are in milimeters.
+
+Usage:
+
+     finches <- read.csv("https://raw.githubusercontent.com/roualdes/data/master/finches.csv")
+
+Format:
+
+     A dataframe with 68 rows and 9 variables:
+
+     'island' factor denoting island
+
+     'winglength' numeric denoting the length in mm of left wing length
+
+     'taillength' numeric denoting the length in mm of the tail
+
+     'beakwidth' numeric denoting the width in mm of the the beak
+
+     'beakheight' numeric denoting the height in mm of the beak
+
+     'lowerbeaklength' numeric denoting the length in mm of the lower beak
+
+     'upperbeaklength' numeric denoting the length in mm of the upper beak
+
+     'tarsuslength' numeric denoting the length in mm of the tarsus
+
+     'middletoelength' numeric denoting the length in mm of the middle toe
+
+
+
+Source:
+
+     Darwin's original data.  Need citation.
