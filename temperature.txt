@@ -6,19 +6,11 @@ Description:
 
 Format:
 
-     Data frame has 136 observations on the following 4 variables.
+     'date' The date on which the observation was collected
 
-     'STATION' ID of the weather station
+     'mintempHilo' The daily minimum temperature (F) in Hilo
 
-     'NAME' Name of the weather station
-
-     'DATE' The date on which the observation was collected
-
-     'TAVG' The daily average temperature in F
-
-     'TMAX' The daily maximum temperature in F
-     
-     'TMIN' The daily minimum temperature in F
+     'mintempDV' The daily minimum temperature (F) in Death Valley
 
 Source:
 
