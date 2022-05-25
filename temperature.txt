@@ -1,0 +1,17 @@
+Data frame of daily temperatures in Hilo, HI and Death Valley, CA
+
+Description:
+
+     These data consist of daily average, min, and max temperatures in Hilo, HI and Death Valley, CA from 01/01/2000 until
+
+Format:
+
+     'date' The date on which the observation was collected
+
+     'mintempHilo' The daily minimum temperature (F) in Hilo
+
+     'mintempDV' The daily minimum temperature (F) in Death Valley
+
+Source:
+
+     https://www.ncdc.noaa.gov/cdo-web/
