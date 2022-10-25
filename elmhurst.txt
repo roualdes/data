@@ -10,12 +10,12 @@ Description:
 Usage:
 
      data("elmhurst")
-     
+
 Format:
 
      A data frame with 50 observations on the following 3 variables.
 
-     ‘family_income’ Family income of the student.
+     ‘family_income’ Family income of the student, in $1000s.
 
      ‘gift_aid’ Gift aid, in $1000s.
 
