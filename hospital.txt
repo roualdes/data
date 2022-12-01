@@ -25,7 +25,7 @@ Format:
 
      ‘beds’ number of beds in hospital
 
-     ‘region’ numerically encoded region in which hospital is located
+     ‘region’ alphabetically encoded region in which hospital is located
 
      ‘nurses’ number of nurses in hospital
 
