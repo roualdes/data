@@ -11,7 +11,7 @@ Description:
 
 Usage:
 
-    read.csv("https://roualdes.us/data/petrol.csv")
+    read.csv("https://raw.githubusercontent.com/roualdes/data/master/petrol.csv")
 
 Format:
 
